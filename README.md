@@ -1,4 +1,4 @@
 projet_supervision_agile
 ========================
 
-Blablabla
+Découverte et supervision automatique des serveurs d'un centre de données...
