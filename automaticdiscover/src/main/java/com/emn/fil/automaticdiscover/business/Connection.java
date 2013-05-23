@@ -46,11 +46,11 @@ public class Connection {
 	public void testConnection(IP range1, IP range2) {
 		Main.log.trace("Test");
 		IPRange range = new IPRange(range1, range2);
-		OsType os_current = OsType.UNKNOWN;
+		OsType osCurrent = OsType.UNKNOWN;
 		while (range.hasNext()) {
-			os_current = getOSType(range.getCurrent());
-			if (os_current != OsType.UNKNOWN) {
-				reseau.ajoutMachine(new Machine(range.getCurrent(), os_current));
+			osCurrent = getOSType(range.getCurrent());
+			if (osCurrent != OsType.UNKNOWN) {
+				reseau.ajoutMachine(new Machine(range.getCurrent(), osCurrent));
 			}
 			range.next();
 		}
@@ -69,21 +69,24 @@ public class Connection {
 		// ///////////////BEGIN TESTS/////////////////
 
 		// Test windows ports
-		if (testConnectionsOnPorts(ip, portsWindows))
+		if (testConnectionsOnPorts(ip, portsWindows)){
 			type = OsType.WINDOWS;
+		}
 
 		// If test windows ports not succeed
 		if (type == OsType.UNKNOWN) {
 			// Test mac ports
-			if (testConnectionsOnPorts(ip, portsMac))
+			if (testConnectionsOnPorts(ip, portsMac)){
 				type = OsType.OSX;
+			}	
 		}
 
 		// If test windows ports and mac ports not succeed
 		if (type == OsType.UNKNOWN) {
 			// Test unix ports
-			if (testConnectionsOnPorts(ip, portsUnix))
+			if (testConnectionsOnPorts(ip, portsUnix)){
 				type = OsType.UNIX;
+			}
 		}
 
 		// ///////////////END TESTS/////////////////
@@ -149,15 +152,15 @@ public class Connection {
 		return false;
 	}
 
-	public int[] getPorts_mac() {
+	public int[] getPortsMac() {
 		return portsMac;
 	}
 
-	public int[] getPorts_windows() {
+	public int[] getPortsWindows() {
 		return portsWindows;
 	}
 
-	public int[] getPorts_unix() {
+	public int[] getPortsUnix() {
 		return portsUnix;
 	}
 

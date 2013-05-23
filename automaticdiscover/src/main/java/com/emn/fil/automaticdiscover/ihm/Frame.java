@@ -41,6 +41,8 @@ public class Frame extends JFrame {
 	private JSeparator separatorUp = new JSeparator();
 	private JSeparator separatorMiddle = new JSeparator();
 
+	private String police = "Tahoma";
+	
 	// Partie config
 	private JLabel lblConfigureRangeTo = new JLabel(
 			"Configure range to analyze :");
@@ -75,11 +77,11 @@ public class Frame extends JFrame {
 	private BtnAdvancedListener btnAdvancedListener;
 
 	// Dialogs
-	AdvancedCFGDialog dialAdvancedConfig;
+	private AdvancedCFGDialog dialAdvancedConfig;
 
 	// Connection
 	@Autowired
-	public Connection connection;
+	private Connection connection;
 
 	public Frame() {
 
@@ -114,12 +116,12 @@ public class Frame extends JFrame {
 
 	private void buildConfiguration() {
 
-		lblFrom.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblFrom.setFont(new Font(police, Font.BOLD, 11));
 		lblFrom.setForeground(SystemColor.textInactiveText);
 		lblFrom.setBounds(20, 105, 46, 14);
 		contentPane.add(lblFrom);
 
-		lblTo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTo.setFont(new Font(police, Font.BOLD, 11));
 		lblTo.setForeground(SystemColor.textInactiveText);
 		lblTo.setBounds(20, 130, 46, 14);
 		contentPane.add(lblTo);
@@ -134,7 +136,7 @@ public class Frame extends JFrame {
 		contentPane.add(getTxtboxTo());
 		getTxtboxTo().setColumns(10);
 
-		lblConfigureRangeTo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblConfigureRangeTo.setFont(new Font(police, Font.BOLD, 11));
 		lblConfigureRangeTo.setForeground(SystemColor.inactiveCaptionText);
 		lblConfigureRangeTo.setBounds(10, 79, 158, 14);
 		contentPane.add(lblConfigureRangeTo);
@@ -146,10 +148,10 @@ public class Frame extends JFrame {
 	private void buildPanelConsole() {
 
 		getTaConsole().setBounds(10, 183, 654, 264);
-		JScrollPane ta_jbar = new JScrollPane(getTaConsole());
-		ta_jbar.setBounds(10, 183, 654, 264);
+		JScrollPane taJbar = new JScrollPane(getTaConsole());
+		taJbar.setBounds(10, 183, 654, 264);
 		//
-		ta_jbar.getVerticalScrollBar().addAdjustmentListener(
+		taJbar.getVerticalScrollBar().addAdjustmentListener(
 				new AdjustmentListener() {
 					public void adjustmentValueChanged(AdjustmentEvent e) {
 						e.getAdjustable().setValue(
@@ -157,7 +159,7 @@ public class Frame extends JFrame {
 					}
 				});
 		//
-		contentPane.add(ta_jbar);
+		contentPane.add(taJbar);
 
 		btnQuit.setBounds(575, 458, 89, 23);
 		contentPane.add(btnQuit);
@@ -171,7 +173,7 @@ public class Frame extends JFrame {
 		getLblPercent().setBounds(431, 462, 35, 14);
 		contentPane.add(getLblPercent());
 
-		lblConsole.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblConsole.setFont(new Font(police, Font.BOLD, 11));
 		lblConsole.setForeground(SystemColor.inactiveCaptionText);
 		lblConsole.setBounds(312, 162, 60, 14);
 		contentPane.add(lblConsole);
@@ -193,7 +195,7 @@ public class Frame extends JFrame {
 				middle.y - (this.getHeight() / 2));
 
 		setLocation(newLocation);
-		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTitle.setFont(new Font(police, Font.BOLD, 11));
 		lblTitle.setForeground(SystemColor.windowText);
 		lblTitle.setBounds(243, 41, 188, 14);
 		contentPane.add(lblTitle);
@@ -267,5 +269,13 @@ public class Frame extends JFrame {
 
 	public void setLblPercent(JLabel lblPercent) {
 		this.lblPercent = lblPercent;
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 	}
 }

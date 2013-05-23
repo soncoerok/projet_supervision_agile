@@ -80,17 +80,17 @@ public class AdvancedCFGDialog extends JDialog {
 
 	private void getInfos(Frame parent) {
 		// TIMEOUT
-		this.txtboxTimeout.setText("" + parent.connection.getTimeout());
+		this.txtboxTimeout.setText("" + parent.getConnection().getTimeout());
 		// PORTS
-		for (int port : parent.connection.getPorts_windows()) {
+		for (int port : parent.getConnection().getPortsWindows()) {
 			this.dlmPortsWin.addElement(port);
 		}
 
-		for (int port : parent.connection.getPorts_mac()) {
+		for (int port : parent.getConnection().getPortsMac()) {
 			this.dlmPortsMac.addElement(port);
 		}
 
-		for (int port : parent.connection.getPorts_unix()) {
+		for (int port : parent.getConnection().getPortsUnix()) {
 			this.dlmPortsUnix.addElement(port);
 		}
 	}

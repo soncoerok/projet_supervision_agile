@@ -16,13 +16,13 @@ import com.emn.fil.automaticdiscover.ihm.Frame;
 public class AnalystThread implements Runnable {
 
 	@Autowired
-	Frame myFrame;
+	private Frame myFrame;
 
 	@Autowired
-	Reseau reseau;
+	private Reseau reseau;
 
 	@Autowired
-	Connection connection;
+	private Connection connection;
 
 	public void run() {
 
@@ -42,27 +42,28 @@ public class AnalystThread implements Runnable {
 			myFrame.getTaConsole().append("\r\n");
 
 			IPRange range = new IPRange(range1, range2);
-			OsType os_current = OsType.UNKNOWN;
-			int nb_ips = range.getTheIPRange().size();
-			Main.log.trace("NB IPS " + nb_ips);
+			OsType osCurrent = OsType.UNKNOWN;
+			int nbIps = range.getTheIPRange().size();
+			Main.log.trace("NB IPS " + nbIps);
 			Main.log.trace(range.getTheIPRange());
-			myFrame.getProgressBar().setMaximum(nb_ips);
-			int nb_current = 1;
+			myFrame.getProgressBar().setMaximum(nbIps);
+			int nbCurrent = 1;
 			while (range.hasNext()) {
-				os_current = connection.getOSType(range.getCurrent());
+				osCurrent = connection.getOSType(range.getCurrent());
 				myFrame.getTaConsole().append(
 						"IP TESTE : " + range.getCurrent().getIp());
-				if (os_current != OsType.UNKNOWN) {
+				if (osCurrent != OsType.UNKNOWN) {
 					reseau.ajoutMachine(new Machine(range.getCurrent(),
-							os_current));
+							osCurrent));
 					myFrame.getTaConsole().append(" => AJOUTÉ\r\n");
-				} else
+				} else{
 					myFrame.getTaConsole().append(" => KO\r\n");
-
-				myFrame.getProgressBar().setValue(nb_current);
+				}
+				
+				myFrame.getProgressBar().setValue(nbCurrent);
 				myFrame.getLblPercent().setText(
-						(nb_current * 100) / nb_ips + "%");
-				nb_current++;
+						(nbCurrent * 100) / nbIps + "%");
+				nbCurrent++;
 				range.next();
 			}
 

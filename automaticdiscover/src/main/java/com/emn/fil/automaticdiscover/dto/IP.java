@@ -8,7 +8,7 @@ import com.emn.fil.automaticdiscover.exception.IPFormatException;
 public class IP implements Comparable<IP> {
 
 	private String ip;
-	private static Pattern pattern_IP = Pattern
+	private static Pattern patternIP = Pattern
 			.compile("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
 					+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
 					+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
@@ -23,15 +23,18 @@ public class IP implements Comparable<IP> {
 	 */
 	@SuppressWarnings("static-access")
 	public IP(String ip) {
-		if (this.isValidIP(ip))
+		if (this.isValidIP(ip)){
 			this.ip = ip;
-		else
+		}
+
+		else {
 			try {
 				throw new IPFormatException("BAD IP : " + ip);
 			} catch (IPFormatException e) {
 				e.printStackTrace();
 				System.exit(-1);
 			}
+		}
 	}
 
 	public String getIp() {
@@ -51,8 +54,8 @@ public class IP implements Comparable<IP> {
 	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public int compareTo(IP IPToCompare) {
-		return this.ip.compareTo(IPToCompare.ip);
+	public int compareTo(IP iPToCompare) {
+		return this.ip.compareTo(iPToCompare.ip);
 	}
 
 	/*
@@ -64,8 +67,9 @@ public class IP implements Comparable<IP> {
 	public boolean equals(Object objectIP) {
 		if (objectIP instanceof IP) {
 			return this.ip.equals(((IP) objectIP).ip);
-		} else
+		} else{
 			return false;
+		}	
 	}
 
 	/*
@@ -79,7 +83,7 @@ public class IP implements Comparable<IP> {
 	}
 
 	public static boolean isValidIP(String ip) {
-		Matcher matcher = pattern_IP.matcher(ip);
+		Matcher matcher = patternIP.matcher(ip);
 		return matcher.matches();
 	}
 }

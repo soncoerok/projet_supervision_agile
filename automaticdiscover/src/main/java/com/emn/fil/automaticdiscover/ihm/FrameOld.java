@@ -25,28 +25,28 @@ public class FrameOld extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	/** An instance of javax.swing.JPanel control. */
-	JPanel jpPrincipal = new JPanel(new BorderLayout());
+	private JPanel jpPrincipal = new JPanel(new BorderLayout());
 
 	/** An instance of javax.swing.JTextArea control. */
-	JTextArea txtConsole = new JTextArea();
+	private JTextArea txtConsole = new JTextArea();
 
 	/** An instance of javax.swing.JTextArea control. */
-	JTextArea txtInput = new JTextArea();
+	private JTextArea txtInput = new JTextArea();
 
 	@Autowired
 	private InputKeyListener inputKeyListener;
 
 	/** The title of the frame. */
 	@Value("${ihm.frame_title}")
-	private String FRAME_TITLE;
+	private String frameTitle;
 
 	/** The width of the frame. */
 	@Value("${ihm.frame_width}")
-	private Integer FRAME_SIZE_WIDTH;
+	private Integer frameSizeWidth;
 
 	/** The height of the frame. */
 	@Value("${ihm.frame_height}")
-	private Integer FRAME_SIZE_HEIGHT;
+	private Integer frameSizeHeight;
 
 	/**
 	 * Creates a new instance of Frame.
@@ -69,8 +69,8 @@ public class FrameOld extends JFrame {
 	 */
 
 	public void createFrame() {
-		this.setTitle(FRAME_TITLE);
-		this.setSize(FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
+		this.setTitle(frameTitle);
+		this.setSize(frameSizeWidth, frameSizeHeight);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -122,28 +122,27 @@ public class FrameOld extends JFrame {
 		this.inputKeyListener = inputKeyListener;
 	}
 
-	public String getFRAME_TITLE() {
-		return FRAME_TITLE;
+	public String getFrameTitle() {
+		return frameTitle;
 	}
 
-	public void setFRAME_TITLE(String fRAME_TITLE) {
-		FRAME_TITLE = fRAME_TITLE;
+	public void setFrameTitle(String title) {
+		frameTitle = title;
 	}
 
-	public int getFRAME_SIZE_WIDTH() {
-		return FRAME_SIZE_WIDTH;
+	public int getFrameSizeWidth() {
+		return frameSizeWidth;
 	}
 
-	public void setFRAME_SIZE_WIDTH(int fRAME_SIZE_WIDTH) {
-		FRAME_SIZE_WIDTH = fRAME_SIZE_WIDTH;
+	public void setFrameSizeWidth(int size) {
+		frameSizeWidth = size;
 	}
 
-	public int getFRAME_SIZE_HEIGHT() {
-		return FRAME_SIZE_HEIGHT;
+	public int getFrameSizeHeight() {
+		return frameSizeHeight;
 	}
 
-	public void setFRAME_SIZE_HEIGHT(int fRAME_SIZE_HEIGHT) {
-		FRAME_SIZE_HEIGHT = fRAME_SIZE_HEIGHT;
+	public void setFrameSizeHeight(int size) {
+		frameSizeHeight = size;
 	}
-
 }

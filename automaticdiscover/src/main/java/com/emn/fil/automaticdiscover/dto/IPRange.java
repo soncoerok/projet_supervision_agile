@@ -81,8 +81,9 @@ public class IPRange implements Iterator<IP> {
 			} else {
 				stopAt = 2;
 			}
-		} else
+		} else {
 			stopAt = 1;
+		}
 
 		Main.log.trace("L'algo s'arrête au niveau " + stopAt);
 		// décrémente de 1 l'adresse d'arrivée pour ne pas boucler é l'infini si
@@ -104,16 +105,18 @@ public class IPRange implements Iterator<IP> {
 				this.ipInTheRange.add(new IP(createIP(currentIp1)));
 				Main.log.trace("Une nouvelle adresse a été rajoutée : "
 						+ this.ipInTheRange.get(i).toString());
-				if (this.ipInTheRange.get(i).equals(this.ip2))
+				if (this.ipInTheRange.get(i).equals(this.ip2)){
 					break;
+				}
 			} else if (currentIp1[2] < 254) {
 				currentIp1[3] = 0;
 				currentIp1[2]++;
 				this.ipInTheRange.add(new IP(createIP(currentIp1)));
 				Main.log.trace("Une nouvelle adresse a été rajoutée : "
 						+ this.ipInTheRange.get(i).toString());
-				if (this.ipInTheRange.get(i).equals(this.ip2))
+				if (this.ipInTheRange.get(i).equals(this.ip2)){
 					break;
+				}
 			} else if (currentIp1[1] < 254) {
 				currentIp1[3] = 0;
 				currentIp1[2] = 0;
@@ -121,8 +124,9 @@ public class IPRange implements Iterator<IP> {
 				ipInTheRange.add(new IP(createIP(currentIp1)));
 				Main.log.trace("Une nouvelle adresse a été rajoutée : "
 						+ this.ipInTheRange.get(i).toString());
-				if (this.ipInTheRange.get(i).equals(this.ip2))
+				if (this.ipInTheRange.get(i).equals(this.ip2)){
 					break;
+				}
 			} else if (currentIp1[0] < 254) {
 				currentIp1[3] = 0;
 				currentIp1[2] = 0;

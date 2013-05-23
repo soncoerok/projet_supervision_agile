@@ -38,8 +38,9 @@ public class Reseau {
 	public List<Machine> getListMachinesOSX() {
 		List<Machine> res = new ArrayList<Machine>();
 		for (Machine m : this.listMachine) {
-			if (m.getOsType() == OsType.OSX)
+			if (m.getOsType() == OsType.OSX){
 				res.add(m);
+			}
 		}
 		return res;
 	}
@@ -47,8 +48,9 @@ public class Reseau {
 	public List<Machine> getListMachinesWINDOWS() {
 		List<Machine> res = new ArrayList<Machine>();
 		for (Machine m : this.listMachine) {
-			if (m.getOsType() == OsType.WINDOWS)
+			if (m.getOsType() == OsType.WINDOWS){
 				res.add(m);
+			}
 		}
 		return res;
 	}
@@ -56,8 +58,9 @@ public class Reseau {
 	public List<Machine> getListMachinesUNIX() {
 		List<Machine> res = new ArrayList<Machine>();
 		for (Machine m : this.listMachine) {
-			if (m.getOsType() == OsType.UNIX)
+			if (m.getOsType() == OsType.UNIX){
 				res.add(m);
+			}
 		}
 		return res;
 	}

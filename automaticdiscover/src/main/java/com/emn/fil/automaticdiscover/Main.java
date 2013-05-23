@@ -18,7 +18,7 @@ public class Main {
 			// Set System L&F
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
-			System.out.println("ERROR : Impossible de modifier le theme");
+			Main.log.trace("ERROR : Impossible de modifier le theme");
 		}
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"applicationContext-base.xml");
