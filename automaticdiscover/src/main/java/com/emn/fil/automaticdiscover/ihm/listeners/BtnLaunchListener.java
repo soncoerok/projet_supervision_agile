@@ -15,8 +15,7 @@ public class BtnLaunchListener implements ActionListener {
 	AnalystThread my_analyst;
 	
 	public void actionPerformed(ActionEvent arg0) {
-		my_analyst.start();
-
+		new Thread(my_analyst).start();
 	}
 
 }

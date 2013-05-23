@@ -1,7 +1,6 @@
 package com.emn.fil.automaticdiscover.ihm.threads;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.emn.fil.automaticdiscover.business.Connection;
@@ -13,7 +12,7 @@ import com.emn.fil.automaticdiscover.dto.enums.OsType;
 import com.emn.fil.automaticdiscover.ihm.Frame;
 
 @Component
-public class AnalystThread extends Thread{
+public class AnalystThread implements Runnable{
 
 	@Autowired
 	Frame my_frame;
@@ -66,8 +65,8 @@ public class AnalystThread extends Thread{
 				my_frame.btn_Launch.setEnabled(true);
 				my_frame.lbl_percent.setText("0%");
 				my_frame.progressBar.setValue(0);
-			}
-			else{
+				
+			} else{
 				my_frame.ta_console.append("ERREUR : IPs INCORRECTES\r\n");
 				my_frame.ta_console.append(my_frame.txtbox_from.getText()+"\r\n");
 				my_frame.ta_console.append(my_frame.txtbox_to.getText()+"\r\n");
