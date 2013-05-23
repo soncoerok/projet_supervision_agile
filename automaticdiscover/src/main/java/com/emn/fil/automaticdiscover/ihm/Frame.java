@@ -39,26 +39,26 @@ public class Frame extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel lbl_title = new JLabel("Automatic Discover via IPs/Ports");
+	private JLabel lblTitle = new JLabel("Automatic Discover via IPs/Ports");
 
-	private JSeparator separator_up = new JSeparator();
-	private JSeparator separator_middle = new JSeparator();
+	private JSeparator separatorUp = new JSeparator();
+	private JSeparator separatorMiddle = new JSeparator();
 
 	//Partie config
 	private JLabel lblConfigureRangeTo = new JLabel("Configure range to analyze :");
-	private JLabel lbl_from = new JLabel("From :");
-	private JLabel lbl_to = new JLabel("To:");
-	JButton btnAdvanced = new JButton("Advanced ...");
+	private JLabel lblFrom = new JLabel("From :");
+	private JLabel lblTo = new JLabel("To:");
+	private JButton btnAdvanced = new JButton("Advanced ...");
 
 	//Partie console
 	private JLabel lblConsole = new JLabel("Console :");
-	public JTextArea ta_console = new JTextArea();
-	public JButton btn_Launch = new JButton("Launch");
-	private JButton btn_Quit = new JButton("Quit");
-	public JProgressBar progressBar = new JProgressBar();
-	public JLabel lbl_percent = new JLabel("0%");
-	public JTextField txtbox_from;
-	public JTextField txtbox_to;
+	private JTextArea taConsole = new JTextArea();
+	private JButton btnLaunch = new JButton("Launch");
+	private JButton btnQuit = new JButton("Quit");
+	private JProgressBar progressBar = new JProgressBar();
+	private JLabel lblPercent = new JLabel("0%");
+	private JTextField txtboxFrom;
+	private JTextField txtboxTo;
 
 	//Partie Menu
 	private JMenuBar menuBar = new JMenuBar();
@@ -77,7 +77,7 @@ public class Frame extends JFrame{
 	private BtnAdvancedListener btnAdvancedListener;
 	
 	//Dialogs
-	AdvancedCFGDialog dial_advanced_config;
+	AdvancedCFGDialog dialAdvancedConfig;
 	
 	//Connection
 	@Autowired
@@ -88,8 +88,8 @@ public class Frame extends JFrame{
 	}
 
 	private void addActions() {
-		this.btn_Quit.addActionListener(btnQuitListener);
-		this.btn_Launch.addActionListener(btnLaunchListener);
+		this.btnQuit.addActionListener(btnQuitListener);
+		this.getBtnLaunch().addActionListener(btnLaunchListener);
 		this.btnAdvanced.addActionListener(btnAdvancedListener);
 
 	}
@@ -116,25 +116,25 @@ public class Frame extends JFrame{
 
 	private void buildConfiguration(){
 
-		lbl_from.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbl_from.setForeground(SystemColor.textInactiveText);
-		lbl_from.setBounds(20, 105, 46, 14);
-		contentPane.add(lbl_from);
+		lblFrom.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblFrom.setForeground(SystemColor.textInactiveText);
+		lblFrom.setBounds(20, 105, 46, 14);
+		contentPane.add(lblFrom);
 
-		lbl_to.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbl_to.setForeground(SystemColor.textInactiveText);
-		lbl_to.setBounds(20, 130, 46, 14);
-		contentPane.add(lbl_to);
+		lblTo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTo.setForeground(SystemColor.textInactiveText);
+		lblTo.setBounds(20, 130, 46, 14);
+		contentPane.add(lblTo);
 
-		txtbox_from = new JTextField();
-		txtbox_from.setBounds(68, 103, 170, 20);
-		contentPane.add(txtbox_from);
-		txtbox_from.setColumns(10);
+		setTxtboxFrom(new JTextField());
+		getTxtboxFrom().setBounds(68, 103, 170, 20);
+		contentPane.add(getTxtboxFrom());
+		getTxtboxFrom().setColumns(10);
 
-		txtbox_to = new JTextField();
-		txtbox_to.setBounds(68, 127, 170, 20);
-		contentPane.add(txtbox_to);
-		txtbox_to.setColumns(10);
+		setTxtboxTo(new JTextField());
+		getTxtboxTo().setBounds(68, 127, 170, 20);
+		contentPane.add(getTxtboxTo());
+		getTxtboxTo().setColumns(10);
 
 		lblConfigureRangeTo.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblConfigureRangeTo.setForeground(SystemColor.inactiveCaptionText);
@@ -149,8 +149,8 @@ public class Frame extends JFrame{
 
 	private void buildPanelConsole(){
 
-		ta_console.setBounds(10, 183, 654, 264);
-		JScrollPane ta_jbar = new JScrollPane(ta_console);
+		getTaConsole().setBounds(10, 183, 654, 264);
+		JScrollPane ta_jbar = new JScrollPane(getTaConsole());
 		ta_jbar.setBounds(10, 183, 654, 264);
 		//
 		ta_jbar.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
@@ -160,17 +160,17 @@ public class Frame extends JFrame{
 		//
 		contentPane.add(ta_jbar);
 
-		btn_Quit.setBounds(575, 458, 89, 23);
-		contentPane.add(btn_Quit);
+		btnQuit.setBounds(575, 458, 89, 23);
+		contentPane.add(btnQuit);
 
-		btn_Launch.setBounds(476, 458, 89, 23);
-		contentPane.add(btn_Launch);
+		getBtnLaunch().setBounds(476, 458, 89, 23);
+		contentPane.add(getBtnLaunch());
 
-		progressBar.setBounds(10, 458, 411, 23);
-		contentPane.add(progressBar);
+		getProgressBar().setBounds(10, 458, 411, 23);
+		contentPane.add(getProgressBar());
 
-		lbl_percent.setBounds(431, 462, 35, 14);
-		contentPane.add(lbl_percent);
+		getLblPercent().setBounds(431, 462, 35, 14);
+		contentPane.add(getLblPercent());
 
 		lblConsole.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblConsole.setForeground(SystemColor.inactiveCaptionText);
@@ -195,16 +195,16 @@ public class Frame extends JFrame{
 		                              middle.y - (this.getHeight() / 2));
 		
 		setLocation(newLocation);
-		lbl_title.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbl_title.setForeground(SystemColor.windowText);
-		lbl_title.setBounds(243, 41, 188, 14);
-		contentPane.add(lbl_title);
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTitle.setForeground(SystemColor.windowText);
+		lblTitle.setBounds(243, 41, 188, 14);
+		contentPane.add(lblTitle);
 
-		separator_up.setBounds(10, 66, 654, 2);
-		contentPane.add(separator_up);
+		separatorUp.setBounds(10, 66, 654, 2);
+		contentPane.add(separatorUp);
 
-		separator_middle.setBounds(10, 156, 654, 2);
-		contentPane.add(separator_middle);
+		separatorMiddle.setBounds(10, 156, 654, 2);
+		contentPane.add(separatorMiddle);
 
 		
 		this.buildMenu();
@@ -212,12 +212,63 @@ public class Frame extends JFrame{
 		this.buildPanelConsole();
 		this.configureComponent();
 		this.addActions();
-		this.dial_advanced_config = new AdvancedCFGDialog(this, "Advanced Configuration", true);
+		this.dialAdvancedConfig = new AdvancedCFGDialog(this, "Advanced Configuration", true);
 		this.setVisible(true);
 	}
 	
 	public void showDialAdvCFG(){
-		this.dial_advanced_config.setVisible(true);
+		this.dialAdvancedConfig.setVisible(true);
+	}
+
+	/*
+	 * GETTER AND SETTER
+	 */
+	public JButton getBtnLaunch() {
+		return btnLaunch;
+	}
+
+	public void setBtnLaunch(JButton btnLaunch) {
+		this.btnLaunch = btnLaunch;
+	}
+
+	public JTextArea getTaConsole() {
+		return taConsole;
+	}
+
+	public void setTaConsole(JTextArea taConsole) {
+		this.taConsole = taConsole;
+	}
+
+	public JTextField getTxtboxFrom() {
+		return txtboxFrom;
+	}
+
+	public void setTxtboxFrom(JTextField txtboxFrom) {
+		this.txtboxFrom = txtboxFrom;
+	}
+
+	public JTextField getTxtboxTo() {
+		return txtboxTo;
+	}
+
+	public void setTxtboxTo(JTextField txtboxTo) {
+		this.txtboxTo = txtboxTo;
+	}
+
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	public void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
+	}
+
+	public JLabel getLblPercent() {
+		return lblPercent;
+	}
+
+	public void setLblPercent(JLabel lblPercent) {
+		this.lblPercent = lblPercent;
 	}
 
 

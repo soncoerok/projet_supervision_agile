@@ -3,9 +3,6 @@ package com.emn.fil.automaticdiscover.ihm.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-import com.emn.fil.automaticdiscover.ihm.Frame;
-
 public class BtnAddsDialAdvCfg implements ActionListener {
 
 	

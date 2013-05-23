@@ -29,8 +29,8 @@ public class IPRange implements Iterator<IP> {
 		this.ip1Int = splitIPInFour(ip1.getIp());
 		this.ip2Int = splitIPInFour(ip2.getIp());
 
-		System.out.println("IP de départ : " + ip1.toString());
-		System.out.println("IP d'arrivée : " + ip2.toString());
+		System.out.println("IP de dï¿½part : " + ip1.toString());
+		System.out.println("IP d'arrivï¿½e : " + ip2.toString());
 
 		this.calculateIPInRange();
 
@@ -68,7 +68,6 @@ public class IPRange implements Iterator<IP> {
 		currentIp1 = this.ip1Int;
 		// tells the algo when to stop calculating
 		int stopAt;
-		boolean stopped = false;
 		if (this.ip2Int[0] - this.ip1Int[0] == 0) {
 			if (this.ip2Int[1] - this.ip1Int[1] == 0) {
 				if (this.ip2Int[2] - this.ip1Int[2] == 0) {
@@ -82,23 +81,23 @@ public class IPRange implements Iterator<IP> {
 		} else
 			stopAt = 1;
 
-		System.out.println("L'algo s'arrête au niveau " + stopAt);
-		// décrémente de 1 l'adresse d'arrivée pour ne pas boucler à l'infini si =255
+		System.out.println("L'algo s'arrï¿½te au niveau " + stopAt);
+		// dï¿½crï¿½mente de 1 l'adresse d'arrivï¿½e pour ne pas boucler ï¿½ l'infini si =255
 		boolean is255=false;
 		if(this.ip2Int[stopAt-1]==255) {
 			this.ip2Int[stopAt-1]=this.ip2Int[stopAt-1]-1;
 			this.ip2=new IP(this.createIP(this.ip2Int));
-			System.out.println("L'adresse s'arrêtant à 255, on la décrémente. ip d'arrivée = " + this.ip2.toString());
+			System.out.println("L'adresse s'arrï¿½tant ï¿½ 255, on la dï¿½crï¿½mente. ip d'arrivï¿½e = " + this.ip2.toString());
 			is255=true;
 		}
 		int i = 1;
-		System.out.println("Une nouvelle adresse a été rajoutée : " + this.ip1);
+		System.out.println("Une nouvelle adresse a ï¿½tï¿½ rajoutï¿½e : " + this.ip1);
 		this.ipInTheRange.add(this.ip1);
 		while (true) {
 			if (currentIp1[3] < 254) {
 				currentIp1[3]++;
 				this.ipInTheRange.add(new IP(createIP(currentIp1)));
-				System.out.println("Une nouvelle adresse a été rajoutée : "
+				System.out.println("Une nouvelle adresse a ï¿½tï¿½ rajoutï¿½e : "
 						+ this.ipInTheRange.get(i).toString());
 				if (this.ipInTheRange.get(i).equals(this.ip2))
 					break;
@@ -106,7 +105,7 @@ public class IPRange implements Iterator<IP> {
 				currentIp1[3] = 0;
 				currentIp1[2]++;
 				this.ipInTheRange.add(new IP(createIP(currentIp1)));
-				System.out.println("Une nouvelle adresse a été rajoutée : "
+				System.out.println("Une nouvelle adresse a ï¿½tï¿½ rajoutï¿½e : "
 						+ this.ipInTheRange.get(i).toString());
 				if (this.ipInTheRange.get(i).equals(this.ip2))
 					break;
@@ -115,7 +114,7 @@ public class IPRange implements Iterator<IP> {
 				currentIp1[2] = 0;
 				currentIp1[1]++;
 				ipInTheRange.add(new IP(createIP(currentIp1)));
-				System.out.println("Une nouvelle adresse a été rajoutée : "
+				System.out.println("Une nouvelle adresse a ï¿½tï¿½ rajoutï¿½e : "
 						+ this.ipInTheRange.get(i).toString());
 				if (this.ipInTheRange.get(i).equals(this.ip2))
 					break;
@@ -125,7 +124,7 @@ public class IPRange implements Iterator<IP> {
 				currentIp1[1] = 0;
 				currentIp1[0]++;
 				this.ipInTheRange.add(new IP(createIP(currentIp1)));
-				System.out.println("Une nouvelle adresse a été rajoutée : "
+				System.out.println("Une nouvelle adresse a ï¿½tï¿½ rajoutï¿½e : "
 						+ this.ipInTheRange.get(i).toString());
 				if (this.ipInTheRange.get(i).equals(this.ip2))
 					break;
@@ -136,9 +135,9 @@ public class IPRange implements Iterator<IP> {
 		if(is255) {
 			this.ip2Int[stopAt-1]=this.ip2Int[stopAt-1]+1;
 			this.ip2=new IP(this.createIP(this.ip2Int));
-			System.out.println("L'adresse ayant été décrémentée on la réencrémente = " + this.ip2.toString());
+			System.out.println("L'adresse ayant ï¿½tï¿½ dï¿½crï¿½mentï¿½e on la rï¿½encrï¿½mente = " + this.ip2.toString());
 		}
-		System.out.println("l'adresse de fin a été atteinte");
+		System.out.println("l'adresse de fin a ï¿½tï¿½ atteinte");
 		this.numbOfIp=this.ipInTheRange.size();
 		System.out.println("Il y a " + this.numbOfIp + " ip dans la plage");
 	}
@@ -155,7 +154,7 @@ public class IPRange implements Iterator<IP> {
 	public static void main(String[] args) {
 		IP ip1 = new IP("192.168.0.250");
 		IP ip2 = new IP("192.168.0.255");
-		IPRange ipRange = new IPRange(ip1, ip2);
+		new IPRange(ip1, ip2);
 	}
 
 	/*

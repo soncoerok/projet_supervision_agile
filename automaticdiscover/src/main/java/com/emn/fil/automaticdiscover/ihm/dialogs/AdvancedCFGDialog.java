@@ -27,15 +27,15 @@ public class AdvancedCFGDialog extends JDialog{
 	
 	//Dialog
 	private JLabel lblAdvancedConfiguration = new JLabel("Advanced Configuration :");
-	private JSeparator separator_up = new JSeparator();
-	private JSeparator separator_middle = new JSeparator();
-	private JSeparator separator_down = new JSeparator();
+	private JSeparator separatorUp = new JSeparator();
+	private JSeparator separatorMiddle = new JSeparator();
+	private JSeparator separatorDown = new JSeparator();
 	private JButton btnCancel = new JButton("Cancel");
 	private JButton btnOk = new JButton("OK");
 	
 	//Partie configuration timeout
 	private JLabel lblSetTimeout = new JLabel("Set Time-Out (ms) :");
-	private JTextField txtbox_timeout;
+	private JTextField txtboxTimeout;
 	
 	//Partie Configuration ports
 	private JLabel lblConfigurePorts = new JLabel("Configure ports :");
@@ -43,14 +43,14 @@ public class AdvancedCFGDialog extends JDialog{
 	private JLabel lblMacOsx = new JLabel("Mac OSX :");
 	private JLabel lblOtherunix = new JLabel("Other (Unix ...)");
 	
-	private DefaultListModel dlm_ports_win = new DefaultListModel();
-	private JList list_ports_win = new JList(dlm_ports_win);
+	private DefaultListModel<Integer> dlmPortsWin = new DefaultListModel<Integer>();
+	private JList<Integer> listPortsWin = new JList<Integer>(dlmPortsWin);
 	
-	private DefaultListModel dlm_ports_mac = new DefaultListModel();
-	private JList list_ports_mac = new JList(dlm_ports_mac);
+	private DefaultListModel<Integer> dlmPortsMac = new DefaultListModel<Integer>();
+	private JList<Integer> listPortsMac = new JList<Integer>(dlmPortsMac);
 	
-	private DefaultListModel dlm_ports_unix = new DefaultListModel();
-	private JList list_ports_unix = new JList(dlm_ports_unix);
+	private DefaultListModel<Integer> dlmPortsUnix = new DefaultListModel<Integer>();
+	private JList<Integer> listPortsUnix = new JList<Integer>(dlmPortsUnix);
 	
 	private JButton btnAddWin = new JButton("add");
 	private JButton btnAddOSX = new JButton("add");
@@ -86,18 +86,18 @@ public class AdvancedCFGDialog extends JDialog{
 
 	private void getInfos(Frame parent) {
 		//TIMEOUT
-		this.txtbox_timeout.setText(""+parent.connection.getTimeout());
+		this.txtboxTimeout.setText(""+parent.connection.getTimeout());
 		//PORTS
 		for(int port:parent.connection.getPorts_windows()){
-			this.dlm_ports_win.addElement(port);
+			this.dlmPortsWin.addElement(port);
 		}
 		
 		for(int port:parent.connection.getPorts_mac()){
-			this.dlm_ports_mac.addElement(port);
+			this.dlmPortsMac.addElement(port);
 		}
 		
 		for(int port:parent.connection.getPorts_unix()){
-			this.dlm_ports_unix.addElement(port);
+			this.dlmPortsUnix.addElement(port);
 		}
 		
 		
@@ -109,14 +109,14 @@ public class AdvancedCFGDialog extends JDialog{
 		lblAdvancedConfiguration.setBounds(247, 11, 147, 14);
 		getContentPane().add(lblAdvancedConfiguration);
 		
-		separator_up.setBounds(10, 36, 621, 2);
-		getContentPane().add(separator_up);
+		separatorUp.setBounds(10, 36, 621, 2);
+		getContentPane().add(separatorUp);
 		
-		separator_middle.setBounds(10, 74, 621, 2);
-		getContentPane().add(separator_middle);
+		separatorMiddle.setBounds(10, 74, 621, 2);
+		getContentPane().add(separatorMiddle);
 		
-		separator_down.setBounds(10, 296, 621, 2);
-		getContentPane().add(separator_down);
+		separatorDown.setBounds(10, 296, 621, 2);
+		getContentPane().add(separatorDown);
 		
 		btnCancel.setBounds(542, 309, 89, 23);
 		getContentPane().add(btnCancel);
@@ -144,18 +144,18 @@ public class AdvancedCFGDialog extends JDialog{
 		lblOtherunix.setBounds(490, 112, 75, 14);
 		getContentPane().add(lblOtherunix);
 		
-		list_ports_win.setBounds(52, 137, 123, 108);
-		JScrollPane listwin_jbar = new JScrollPane(list_ports_win);
+		listPortsWin.setBounds(52, 137, 123, 108);
+		JScrollPane listwin_jbar = new JScrollPane(listPortsWin);
 		listwin_jbar.setBounds(52, 137, 123, 108);
 		getContentPane().add(listwin_jbar);
 		
-		list_ports_mac.setBounds(259, 139, 123, 108);
-		JScrollPane listmac_jbar = new JScrollPane(list_ports_mac);
+		listPortsMac.setBounds(259, 139, 123, 108);
+		JScrollPane listmac_jbar = new JScrollPane(listPortsMac);
 		listmac_jbar.setBounds(259, 139, 123, 108);
 		getContentPane().add(listmac_jbar);
 		
-		list_ports_unix.setBounds(465, 139, 123, 108);
-		JScrollPane listunix_jbar = new JScrollPane(list_ports_unix);
+		listPortsUnix.setBounds(465, 139, 123, 108);
+		JScrollPane listunix_jbar = new JScrollPane(listPortsUnix);
 		listunix_jbar.setBounds(465, 139, 123, 108);
 		getContentPane().add(listunix_jbar);
 		
@@ -191,10 +191,10 @@ public class AdvancedCFGDialog extends JDialog{
 		lblSetTimeout.setBounds(20, 49, 123, 14);
 		getContentPane().add(lblSetTimeout);
 		
-		txtbox_timeout = new JTextField();
-		txtbox_timeout.setBounds(143, 46, 86, 20);
-		getContentPane().add(txtbox_timeout);
-		txtbox_timeout.setColumns(10);
+		txtboxTimeout = new JTextField();
+		txtboxTimeout.setBounds(143, 46, 86, 20);
+		getContentPane().add(txtboxTimeout);
+		txtboxTimeout.setColumns(10);
 		
 	}
 

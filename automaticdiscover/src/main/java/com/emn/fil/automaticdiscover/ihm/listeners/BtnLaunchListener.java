@@ -12,10 +12,10 @@ import com.emn.fil.automaticdiscover.ihm.threads.AnalystThread;
 public class BtnLaunchListener implements ActionListener {
 
 	@Autowired
-	AnalystThread my_analyst;
+	private AnalystThread myAnalyst;
 	
 	public void actionPerformed(ActionEvent arg0) {
-		new Thread(my_analyst).start();
+		new Thread(myAnalyst).start();
 	}
 
 }

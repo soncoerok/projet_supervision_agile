@@ -7,12 +7,18 @@ import com.emn.fil.automaticdiscover.ihm.Frame;
 
 public class BtnOkDialAdvCfg implements ActionListener{
 
-	private Frame my_frame;
+	private Frame myFrame;
 	public BtnOkDialAdvCfg(Frame fr) {
-		this.my_frame = fr;
+		this.setMyFrame(fr);
 	}
 	public void actionPerformed(ActionEvent arg0) {
 		
+	}
+	public Frame getMyFrame() {
+		return myFrame;
+	}
+	public void setMyFrame(Frame myFrame) {
+		this.myFrame = myFrame;
 	}
 
 }

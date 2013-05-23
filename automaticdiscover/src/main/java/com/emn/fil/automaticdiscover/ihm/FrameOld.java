@@ -11,7 +11,6 @@ import javax.swing.JTextArea;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 /**
  * A JFrame that contains a JtextArea in which the output stream writes its output.
@@ -94,6 +93,7 @@ public class FrameOld extends JFrame {
 	/**
 	 * Builds the main panel containing the JTextArea.
 	 */
+	@SuppressWarnings("deprecation")
 	public void buildPanelPrincipal() {
 
 		

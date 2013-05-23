@@ -21,6 +21,7 @@ public class IP implements Comparable<IP> {
 	 *            The new IP to create.
 	 * @throws IPFormatException 
 	 */
+	@SuppressWarnings("static-access")
 	public IP(String ip) {
 		if(this.isValidIP(ip))
 			this.ip = ip;

@@ -1,3 +1,4 @@
+package com.emn.fil.automaticdiscover;
 import java.util.List;
 
 import org.junit.Assert;
@@ -30,15 +31,15 @@ public class IPRangeTest {
 		Assert.assertEquals(listIp.size(), 257);
 	}
 	
+	/*
 	@Test
 	public void rangeKoTestSimpleInverse() {
 		IP ip1 = new IP("192.168.2.1");
 		IP ip2 = new IP("192.168.1.1");
-		//IPRange ipRange = new IPRange(ip1, ip2);
-		//List<IP> listIp = ipRange.getTheIPRange();
 		
 		//Assert.assertEquals(listIp.size(), 257);
 	}
+	*/
 	
 /*	@Test(expected=com.emn.fil.automaticdiscover.exception.IPFormatException.class)
 	public void rangeKoTestIpError() {

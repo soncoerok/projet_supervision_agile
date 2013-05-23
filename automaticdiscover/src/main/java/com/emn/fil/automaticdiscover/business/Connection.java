@@ -99,6 +99,7 @@ public class Connection {
 	 * @param ports
 	 * @return boolean state
 	 */
+	@SuppressWarnings("null")
 	private boolean testConnectionsOnPorts(IP ip,int[] ports) {
 		InputStream input   = null;
 		int port;
