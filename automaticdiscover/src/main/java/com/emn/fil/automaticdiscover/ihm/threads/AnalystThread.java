@@ -3,6 +3,7 @@ package com.emn.fil.automaticdiscover.ihm.threads;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.emn.fil.automaticdiscover.Main;
 import com.emn.fil.automaticdiscover.business.Connection;
 import com.emn.fil.automaticdiscover.business.Reseau;
 import com.emn.fil.automaticdiscover.dto.IP;
@@ -43,8 +44,8 @@ public class AnalystThread implements Runnable {
 			IPRange range = new IPRange(range1, range2);
 			OsType os_current = OsType.UNKNOWN;
 			int nb_ips = range.getTheIPRange().size();
-			System.out.println("NB IPS " + nb_ips);
-			System.out.println(range.getTheIPRange());
+			Main.log.trace("NB IPS " + nb_ips);
+			Main.log.trace(range.getTheIPRange());
 			myFrame.getProgressBar().setMaximum(nb_ips);
 			int nb_current = 1;
 			while (range.hasNext()) {
@@ -79,6 +80,5 @@ public class AnalystThread implements Runnable {
 			myFrame.getTaConsole().append(
 					myFrame.getTxtboxTo().getText() + "\r\n");
 		}
-
 	}
 }

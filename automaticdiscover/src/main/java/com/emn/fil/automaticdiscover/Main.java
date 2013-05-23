@@ -3,12 +3,17 @@ package com.emn.fil.automaticdiscover;
 import javax.swing.UIManager;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.apache.log4j.Logger;
 
 import com.emn.fil.automaticdiscover.ihm.Frame;
 
 public class Main {
+	
+	public static Logger log = Logger.getLogger(Main.class);
+	
 	// Test
 	public static void main(String[] args) {
+		
 		try {
 			// Set System L&F
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -25,6 +30,5 @@ public class Main {
 		frame.initFrame();
 
 		// connection.testConnection(plage1,plage2);
-
 	}
 }

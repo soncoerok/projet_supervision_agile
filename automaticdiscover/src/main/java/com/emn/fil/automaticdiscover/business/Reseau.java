@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.emn.fil.automaticdiscover.Main;
 import com.emn.fil.automaticdiscover.dto.Machine;
 import com.emn.fil.automaticdiscover.dto.enums.OsType;
 
@@ -18,7 +19,7 @@ public class Reseau {
 	}
 
 	public void ajoutMachine(Machine machine) {
-		System.out.println("Ajout de la machine : " + machine.getIp() + " ("
+		Main.log.trace("Ajout de la machine : " + machine.getIp() + " ("
 				+ machine.getOsType());
 		listMachine.add(machine);
 	}
@@ -59,7 +60,5 @@ public class Reseau {
 				res.add(m);
 		}
 		return res;
-
 	}
-
 }

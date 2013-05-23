@@ -14,7 +14,6 @@ public class BtnOkDialAdvCfg implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-
 	}
 
 	public Frame getMyFrame() {
@@ -24,5 +23,4 @@ public class BtnOkDialAdvCfg implements ActionListener {
 	public void setMyFrame(Frame myFrame) {
 		this.myFrame = myFrame;
 	}
-
 }

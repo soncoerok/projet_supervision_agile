@@ -11,5 +11,4 @@ public class BtnQuitListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		System.exit(0);
 	}
-
 }

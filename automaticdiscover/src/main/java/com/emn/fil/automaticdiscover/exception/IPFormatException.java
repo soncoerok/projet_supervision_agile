@@ -7,7 +7,5 @@ public class IPFormatException extends Exception {
 	public IPFormatException(String message) {
 
 		super("IPFormatException : " + message);
-
 	}
-
 }

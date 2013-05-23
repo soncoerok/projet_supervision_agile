@@ -2,6 +2,9 @@ package com.emn.fil.automaticdiscover.dto;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
+import com.emn.fil.automaticdiscover.Main;
 
 public class IPRange implements Iterator<IP> {
 
@@ -11,7 +14,7 @@ public class IPRange implements Iterator<IP> {
 	private int[] ip1Int = new int[4], ip2Int = new int[4];
 	// number if ip adresses in the range
 	private int numbOfIp;
-	private ArrayList<IP> ipInTheRange = new ArrayList<IP>();
+	private List<IP> ipInTheRange = new ArrayList<IP>();
 
 	private int indexCurrentIP;
 
@@ -29,8 +32,8 @@ public class IPRange implements Iterator<IP> {
 		this.ip1Int = splitIPInFour(ip1.getIp());
 		this.ip2Int = splitIPInFour(ip2.getIp());
 
-		System.out.println("IP de d&eacute;part : " + ip1.toString());
-		System.out.println("IP d'arriv&eacute;e : " + ip2.toString());
+		Main.log.trace("IP de d&eacute;part : " + ip1.toString());
+		Main.log.trace("IP d'arriv&eacute;e : " + ip2.toString());
 
 		this.calculateIPInRange();
 
@@ -56,7 +59,7 @@ public class IPRange implements Iterator<IP> {
 	/**
 	 * Returns an array with the ips in the range.
 	 */
-	public ArrayList<IP> getTheIPRange() {
+	public List<IP> getTheIPRange() {
 		return ipInTheRange;
 	}
 
@@ -81,26 +84,25 @@ public class IPRange implements Iterator<IP> {
 		} else
 			stopAt = 1;
 
-		System.out.println("L'algo s'arrête au niveau " + stopAt);
+		Main.log.trace("L'algo s'arrête au niveau " + stopAt);
 		// décrémente de 1 l'adresse d'arrivée pour ne pas boucler é l'infini si
 		// =255
 		boolean is255 = false;
 		if (this.ip2Int[stopAt - 1] == 255) {
 			this.ip2Int[stopAt - 1] = this.ip2Int[stopAt - 1] - 1;
 			this.ip2 = new IP(this.createIP(this.ip2Int));
-			System.out
-					.println("L'adresse s'arrêtant à 255, on la décrémente. ip d'arrivée = "
-							+ this.ip2.toString());
+			Main.log.trace("L'adresse s'arrêtant à 255, on la décrémente. ip d'arrivée = "
+					+ this.ip2.toString());
 			is255 = true;
 		}
 		int i = 1;
-		System.out.println("Une nouvelle adresse a été rajoutée : " + this.ip1);
+		Main.log.trace("Une nouvelle adresse a été rajoutée : " + this.ip1);
 		this.ipInTheRange.add(this.ip1);
 		while (true) {
 			if (currentIp1[3] < 254) {
 				currentIp1[3]++;
 				this.ipInTheRange.add(new IP(createIP(currentIp1)));
-				System.out.println("Une nouvelle adresse a été rajoutée : "
+				Main.log.trace("Une nouvelle adresse a été rajoutée : "
 						+ this.ipInTheRange.get(i).toString());
 				if (this.ipInTheRange.get(i).equals(this.ip2))
 					break;
@@ -108,7 +110,7 @@ public class IPRange implements Iterator<IP> {
 				currentIp1[3] = 0;
 				currentIp1[2]++;
 				this.ipInTheRange.add(new IP(createIP(currentIp1)));
-				System.out.println("Une nouvelle adresse a été rajoutée : "
+				Main.log.trace("Une nouvelle adresse a été rajoutée : "
 						+ this.ipInTheRange.get(i).toString());
 				if (this.ipInTheRange.get(i).equals(this.ip2))
 					break;
@@ -117,7 +119,7 @@ public class IPRange implements Iterator<IP> {
 				currentIp1[2] = 0;
 				currentIp1[1]++;
 				ipInTheRange.add(new IP(createIP(currentIp1)));
-				System.out.println("Une nouvelle adresse a été rajoutée : "
+				Main.log.trace("Une nouvelle adresse a été rajoutée : "
 						+ this.ipInTheRange.get(i).toString());
 				if (this.ipInTheRange.get(i).equals(this.ip2))
 					break;
@@ -127,7 +129,7 @@ public class IPRange implements Iterator<IP> {
 				currentIp1[1] = 0;
 				currentIp1[0]++;
 				this.ipInTheRange.add(new IP(createIP(currentIp1)));
-				System.out.println("Une nouvelle adresse a été rajoutée : "
+				Main.log.trace("Une nouvelle adresse a été rajoutée : "
 						+ this.ipInTheRange.get(i).toString());
 				if (this.ipInTheRange.get(i).equals(this.ip2))
 					break;
@@ -138,13 +140,12 @@ public class IPRange implements Iterator<IP> {
 		if (is255) {
 			this.ip2Int[stopAt - 1] = this.ip2Int[stopAt - 1] + 1;
 			this.ip2 = new IP(this.createIP(this.ip2Int));
-			System.out
-					.println("L'adresse ayant été décrémentée on la réincrémente = "
-							+ this.ip2.toString());
+			Main.log.trace("L'adresse ayant été décrémentée on la réincrémente = "
+					+ this.ip2.toString());				
 		}
-		System.out.println("l'adresse de fin a été atteinte");
+		Main.log.trace("l'adresse de fin a été atteinte");
 		this.numbOfIp = this.ipInTheRange.size();
-		System.out.println("Il y a " + this.numbOfIp + " ip dans la plage");
+		Main.log.trace("Il y a " + this.numbOfIp + " ip dans la plage");
 	}
 
 	/**
@@ -204,5 +205,4 @@ public class IPRange implements Iterator<IP> {
 	public IP getCurrent() {
 		return this.ipInTheRange.get(indexCurrentIP);
 	}
-
 }

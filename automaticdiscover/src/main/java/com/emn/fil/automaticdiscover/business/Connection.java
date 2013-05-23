@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.emn.fil.automaticdiscover.Main;
 import com.emn.fil.automaticdiscover.dto.IP;
 import com.emn.fil.automaticdiscover.dto.IPRange;
 import com.emn.fil.automaticdiscover.dto.Machine;
@@ -43,7 +44,7 @@ public class Connection {
 	 * @param range2
 	 */
 	public void testConnection(IP range1, IP range2) {
-		System.out.println("Test");
+		Main.log.trace("Test");
 		IPRange range = new IPRange(range1, range2);
 		OsType os_current = OsType.UNKNOWN;
 		while (range.hasNext()) {
@@ -53,8 +54,7 @@ public class Connection {
 			}
 			range.next();
 		}
-
-		System.out.println(reseau.getResume());
+		Main.log.trace(reseau.getResume());
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class Connection {
 	 */
 	public OsType getOSType(IP ip) {
 		OsType type = OsType.UNKNOWN;
-		System.out.println("Test ip : " + ip.toString());
+		Main.log.trace("Test ip : " + ip.toString());
 		// ///////////////BEGIN TESTS/////////////////
 
 		// Test windows ports
@@ -115,7 +115,7 @@ public class Connection {
 
 				// Open stream
 				input = socket.getInputStream();
-				System.out.println("Connection ok ! : " + ports[i]);
+				Main.log.trace("Connection ok ! : " + ports[i]);
 
 				// Show the server response
 				// String response = new BufferedReader(new
@@ -172,5 +172,4 @@ public class Connection {
 	public Reseau getReseau() {
 		return reseau;
 	}
-
 }

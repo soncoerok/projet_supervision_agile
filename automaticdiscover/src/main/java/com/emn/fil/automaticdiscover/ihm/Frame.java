@@ -268,5 +268,4 @@ public class Frame extends JFrame {
 	public void setLblPercent(JLabel lblPercent) {
 		this.lblPercent = lblPercent;
 	}
-
 }
