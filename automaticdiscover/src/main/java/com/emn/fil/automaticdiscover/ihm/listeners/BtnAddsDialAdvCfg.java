@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 public class BtnAddsDialAdvCfg implements ActionListener {
 
-	
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println("OK");
 	}

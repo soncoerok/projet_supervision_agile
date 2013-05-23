@@ -12,9 +12,10 @@ import com.emn.fil.automaticdiscover.ihm.Frame;
 public class BtnAdvancedListener implements ActionListener {
 
 	@Autowired
-	Frame my_frame;
+	Frame myFrame;
+
 	public void actionPerformed(ActionEvent arg0) {
-		my_frame.showDialAdvCFG();
+		myFrame.showDialAdvCFG();
 	}
 
 }

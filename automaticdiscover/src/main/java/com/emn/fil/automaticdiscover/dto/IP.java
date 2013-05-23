@@ -7,33 +7,32 @@ import com.emn.fil.automaticdiscover.exception.IPFormatException;
 
 public class IP implements Comparable<IP> {
 
-
 	private String ip;
-	private static Pattern pattern_IP =  Pattern.compile("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-			"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-			"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-			"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+	private static Pattern pattern_IP = Pattern
+			.compile("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+					+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+					+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+					+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
 	/**
 	 * Creates a new instance of IP.
 	 * 
 	 * @param ip
 	 *            The new IP to create.
-	 * @throws IPFormatException 
+	 * @throws IPFormatException
 	 */
 	@SuppressWarnings("static-access")
 	public IP(String ip) {
-		if(this.isValidIP(ip))
+		if (this.isValidIP(ip))
 			this.ip = ip;
 		else
 			try {
-				throw new IPFormatException("BAD IP : "+ip);
+				throw new IPFormatException("BAD IP : " + ip);
 			} catch (IPFormatException e) {
 				e.printStackTrace();
 				System.exit(-1);
 			}
 	}
-
 
 	public String getIp() {
 		return ip;
@@ -79,7 +78,7 @@ public class IP implements Comparable<IP> {
 		return this.ip.hashCode();
 	}
 
-	public static boolean isValidIP(String ip){
+	public static boolean isValidIP(String ip) {
 		Matcher matcher = pattern_IP.matcher(ip);
 		return matcher.matches();
 	}

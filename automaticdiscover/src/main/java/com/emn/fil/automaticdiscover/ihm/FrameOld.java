@@ -13,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
- * A JFrame that contains a JtextArea in which the output stream writes its output.
+ * A JFrame that contains a JtextArea in which the output stream writes its
+ * output.
  */
-//@Component
+// @Component
 public class FrameOld extends JFrame {
 
 	/**
@@ -24,30 +25,29 @@ public class FrameOld extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	/** An instance of javax.swing.JPanel control. */
-	JPanel jp_principal = new JPanel(new BorderLayout());
-	
+	JPanel jpPrincipal = new JPanel(new BorderLayout());
+
 	/** An instance of javax.swing.JTextArea control. */
 	JTextArea txtConsole = new JTextArea();
-	
+
 	/** An instance of javax.swing.JTextArea control. */
 	JTextArea txtInput = new JTextArea();
-	
+
 	@Autowired
 	private InputKeyListener inputKeyListener;
-	
+
 	/** The title of the frame. */
 	@Value("${ihm.frame_title}")
 	private String FRAME_TITLE;
-	
+
 	/** The width of the frame. */
 	@Value("${ihm.frame_width}")
 	private Integer FRAME_SIZE_WIDTH;
-	
+
 	/** The height of the frame. */
 	@Value("${ihm.frame_height}")
 	private Integer FRAME_SIZE_HEIGHT;
-	
-	
+
 	/**
 	 * Creates a new instance of Frame.
 	 */
@@ -55,19 +55,19 @@ public class FrameOld extends JFrame {
 		createFrame();
 
 		buildTextAreaOutputStream();
-		
+
 		buildPanelPrincipal();
-		
+
 		// Add the main panel to the frame
-		this.setContentPane(jp_principal);
-		
+		this.setContentPane(jpPrincipal);
+
 		this.setVisible(true);
 	}
-	
+
 	/**
 	 * Establishes the different parameters of our frame (size, title, ...).
 	 */
-	
+
 	public void createFrame() {
 		this.setTitle(FRAME_TITLE);
 		this.setSize(FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
@@ -77,7 +77,8 @@ public class FrameOld extends JFrame {
 	}
 
 	/**
-	 * Builds the TextAreaOutputStream by creating a new TextAreaOutputStream to write to our JTextArea control.
+	 * Builds the TextAreaOutputStream by creating a new TextAreaOutputStream to
+	 * write to our JTextArea control.
 	 */
 	public void buildTextAreaOutputStream() {
 		// Wrap a PrintStream around it to support the println/printf methods
@@ -87,29 +88,30 @@ public class FrameOld extends JFrame {
 		System.setOut(out);
 
 		// Redirect standard error stream to the TextAreaOutputStream
-		//System.setErr(out);
+		// System.setErr(out);
 	}
-	
+
 	/**
 	 * Builds the main panel containing the JTextArea.
 	 */
 	@SuppressWarnings("deprecation")
 	public void buildPanelPrincipal() {
 
-		
 		txtConsole.setSize(700, 400);
 		txtConsole.setBackground(Color.LIGHT_GRAY);
 		txtConsole.disable();
 		JScrollPane ascenceur = new JScrollPane(txtConsole);
-		ascenceur.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		ascenceur.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		jp_principal.add(ascenceur, BorderLayout.CENTER);
-		
+		ascenceur
+				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		ascenceur
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		jpPrincipal.add(ascenceur, BorderLayout.CENTER);
+
 		txtInput.setSize(700, 100);
 		txtInput.requestDefaultFocus();
 		txtInput.addKeyListener(inputKeyListener);
-		jp_principal.add(txtInput, BorderLayout.PAGE_END);
-		
+		jpPrincipal.add(txtInput, BorderLayout.PAGE_END);
+
 	}
 
 	public InputKeyListener getInputKeyListener() {
@@ -143,5 +145,5 @@ public class FrameOld extends JFrame {
 	public void setFRAME_SIZE_HEIGHT(int fRAME_SIZE_HEIGHT) {
 		FRAME_SIZE_HEIGHT = fRAME_SIZE_HEIGHT;
 	}
-	
+
 }

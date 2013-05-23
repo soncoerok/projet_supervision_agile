@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
  * An output stream that writes its output to a javax.swing.JTextArea control.
  */
 public class TextAreaOutputStream extends OutputStream {
-	
+
 	private JTextArea textControl;
 
 	/**
@@ -31,7 +31,7 @@ public class TextAreaOutputStream extends OutputStream {
 	 *            The byte to be written as character to the JTextArea.
 	 */
 	public void write(int b) throws IOException {
-		
+
 		// append the data as characters to the JTextArea control
 		textControl.append(String.valueOf((char) b));
 	}

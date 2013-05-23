@@ -10,56 +10,56 @@ import com.emn.fil.automaticdiscover.dto.enums.OsType;
 
 @Component("reseau")
 public class Reseau {
-	
+
 	private List<Machine> listMachine;
-	
-	
+
 	public Reseau() {
-		
 		listMachine = new ArrayList<Machine>();
-		
 	}
-	
+
 	public void ajoutMachine(Machine machine) {
-		
-		System.out.println("Ajout de la machine : " + machine.getIp() + " (" + machine.getOsType());
+		System.out.println("Ajout de la machine : " + machine.getIp() + " ("
+				+ machine.getOsType());
 		listMachine.add(machine);
-		
 	}
-	
-	public String getResume(){
-		return "Nombre total de machines dÈtÈctÈes : "+this.listMachine.size()+" dont :\r\n" +
-				"\tWINDOWS : "+this.getListMachinesWINDOWS().size()+"\r\n"+
-				"\tOSX : "+this.getListMachinesOSX().size()+"\r\n"+
-				"\tUNIX : "+this.getListMachinesUNIX().size()+"\r\n";
+
+	public String getResume() {
+		if (this.listMachine.size() > 0) {
+			return "Nombre total de machines d√©t√©ct√©es : "
+					+ this.listMachine.size() + " dont :\r\n" + "\tWINDOWS : "
+					+ this.getListMachinesWINDOWS().size() + "\r\n"
+					+ "\tOSX : " + this.getListMachinesOSX().size() + "\r\n"
+					+ "\tUNIX : " + this.getListMachinesUNIX().size() + "\r\n";
+		}
+		return "Aucune machine d√©tect√©e";
 	}
-	
-	public List<Machine> getListMachinesOSX(){
+
+	public List<Machine> getListMachinesOSX() {
 		List<Machine> res = new ArrayList<Machine>();
-		for(Machine m:this.listMachine){
-			if(m.getOsType() == OsType.OSX)
+		for (Machine m : this.listMachine) {
+			if (m.getOsType() == OsType.OSX)
 				res.add(m);
 		}
 		return res;
 	}
-	
-	public List<Machine> getListMachinesWINDOWS(){
+
+	public List<Machine> getListMachinesWINDOWS() {
 		List<Machine> res = new ArrayList<Machine>();
-		for(Machine m:this.listMachine){
-			if(m.getOsType() == OsType.WINDOWS)
+		for (Machine m : this.listMachine) {
+			if (m.getOsType() == OsType.WINDOWS)
 				res.add(m);
 		}
 		return res;
 	}
-	
-	public List<Machine> getListMachinesUNIX(){
+
+	public List<Machine> getListMachinesUNIX() {
 		List<Machine> res = new ArrayList<Machine>();
-		for(Machine m:this.listMachine){
-			if(m.getOsType() == OsType.UNIX)
+		for (Machine m : this.listMachine) {
+			if (m.getOsType() == OsType.UNIX)
 				res.add(m);
 		}
 		return res;
-		
+
 	}
-	
+
 }

@@ -15,20 +15,20 @@ public class InputKeyListener implements KeyListener {
 
 	@Autowired
 	private CommandInterpreter commandInterpreter;
-	
+
 	public void keyPressed(KeyEvent arg0) {
 
 	}
 
 	public void keyReleased(KeyEvent arg0) {
-		//System.out.println(arg0.getKeyCode());
-		if(arg0.getKeyCode() == 10) {
-			JTextArea textArea = (JTextArea)arg0.getSource();
+		// System.out.println(arg0.getKeyCode());
+		if (arg0.getKeyCode() == 10) {
+			JTextArea textArea = (JTextArea) arg0.getSource();
 			System.out.print("Command typed : " + textArea.getText());
 			commandInterpreter.execute(textArea.getText());
 			textArea.setText("");
 		}
-		
+
 	}
 
 	public void keyTyped(KeyEvent arg0) {

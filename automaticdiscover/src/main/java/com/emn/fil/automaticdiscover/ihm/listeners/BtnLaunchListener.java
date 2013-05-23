@@ -13,7 +13,7 @@ public class BtnLaunchListener implements ActionListener {
 
 	@Autowired
 	private AnalystThread myAnalyst;
-	
+
 	public void actionPerformed(ActionEvent arg0) {
 		new Thread(myAnalyst).start();
 	}

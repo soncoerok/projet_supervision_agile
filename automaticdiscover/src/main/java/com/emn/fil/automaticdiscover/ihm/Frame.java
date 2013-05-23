@@ -32,11 +32,8 @@ import com.emn.fil.automaticdiscover.ihm.listeners.BtnLaunchListener;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
 
 @Component
-public class Frame extends JFrame{
+public class Frame extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblTitle = new JLabel("Automatic Discover via IPs/Ports");
@@ -44,13 +41,14 @@ public class Frame extends JFrame{
 	private JSeparator separatorUp = new JSeparator();
 	private JSeparator separatorMiddle = new JSeparator();
 
-	//Partie config
-	private JLabel lblConfigureRangeTo = new JLabel("Configure range to analyze :");
+	// Partie config
+	private JLabel lblConfigureRangeTo = new JLabel(
+			"Configure range to analyze :");
 	private JLabel lblFrom = new JLabel("From :");
 	private JLabel lblTo = new JLabel("To:");
 	private JButton btnAdvanced = new JButton("Advanced ...");
 
-	//Partie console
+	// Partie console
 	private JLabel lblConsole = new JLabel("Console :");
 	private JTextArea taConsole = new JTextArea();
 	private JButton btnLaunch = new JButton("Launch");
@@ -60,14 +58,14 @@ public class Frame extends JFrame{
 	private JTextField txtboxFrom;
 	private JTextField txtboxTo;
 
-	//Partie Menu
+	// Partie Menu
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu mnFile = new JMenu("File");
 	private JMenuItem mntmQuit = new JMenuItem("Quit");
 	private JMenu mnHelp = new JMenu("Help");
 	private JMenuItem mntmAbout = new JMenuItem("About");
 
-	//LISTENERS
+	// LISTENERS
 
 	@Autowired
 	private BtnQuitListener btnQuitListener;
@@ -75,11 +73,11 @@ public class Frame extends JFrame{
 	private BtnLaunchListener btnLaunchListener;
 	@Autowired
 	private BtnAdvancedListener btnAdvancedListener;
-	
-	//Dialogs
+
+	// Dialogs
 	AdvancedCFGDialog dialAdvancedConfig;
-	
-	//Connection
+
+	// Connection
 	@Autowired
 	public Connection connection;
 
@@ -95,11 +93,11 @@ public class Frame extends JFrame{
 	}
 
 	private void configureComponent() {
-		//this.btn_Launch.setEnabled(false);
+		// this.btn_Launch.setEnabled(false);
 
 	}
 
-	private void buildMenu(){
+	private void buildMenu() {
 
 		menuBar.setBounds(0, 0, 674, 21);
 		contentPane.add(menuBar);
@@ -114,7 +112,7 @@ public class Frame extends JFrame{
 
 	}
 
-	private void buildConfiguration(){
+	private void buildConfiguration() {
 
 		lblFrom.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblFrom.setForeground(SystemColor.textInactiveText);
@@ -140,23 +138,24 @@ public class Frame extends JFrame{
 		lblConfigureRangeTo.setForeground(SystemColor.inactiveCaptionText);
 		lblConfigureRangeTo.setBounds(10, 79, 158, 14);
 		contentPane.add(lblConfigureRangeTo);
-		
 
-		
 		btnAdvanced.setBounds(561, 126, 103, 23);
 		contentPane.add(btnAdvanced);
 	}
 
-	private void buildPanelConsole(){
+	private void buildPanelConsole() {
 
 		getTaConsole().setBounds(10, 183, 654, 264);
 		JScrollPane ta_jbar = new JScrollPane(getTaConsole());
 		ta_jbar.setBounds(10, 183, 654, 264);
 		//
-		ta_jbar.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
-			public void adjustmentValueChanged(AdjustmentEvent e) {  
-			e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
-			}});  
+		ta_jbar.getVerticalScrollBar().addAdjustmentListener(
+				new AdjustmentListener() {
+					public void adjustmentValueChanged(AdjustmentEvent e) {
+						e.getAdjustable().setValue(
+								e.getAdjustable().getMaximum());
+					}
+				});
 		//
 		contentPane.add(ta_jbar);
 
@@ -187,13 +186,12 @@ public class Frame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(690, 530);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Point middle = new Point(screenSize.width / 2, screenSize.height / 2);
-		Point newLocation = new Point(middle.x - (this.getWidth() / 2), 
-		                              middle.y - (this.getHeight() / 2));
-		
+		Point newLocation = new Point(middle.x - (this.getWidth() / 2),
+				middle.y - (this.getHeight() / 2));
+
 		setLocation(newLocation);
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblTitle.setForeground(SystemColor.windowText);
@@ -206,17 +204,17 @@ public class Frame extends JFrame{
 		separatorMiddle.setBounds(10, 156, 654, 2);
 		contentPane.add(separatorMiddle);
 
-		
 		this.buildMenu();
 		this.buildConfiguration();
 		this.buildPanelConsole();
 		this.configureComponent();
 		this.addActions();
-		this.dialAdvancedConfig = new AdvancedCFGDialog(this, "Advanced Configuration", true);
+		this.dialAdvancedConfig = new AdvancedCFGDialog(this,
+				"Advanced Configuration", true);
 		this.setVisible(true);
 	}
-	
-	public void showDialAdvCFG(){
+
+	public void showDialAdvCFG() {
 		this.dialAdvancedConfig.setVisible(true);
 	}
 
@@ -270,6 +268,5 @@ public class Frame extends JFrame{
 	public void setLblPercent(JLabel lblPercent) {
 		this.lblPercent = lblPercent;
 	}
-
 
 }
