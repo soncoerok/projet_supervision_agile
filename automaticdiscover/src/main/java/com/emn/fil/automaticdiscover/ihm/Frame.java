@@ -44,8 +44,7 @@ public class Frame extends JFrame {
 	private String police = "Tahoma";
 	
 	// Partie config
-	private JLabel lblConfigureRangeTo = new JLabel(
-			"Configure range to analyze :");
+	private JLabel lblConfigureRangeTo = new JLabel("Configure range to analyze :");
 	private JLabel lblFrom = new JLabel("From :");
 	private JLabel lblTo = new JLabel("To:");
 	private JButton btnAdvanced = new JButton("Advanced ...");
@@ -83,24 +82,19 @@ public class Frame extends JFrame {
 	@Autowired
 	private Connection connection;
 
-	public Frame() {
-
-	}
+	public Frame() {}
 
 	private void addActions() {
 		this.btnQuit.addActionListener(btnQuitListener);
 		this.getBtnLaunch().addActionListener(btnLaunchListener);
 		this.btnAdvanced.addActionListener(btnAdvancedListener);
-
 	}
 
 	private void configureComponent() {
 		// this.btn_Launch.setEnabled(false);
-
 	}
 
 	private void buildMenu() {
-
 		menuBar.setBounds(0, 0, 674, 21);
 		contentPane.add(menuBar);
 
@@ -111,11 +105,9 @@ public class Frame extends JFrame {
 		menuBar.add(mnHelp);
 
 		mnHelp.add(mntmAbout);
-
 	}
 
 	private void buildConfiguration() {
-
 		lblFrom.setFont(new Font(police, Font.BOLD, 11));
 		lblFrom.setForeground(SystemColor.textInactiveText);
 		lblFrom.setBounds(20, 105, 46, 14);
@@ -146,11 +138,9 @@ public class Frame extends JFrame {
 	}
 
 	private void buildPanelConsole() {
-
 		getTaConsole().setBounds(10, 183, 654, 264);
 		JScrollPane taJbar = new JScrollPane(getTaConsole());
 		taJbar.setBounds(10, 183, 654, 264);
-		//
 		taJbar.getVerticalScrollBar().addAdjustmentListener(
 				new AdjustmentListener() {
 					public void adjustmentValueChanged(AdjustmentEvent e) {
@@ -158,7 +148,6 @@ public class Frame extends JFrame {
 								e.getAdjustable().getMaximum());
 					}
 				});
-		//
 		contentPane.add(taJbar);
 
 		btnQuit.setBounds(575, 458, 89, 23);
