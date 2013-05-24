@@ -22,8 +22,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/Users/Clement/Dropbox/EMN/Programmation/Projet_Supervision_Agile/projet_supervision_agile/automaticdiscover/jar/org.nmap4j_-bin.jar" sourcepath="e:/Users/Clement/Dropbox/EMN/Programmation/Projet_Supervision_Agile/projet_supervision_agile/automaticdiscover/jar/org.nmap4j_-source.jar"/>
-	<classpathentry kind="lib" path="E:/Users/Clement/Dropbox/EMN/Programmation/Projet_Supervision_Agile/projet_supervision_agile/automaticdiscover/jar/org.nmap4j_-javadocs.jar"/>
-	<classpathentry kind="lib" path="E:/Users/Clement/Dropbox/EMN/Programmation/Projet_Supervision_Agile/projet_supervision_agile/automaticdiscover/jar/org.nmap4j_-source.jar"/>
+	<classpathentry kind="lib" path="jar/org.nmap4j_-bin.jar"/>
+	<classpathentry kind="lib" path="jar/org.nmap4j_-javadocs.jar"/>
+	<classpathentry kind="lib" path="jar/org.nmap4j_-source.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

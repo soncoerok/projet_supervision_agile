@@ -86,4 +86,6 @@ public class IP implements Comparable<IP> {
 		Matcher matcher = patternIP.matcher(ip);
 		return matcher.matches();
 	}
+	
+	
 }
