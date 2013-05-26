@@ -1,7 +1,7 @@
 analyseLocally=false
 eclipse.preferences.version=1
 extraProperties=
-lastAnalysisDate=1369406945000
+lastAnalysisDate=1369418764000
 projectKey=com.emn.fil\:automatic-discover-of-datacenter
-serverUrl=http\://10.143.45.10\:9000
+serverUrl=http\://lerelou.dyndns.org\:9000
 version=2

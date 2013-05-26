@@ -20,15 +20,12 @@ public class Main {
 		} catch (Exception e) {
 			Main.log.trace("ERROR : Impossible de modifier le theme");
 		}
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"applicationContext-base.xml");
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext-base.xml");
 
 		// instantiate our spring dao object from the application context
 		// Connection connection = (Connection)ctx.getBean("connection");
 
 		Frame frame = (Frame) ctx.getBean("frame");
 		frame.initFrame();
-
-		// connection.testConnection(plage1,plage2);
 	}
 }

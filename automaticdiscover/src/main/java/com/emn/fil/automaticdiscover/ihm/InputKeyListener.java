@@ -17,22 +17,20 @@ public class InputKeyListener implements KeyListener {
 	@Autowired
 	private CommandInterpreter commandInterpreter;
 
-	public void keyPressed(KeyEvent arg0) {
-
-	}
-
 	public void keyReleased(KeyEvent arg0) {
-		// System.out.println(arg0.getKeyCode());
 		if (arg0.getKeyCode() == 10) {
 			JTextArea textArea = (JTextArea) arg0.getSource();
 			Main.log.trace("Command typed : " + textArea.getText());
-			commandInterpreter.execute(textArea.getText());
+			try {
+				commandInterpreter.execute(textArea.getText());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			textArea.setText("");
 		}
-
 	}
 
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+	public void keyTyped(KeyEvent e) {}
+
+	public void keyPressed(KeyEvent e) {}
 }

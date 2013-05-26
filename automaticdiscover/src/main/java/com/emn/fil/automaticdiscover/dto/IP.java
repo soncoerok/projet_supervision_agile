@@ -17,17 +17,14 @@ public class IP implements Comparable<IP> {
 	/**
 	 * Creates a new instance of IP.
 	 * 
-	 * @param ip
-	 *            The new IP to create.
+	 * @param ip the new IP to create.
 	 * @throws IPFormatException
 	 */
 	@SuppressWarnings("static-access")
 	public IP(String ip) {
 		if (this.isValidIP(ip)){
 			this.ip = ip;
-		}
-
-		else {
+		} else {
 			try {
 				throw new IPFormatException("BAD IP : " + ip);
 			} catch (IPFormatException e) {

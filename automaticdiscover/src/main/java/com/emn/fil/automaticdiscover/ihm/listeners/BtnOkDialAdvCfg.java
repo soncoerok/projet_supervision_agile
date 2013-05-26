@@ -13,8 +13,7 @@ public class BtnOkDialAdvCfg implements ActionListener {
 		this.setMyFrame(fr);
 	}
 
-	public void actionPerformed(ActionEvent arg0) {
-	}
+	public void actionPerformed(ActionEvent arg0) {}
 
 	public Frame getMyFrame() {
 		return myFrame;

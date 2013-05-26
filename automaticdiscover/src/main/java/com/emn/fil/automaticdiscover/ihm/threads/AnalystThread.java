@@ -35,11 +35,8 @@ public class AnalystThread implements Runnable {
 			IP range2 = new IP(myFrame.getTxtboxTo().getText());
 
 			myFrame.getTaConsole().append("ANALYSE LAUNCH : \r\n");
-			myFrame.getTaConsole().append(
-					"\tFROM :" + myFrame.getTxtboxFrom().getText() + " \r\n");
-			myFrame.getTaConsole().append(
-					"\tTO :" + myFrame.getTxtboxTo().getText() + " \r\n");
-			myFrame.getTaConsole().append("\r\n");
+			myFrame.getTaConsole().append("\tFROM :" + myFrame.getTxtboxFrom().getText() + " \r\n");
+			myFrame.getTaConsole().append("\tTO :" + myFrame.getTxtboxTo().getText() + " \r\n\r\n");
 
 			IPRange range = new IPRange(range1, range2);
 			OsType osCurrent = OsType.UNKNOWN;
@@ -50,36 +47,28 @@ public class AnalystThread implements Runnable {
 			int nbCurrent = 1;
 			while (range.hasNext()) {
 				osCurrent = connection.getOSType(range.getCurrent());
-				myFrame.getTaConsole().append(
-						"IP TESTE : " + range.getCurrent().getIp());
+				myFrame.getTaConsole().append("IP TESTE : " + range.getCurrent().getIp());
 				if (osCurrent != OsType.UNKNOWN) {
-					reseau.ajoutMachine(new Machine(range.getCurrent(),
-							osCurrent));
+					reseau.ajoutMachine(new Machine(range.getCurrent(), osCurrent));
 					myFrame.getTaConsole().append(" => AJOUTÉ\r\n");
 				} else{
 					myFrame.getTaConsole().append(" => KO\r\n");
 				}
-				
 				myFrame.getProgressBar().setValue(nbCurrent);
-				myFrame.getLblPercent().setText(
-						(nbCurrent * 100) / nbIps + "%");
+				myFrame.getLblPercent().setText((nbCurrent * 100) / nbIps + "%");
 				nbCurrent++;
 				range.next();
 			}
 
-			myFrame.getTaConsole().append(
-					"#############\r\n" + reseau.getResume() + "\r\n");
+			myFrame.getTaConsole().append("#############\r\n" + reseau.getResume() + "\r\n");
 			// ON reactive le btn pendant le traitement
 			myFrame.getBtnLaunch().setEnabled(true);
 			myFrame.getLblPercent().setText("0%");
 			myFrame.getProgressBar().setValue(0);
-
 		} else {
 			myFrame.getTaConsole().append("ERREUR : IPs INCORRECTES\r\n");
-			myFrame.getTaConsole().append(
-					myFrame.getTxtboxFrom().getText() + "\r\n");
-			myFrame.getTaConsole().append(
-					myFrame.getTxtboxTo().getText() + "\r\n");
+			myFrame.getTaConsole().append(myFrame.getTxtboxFrom().getText() + "\r\n");
+			myFrame.getTaConsole().append(myFrame.getTxtboxTo().getText() + "\r\n");
 		}
 	}
 }

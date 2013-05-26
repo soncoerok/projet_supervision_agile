@@ -97,13 +97,9 @@ public class Frame extends JFrame {
 	private void buildMenu() {
 		menuBar.setBounds(0, 0, 674, 21);
 		contentPane.add(menuBar);
-
 		menuBar.add(mnFile);
-
 		mnFile.add(mntmQuit);
-
 		menuBar.add(mnHelp);
-
 		mnHelp.add(mntmAbout);
 	}
 
@@ -144,8 +140,7 @@ public class Frame extends JFrame {
 		taJbar.getVerticalScrollBar().addAdjustmentListener(
 				new AdjustmentListener() {
 					public void adjustmentValueChanged(AdjustmentEvent e) {
-						e.getAdjustable().setValue(
-								e.getAdjustable().getMaximum());
+						e.getAdjustable().setValue(e.getAdjustable().getMaximum());
 					}
 				});
 		contentPane.add(taJbar);
@@ -200,8 +195,7 @@ public class Frame extends JFrame {
 		this.buildPanelConsole();
 		this.configureComponent();
 		this.addActions();
-		this.dialAdvancedConfig = new AdvancedCFGDialog(this,
-				"Advanced Configuration", true);
+		this.dialAdvancedConfig = new AdvancedCFGDialog(this, "Advanced Configuration", true);
 		this.setVisible(true);
 	}
 

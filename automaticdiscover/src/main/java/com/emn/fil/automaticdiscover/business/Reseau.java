@@ -19,8 +19,7 @@ public class Reseau {
 	}
 
 	public void ajoutMachine(Machine machine) {
-		Main.log.trace("Ajout de la machine : " + machine.getIp() + " ("
-				+ machine.getOsType());
+		Main.log.trace("Ajout de la machine : " + machine.getIp() + " (" + machine.getOsType() + ")");
 		if (! listMachine.contains(machine)){
 			listMachine.add(machine);
 		}

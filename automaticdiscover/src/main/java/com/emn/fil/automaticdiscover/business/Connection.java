@@ -1,11 +1,9 @@
 package com.emn.fil.automaticdiscover.business;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.net.UnknownHostException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -64,33 +62,20 @@ public class Connection {
 	 * @return 0 MAC, 1 UNIX, 2 WINDOWS, -1 UNREACHABLE
 	 */
 	public OsType getOSType(IP ip) {
-		OsType type = OsType.UNKNOWN;
 		Main.log.trace("Test ip : " + ip.toString());
 		// ///////////////BEGIN TESTS/////////////////
 
 		// Test windows ports
-		if (testConnectionsOnPorts(ip, portsWindows)){
-			type = OsType.WINDOWS;
-		}
-
-		// If test windows ports not succeed
-		if (type == OsType.UNKNOWN) {
-			// Test mac ports
-			if (testConnectionsOnPorts(ip, portsMac)){
-				type = OsType.OSX;
-			}	
-		}
-
-		// If test windows ports and mac ports not succeed
-		if (type == OsType.UNKNOWN) {
-			// Test unix ports
-			if (testConnectionsOnPorts(ip, portsUnix)){
-				type = OsType.UNIX;
-			}
+		if (testConnectionsOnPorts(ip, portsWindows)) {
+			return OsType.WINDOWS;
+		} else if (testConnectionsOnPorts(ip, portsMac)) { // If test windows ports not succeed, Test mac ports
+			return OsType.OSX;
+		} else if (testConnectionsOnPorts(ip, portsUnix)) { // If test windows ports and mac ports not succeed, Test unix ports
+			return OsType.UNIX;
 		}
 
 		// ///////////////END TESTS/////////////////
-		return type;
+		return OsType.UNKNOWN;
 	}
 
 	/**
@@ -99,8 +84,8 @@ public class Connection {
 	 * @param ip
 	 * @param ports
 	 * @return boolean state
+	 * @throws Exception 
 	 */
-	@SuppressWarnings("null")
 	private boolean testConnectionsOnPorts(IP ip, int[] ports) {
 		InputStream input = null;
 		int port;
@@ -108,11 +93,9 @@ public class Connection {
 
 		// BEGIN TEST OF CONNECTION
 		for (int i = 0; i < ports.length; i++) {
-			// System.out.println("Test port : "+ports[i]);
 			try {
 				port = ports[i];
-				SocketAddress sockaddr = new InetSocketAddress(ip.toString(),
-						port);
+				SocketAddress sockaddr = new InetSocketAddress(ip.toString(), port);
 				socket = new Socket();
 				socket.connect(sockaddr, this.timeout);
 
@@ -121,32 +104,17 @@ public class Connection {
 				Main.log.trace("Connection ok ! : " + ports[i]);
 
 				// Show the server response
-				// String response = new BufferedReader(new
-				// InputStreamReader(input)).readLine();
+				// String response = new BufferedReader(new InputStreamReader(input)).readLine();
 				// System.out.println("Server message: " + response);
 
-				try {
-					input.close();
-					socket.close();
-				} catch (Exception e) {
-					// System.err.println("[ERROR] close socket : "+e);
-				}
-
+				input.close();
+				socket.close();
 				return true;
-			} catch (UnknownHostException e) {
-				// System.out.println("Connection fail !");
-				// System.err.println("UnknownHostException : "+e);
-			} catch (IOException e) {
-				// System.out.println("Connection fail !");
-				// System.err.println("IO : "+e);
-			} finally {
+			} catch (Exception e) {} finally {
 				try {
 					input.close();
 					socket.close();
-				} catch (Exception e) {
-					// System.out.println("Connection fail !");
-					// System.err.println("Finally : "+e);
-				}
+				} catch (Exception e) {}
 			}
 		}
 		return false;
