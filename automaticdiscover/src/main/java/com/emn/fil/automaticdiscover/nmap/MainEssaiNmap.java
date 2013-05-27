@@ -1,66 +1,24 @@
 package com.emn.fil.automaticdiscover.nmap;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
-import org.nmap4j.Nmap4j;
-import org.nmap4j.core.nmap.NMapExecutionException;
-import org.nmap4j.core.nmap.NMapInitializationException;
-import org.nmap4j.data.NMapRun;
 
 public class MainEssaiNmap {
 
-	public static void main(String[] args) {
-		/*
-		 * Méthode 1
-		 * 
-		 * >>> en attente (implementation pour windows en cours... )
-		 * >>> cf. http://sourceforge.net/projects/nmap4j/forums/forum/1171634/topic/7057340
-		 * 
-		 * try {
-			String path = "log" ;	
-			Nmap4j nmap4j = new Nmap4j(path) ;
-			nmap4j.addFlags( "-sV -O " ) ;
-			nmap4j.includeHosts( "172.17.3.248" ) ;
-			nmap4j.execute() ;
-			if( !nmap4j.hasError() ) {
-				NMapRun nmapRun = nmap4j.getResult() ;
-				System.out.println( nmapRun ) ;
-			}
-		} catch (NMapInitializationException e) {
-			e.printStackTrace();
-		} catch (NMapExecutionException e) {
-			e.printStackTrace();
+	public static void main(String[] args) throws IOException {
+		String chemin_nmap = "E:\\Outils\\nmap-6.25\\";
+		String adresse_ip = "172.17.2.214";
+		String chemin = ".\\resultat.xml";
+		String cmd = chemin_nmap + "nmap.exe -O --system-dns -Pn -oX " + chemin + " " + adresse_ip;
+		System.out.println(cmd);
+		Runtime.getRuntime().exec(cmd);
+		Process p = Runtime.getRuntime().exec(cmd);
+		Scanner s = new Scanner(p.getInputStream());
+		while(s.hasNext()){
+			System.out.println(s.nextLine());
 		}
-		 */
-
-		/*
-		 * Méthode 2 ?
-		 */
-		
-		String system = "windows"; // windows | linux | mac
-		String cmd = "ping -a localhost";
-		String result;
-		Process p;
-
-		try {
-			if (system.equals("windows")){
-				p = Runtime.getRuntime().exec("cmd /C "+cmd);
-			}else if ((system.equals("linux")) || (system.equals("mac"))){
-				p = Runtime.getRuntime().exec(cmd);
-			}else {
-				throw new RuntimeException("Problème d'OS");
-			}
-
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			
-			result = "";
-			while ((result = stdInput.readLine()) != null)
-				// Il faudra effectuer le parse à cet endroit
-				System.out.println(result);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		s.close();
+		p.destroy();
 	}
 }
