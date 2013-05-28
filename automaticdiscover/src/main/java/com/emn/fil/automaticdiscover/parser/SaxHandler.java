@@ -13,10 +13,67 @@ import com.emn.fil.automaticdiscover.dto.enums.OsType;
 
 public class SaxHandler extends DefaultHandler{
 
-	List<Machine> listeMachine = new ArrayList<Machine>();
-	List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
+	private final String OS_WINDOWS = "windows";
+	private final String OS_LINUX = "linux";
+	private final String OS_MAC = "mac";
+	private List<Machine> listeMachine = new ArrayList<Machine>();
+	private List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
 	private Machine machine = new Machine();
-
+	private String nomAttributAdresse;
+	private String nomAttributHostname;
+	private String nomAttributOs;
+	private String nomAttributMachine;
+	
+	public List<Machine> getListeMachine() {
+		return listeMachine;
+	}
+	public void setListeMachine(List<Machine> listeMachine) {
+		this.listeMachine = listeMachine;
+	}
+	public List<BaliseXML> getListeBalise() {
+		return listeBalise;
+	}
+	public void setListeBalise(List<BaliseXML> listeBalise) {
+		this.listeBalise = listeBalise;
+	}
+	public String getNomAttributAdresse() {
+		return nomAttributAdresse;
+	}
+	public String getNomAttributHostname() {
+		return nomAttributHostname;
+	}
+	public String getNomAttributOs() {
+		return nomAttributOs;
+	}
+	public void setNomAttributAdresse(String nomAttributAdresse) {
+		this.nomAttributAdresse = nomAttributAdresse;
+	}
+	public void setNomAttributHostname(String nomAttributHostname) {
+		this.nomAttributHostname = nomAttributHostname;
+	}
+	public void setNomAttributOs(String nomAttributOs) {
+		this.nomAttributOs = nomAttributOs;
+	}
+	public String getNomAttributMachine() {
+		return nomAttributMachine;
+	}
+	public void setNomAttributMachine(String nomAttributMachine) {
+		this.nomAttributMachine = nomAttributMachine;
+	}
+	
+	public void verifMachine(){
+		if (machine.getHostname() == null){
+			machine.setHostname("unknonw");
+		}
+		if (machine.getOsType() == null){
+			machine.setOsType(OsType.UNKNOWN);
+		}
+	}
+	
+	public void razMachine(){
+		machine = new Machine();
+	}
+	
 	/**
 	 * détection d'ouverture de balise
 	 *@param uri l'uri de la balise
@@ -26,28 +83,24 @@ public class SaxHandler extends DefaultHandler{
 	 */
 	@Override
 	public void startElement(String uri, String localName, String nomBalise, Attributes valeur) throws SAXException{
-		String ip, os, hostname;
 		//Ouverture d'une balise => Tester sur qName pour le nom et parcourez attributes comme une liste pour la liste des attributs
 		for (BaliseXML balise : listeBalise){
 			if (balise.getNomBalise().equalsIgnoreCase(nomBalise)) {
-				
 				String tmp = "";
-				
 				for (int index = 0; index < valeur.getLength(); index++) 
 					if (balise.getNomAttribut().contains(valeur.getLocalName(index))) {
-						System.out.println(valeur.getValue(index));
-						if (valeur.getValue(index).equalsIgnoreCase("ipv4")){
+						if (valeur.getValue(index).equalsIgnoreCase(this.nomAttributAdresse)){
 							machine.setIp(new IP(tmp));
 						}
-						if (balise.getNomBalise().equalsIgnoreCase("hostname")){
+						if (balise.getNomBalise().equalsIgnoreCase(this.nomAttributHostname)){
 							machine.setHostname(valeur.getValue(index));
 						}
-						if (balise.getNomBalise().equalsIgnoreCase("osclass")){
-							if (valeur.getValue(index).equalsIgnoreCase("windows")){
+						if (balise.getNomBalise().equalsIgnoreCase(this.nomAttributOs)){
+							if (valeur.getValue(index).equalsIgnoreCase(OS_WINDOWS)){
 								machine.setOsType(OsType.WINDOWS);
-							}else if (valeur.getValue(index).equalsIgnoreCase("linux")){
+							}else if (valeur.getValue(index).equalsIgnoreCase(OS_LINUX)){
 								machine.setOsType(OsType.UNIX);
-							}else if (valeur.getValue(index).equalsIgnoreCase("mac")){
+							}else if (valeur.getValue(index).equalsIgnoreCase(OS_MAC)){
 								machine.setOsType(OsType.OSX);
 							}else {
 								machine.setOsType(OsType.UNKNOWN);
@@ -58,29 +111,17 @@ public class SaxHandler extends DefaultHandler{
 				break;
 			}
 		}
-		
-		//listeMachine.add(new Machine(new IP(ip), OsType.valueOf(os), hostname));
 	}
-
-	//for (String s : )
-
-	/*for (int index = 0; index < attributes.getLength(); index++) { // on parcourt la liste des attributs
-			if ((attributes.getLocalName(index).equalsIgnoreCase("name")) || (attributes.getLocalName(index).equalsIgnoreCase("addr"))){ 
-				// lorsque l'on obtient la balise hostname ou osmatch
-				System.out.println(attributes.getValue(index));
-
-			}
-		}*/
 
 	/**
 	 * détection fin de balise
 	 */
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException{
-		if (qName.equalsIgnoreCase("host")){
-			System.out.println(machine);
+		if (qName.equalsIgnoreCase(this.nomAttributMachine)){
+			verifMachine();
 			listeMachine.add(machine);
-			machine = new Machine();
+			razMachine();
 		}
 	}
 
@@ -105,22 +146,4 @@ public class SaxHandler extends DefaultHandler{
 	@Override
 	public void endDocument() throws SAXException {
 	}	
-
-	public List<Machine> getListeMachine() {
-		return listeMachine;
-	}
-
-	public void setListeMachine(List<Machine> listeMachine) {
-		this.listeMachine = listeMachine;
-	}
-	
-	public List<BaliseXML> getListeBalise() {
-		return listeBalise;
-	}
-
-	public void setListeBalise(List<BaliseXML> listeBalise) {
-		this.listeBalise = listeBalise;
-	}
-	
-	
 }

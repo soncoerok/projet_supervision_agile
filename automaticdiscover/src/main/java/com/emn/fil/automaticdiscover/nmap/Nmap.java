@@ -30,7 +30,7 @@ public class Nmap {
 	private String cheminNmap;
 
 	/** Chemin où on enregistre le fichier xml. */
-	private static final String cheminEnregistrementFichier = ".\resultat.xml";
+	private static final String cheminEnregistrementFichier = "./resultat.xml";
 
 	/** Méthode permettant de scanner le réseau indiqué.
 	 * 
@@ -38,13 +38,13 @@ public class Nmap {
 	 * @throws IOException
 	 */
 	public void scanner(IPMask ipMask) throws IOException{
-		/*
 		StringBuilder commandeNmap = new StringBuilder();
 		commandeNmap.append(cheminNmap);
 		commandeNmap.append(" " + OptionsNmap.OS_DETECTION.getCommande());
-		commandeNmap.append(" " +OptionsNmap.HOST_NAME_DETECTION.getCommande());
-		commandeNmap.append(" " +OptionsNmap.PING.getCommande());
-		commandeNmap.append(" " +cheminEnregistrementFichier);
+		commandeNmap.append(" " + OptionsNmap.HOST_NAME_DETECTION.getCommande());
+		commandeNmap.append(" " + OptionsNmap.PING.getCommande());
+		commandeNmap.append(" " + OptionsNmap.EXPORT_XML.getCommande());
+		commandeNmap.append(" " + cheminEnregistrementFichier);
 		commandeNmap.append(" " + ipMask);
 		Process processNmap = Runtime.getRuntime().exec(commandeNmap.toString());
 		Scanner scannerNmap = new Scanner(processNmap.getInputStream());
@@ -53,7 +53,6 @@ public class Nmap {
 		}
 		scannerNmap.close();
 		processNmap.destroy();
-		 */
 		parsageResultat();
 	}
 
@@ -64,21 +63,28 @@ public class Nmap {
 			listeBalise.add(new BaliseXML("address", Arrays.asList("addr", "addrtype")));
 			listeBalise.add(new BaliseXML("hostname", Arrays.asList("name")));
 			listeBalise.add(new BaliseXML("osclass", Arrays.asList("osfamily")));
-			listeBalise.add(new BaliseXML("host", Arrays.asList("")));
 
 			SAXParserFactory usine = SAXParserFactory.newInstance();
 			SAXParser parseur =usine.newSAXParser();
 
 			File fichier = new File("./resultat.xml");
 			SaxHandler gestionnaire =new SaxHandler();
+			parametrageSaxHandler(gestionnaire, "ipv4", "hostname", "osclass", "host");
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
-			System.out.println("Trolololo : "+gestionnaire.getListeMachine().toString());
+			System.out.println("Liste : "+gestionnaire.getListeMachine().toString());
 
 		}catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Erreur avec le parsage XML");
 		}
+	}
+	
+	public static void parametrageSaxHandler(SaxHandler gestionnaire, String baliseAddress,
+			String baliseHostname, String baliseOs, String baliseSeparationMachine){
+		gestionnaire.setNomAttributAdresse(baliseAddress);
+		gestionnaire.setNomAttributHostname(baliseHostname);
+		gestionnaire.setNomAttributOs(baliseOs);
+		gestionnaire.setNomAttributMachine(baliseSeparationMachine);
 	}
 }

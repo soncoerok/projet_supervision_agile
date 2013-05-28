@@ -3,7 +3,7 @@ package com.emn.fil.automaticdiscover.parser;
 import java.util.List;
 
 public class BaliseXML {
-
+ 
 	private String nomBalise;
 	private List<String> nomAttribut;
 	
@@ -28,6 +28,4 @@ public class BaliseXML {
 	public void setNomAttribut(List<String> nomAttribut) {
 		this.nomAttribut = nomAttribut;
 	}
-	
-	
 }
