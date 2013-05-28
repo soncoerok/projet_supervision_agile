@@ -22,9 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="jar/org.nmap4j_-bin.jar"/>
-	<classpathentry kind="lib" path="jar/org.nmap4j_-javadocs.jar"/>
-	<classpathentry kind="lib" path="jar/org.nmap4j_-source.jar"/>
 	<classpathentry kind="lib" path="jar/sax.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

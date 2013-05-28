@@ -31,7 +31,7 @@ public class Main {
 		try {
 			nmap.scanner(ipMask);
 		} catch (IOException e) {
-			System.out.println("Erreur lors du scan");
+			e.printStackTrace();
 		}
 
 		Frame frame = (Frame) ctx.getBean("frame");

@@ -36,10 +36,10 @@ public class Nmap {
 	public void scanner(IPMask ipMask) throws IOException{
 		StringBuilder commandeNmap = new StringBuilder();
 		commandeNmap.append(cheminNmap);
-		commandeNmap.append(OptionsNmap.OS_DETECTION);
-		commandeNmap.append(OptionsNmap.HOST_NAME_DETECTION);
-		commandeNmap.append(OptionsNmap.PING);
-		commandeNmap.append(cheminEnregistrementFichier);
+		commandeNmap.append(" " + OptionsNmap.OS_DETECTION.getCommande());
+		commandeNmap.append(" " +OptionsNmap.HOST_NAME_DETECTION.getCommande());
+		commandeNmap.append(" " +OptionsNmap.PING.getCommande());
+		commandeNmap.append(" " +cheminEnregistrementFichier);
 		commandeNmap.append(" " + ipMask);
 		Process processNmap = Runtime.getRuntime().exec(commandeNmap.toString());
 		Scanner scannerNmap = new Scanner(processNmap.getInputStream());
