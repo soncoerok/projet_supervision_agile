@@ -26,7 +26,7 @@ public class Nmap {
 	private String cheminNmap;
 	
 	/** Chemin où on enregistre le fichier xml. */
-	private static final String cheminEnregistrementFichier = ".\\resultat.xml";
+	private static final String cheminEnregistrementFichier = ".\resultat.xml";
 	
 	/** Méthode permettant de scanner le réseau indiqué.
 	 * 
@@ -39,7 +39,8 @@ public class Nmap {
 		commandeNmap.append(" " + OptionsNmap.OS_DETECTION.getCommande());
 		commandeNmap.append(" " +OptionsNmap.HOST_NAME_DETECTION.getCommande());
 		commandeNmap.append(" " +OptionsNmap.PING.getCommande());
-		commandeNmap.append(" " +cheminEnregistrementFichier);
+		commandeNmap.append(" " +OptionsNmap.EXPORT_XML.getCommande());
+		commandeNmap.append(" " + cheminEnregistrementFichier);
 		commandeNmap.append(" " + ipMask);
 		Process processNmap = Runtime.getRuntime().exec(commandeNmap.toString());
 		Scanner scannerNmap = new Scanner(processNmap.getInputStream());

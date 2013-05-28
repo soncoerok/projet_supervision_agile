@@ -6,7 +6,7 @@ package com.emn.fil.automaticdiscover.nmap;
  *
  */
 public enum OptionsNmap {
-	PING("-Pn"), OS_DETECTION("-O"), HOST_NAME_DETECTION("--system-dns"), FASTER("-T Aggresive");
+	PING("-Pn"), OS_DETECTION("-O"), HOST_NAME_DETECTION("--system-dns"), FASTER("-T Aggresive"), EXPORT_XML("-oX");
 	
 	private String commande;
 
