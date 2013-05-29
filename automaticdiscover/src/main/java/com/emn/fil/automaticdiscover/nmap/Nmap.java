@@ -58,6 +58,7 @@ public class Nmap {
 
 	public static void parsageResultat(){
 		try{
+			
 			// definition des attributs a recup
 			List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
 			listeBalise.add(new BaliseXML("address", Arrays.asList("addr", "addrtype")));

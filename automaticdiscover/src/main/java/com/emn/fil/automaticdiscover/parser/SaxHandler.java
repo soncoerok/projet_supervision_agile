@@ -96,11 +96,11 @@ public class SaxHandler extends DefaultHandler{
 							machine.setHostname(valeur.getValue(index));
 						}
 						if (balise.getNomBalise().equalsIgnoreCase(this.nomAttributOs)){
-							if (valeur.getValue(index).equalsIgnoreCase(OS_WINDOWS)){
+							if (valeur.getValue(index).toLowerCase().contains(OS_WINDOWS)){
 								machine.setOsType(OsType.WINDOWS);
-							}else if (valeur.getValue(index).equalsIgnoreCase(OS_LINUX)){
+							}else if (valeur.getValue(index).toLowerCase().contains(OS_LINUX)){
 								machine.setOsType(OsType.UNIX);
-							}else if (valeur.getValue(index).equalsIgnoreCase(OS_MAC)){
+							}else if (valeur.getValue(index).toLowerCase().contains(OS_MAC)){
 								machine.setOsType(OsType.OSX);
 							}else {
 								machine.setOsType(OsType.UNKNOWN);
