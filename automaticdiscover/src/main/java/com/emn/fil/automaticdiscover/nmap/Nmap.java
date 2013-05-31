@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.emn.fil.automaticdiscover.Main;
 import com.emn.fil.automaticdiscover.dto.IPMask;
-import com.emn.fil.automaticdiscover.dto.Machine;
+import com.emn.fil.automaticdiscover.dto.Scan;
 import com.emn.fil.automaticdiscover.ihm.ShowDialog;
 import com.emn.fil.automaticdiscover.parser.BaliseXML;
 import com.emn.fil.automaticdiscover.parser.SaxHandler;
@@ -41,7 +41,6 @@ public class Nmap {
 	 * @throws IOException
 	 */
 	public void scanner(IPMask ipMask) throws IOException{
-		/*
 		StringBuilder commandeNmap = new StringBuilder();
 		commandeNmap.append(cheminNmap);
 		commandeNmap.append(" " + OptionsNmap.OS_DETECTION.getCommande());
@@ -52,16 +51,15 @@ public class Nmap {
 		commandeNmap.append(" " + ipMask);
 		Process processNmap = Runtime.getRuntime().exec(commandeNmap.toString());
 		Scanner scannerNmap = new Scanner(processNmap.getInputStream());
-		while(scannerNmap.hasNext()){
+		while(scannerNmap.hasNext()) {
 			System.out.println(scannerNmap.nextLine());
 		}
 		scannerNmap.close();
 		processNmap.destroy();
-		*/
 		parsageResultat();
 	}
 
-	public static List<Machine> parsageResultat(){
+	public static Scan parsageResultat() {
 		try {
 			// definition des attributs a recup
 			List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
@@ -73,17 +71,17 @@ public class Nmap {
 			SAXParserFactory usine = SAXParserFactory.newInstance();
 			SAXParser parseur = usine.newSAXParser();
 
-			File fichier = new File("./resultat.xml");
-			SaxHandler gestionnaire =new SaxHandler();
+			File fichier = new File(cheminEnregistrementFichier);
+			SaxHandler gestionnaire = new SaxHandler();
 			parametrageSaxHandler(gestionnaire, "startstr","ipv4", "hostname", "osclass", "host");
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
 			System.out.println("Liste : " + gestionnaire.getScan().toString());
-			return gestionnaire.getListeMachine();
-		}catch (Exception e) {
+			return gestionnaire.getScan();
+		} catch (Exception e) {
 			Main.log.error(e.getStackTrace());
-			ShowDialog dialog = new ShowDialog("Problème lors de la récupération des machines ! \n" + e.getMessage());
+			ShowDialog dialog = new ShowDialog("Problème lors de la récupération des machines !\n" + e.getMessage());
 			dialog.setVisible(true);
 		}
 		return null;

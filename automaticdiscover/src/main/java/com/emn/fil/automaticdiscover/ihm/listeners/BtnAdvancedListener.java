@@ -15,6 +15,6 @@ public class BtnAdvancedListener implements ActionListener {
 	private Frame myFrame;
 
 	public void actionPerformed(ActionEvent arg0) {
-		myFrame.showDialAdvCFG();
+		//myFrame.showDialAdvCFG();
 	}
 }

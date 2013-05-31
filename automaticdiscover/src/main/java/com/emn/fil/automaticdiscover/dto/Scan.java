@@ -1,6 +1,5 @@
 package com.emn.fil.automaticdiscover.dto;
 
-import java.util.Date;
 import java.util.List;
 
 public class Scan {
@@ -8,8 +7,7 @@ public class Scan {
 	private List<Machine> listeMachine;
 	private String dateScan;
 	
-	public Scan(){
-	}
+	public Scan() {}
 	
 	public Scan(List<Machine> listeMachine, String dateScan) {
 		this.listeMachine = listeMachine;
@@ -31,7 +29,6 @@ public class Scan {
 
 	@Override
 	public String toString() {
-		return "Scan [listeMachine=" + listeMachine + ", dateScan=" + dateScan
-				+ "]";
+		return "Scan [listeMachine=" + listeMachine + ", dateScan=" + dateScan + "]";
 	}
 }

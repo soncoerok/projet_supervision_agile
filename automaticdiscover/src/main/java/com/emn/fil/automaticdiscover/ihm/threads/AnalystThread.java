@@ -15,6 +15,8 @@ import com.emn.fil.automaticdiscover.ihm.Frame;
 @Component
 public class AnalystThread implements Runnable {
 
+	public void run() {}
+/*
 	@Autowired
 	private Frame myFrame;
 
@@ -71,4 +73,5 @@ public class AnalystThread implements Runnable {
 			myFrame.getTaConsole().append(myFrame.getTxtboxTo().getText() + "\r\n");
 		}
 	}
+	*/
 }

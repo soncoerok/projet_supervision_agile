@@ -28,55 +28,6 @@ public class SaxHandler extends DefaultHandler{
 	private String nomAttributMachine;
 	private String nomAttributDateScan;
 	
-	public String getDateScan() {
-		return nomAttributDateScan;
-	}
-	public void setDateScan(String nomAttributDateScan) {
-		this.nomAttributDateScan = nomAttributDateScan;
-	}
-	public Scan getScan() {
-		return scan;
-	}
-	public void setScan(Scan scan) {
-		this.scan = scan;
-	}
-	public List<Machine> getListeMachine() {
-		return listeMachine;
-	}
-	public void setListeMachine(List<Machine> listeMachine) {
-		this.listeMachine = listeMachine;
-	}
-	public List<BaliseXML> getListeBalise() {
-		return listeBalise;
-	}
-	public void setListeBalise(List<BaliseXML> listeBalise) {
-		this.listeBalise = listeBalise;
-	}
-	public String getNomAttributAdresse() {
-		return nomAttributAdresse;
-	}
-	public String getNomAttributHostname() {
-		return nomAttributHostname;
-	}
-	public String getNomAttributOs() {
-		return nomAttributOs;
-	}
-	public void setNomAttributAdresse(String nomAttributAdresse) {
-		this.nomAttributAdresse = nomAttributAdresse;
-	}
-	public void setNomAttributHostname(String nomAttributHostname) {
-		this.nomAttributHostname = nomAttributHostname;
-	}
-	public void setNomAttributOs(String nomAttributOs) {
-		this.nomAttributOs = nomAttributOs;
-	}
-	public String getNomAttributMachine() {
-		return nomAttributMachine;
-	}
-	public void setNomAttributMachine(String nomAttributMachine) {
-		this.nomAttributMachine = nomAttributMachine;
-	}
-	
 	public void verifMachine(){
 		if (machine.getHostname() == null){
 			machine.setHostname("unknown");
@@ -159,5 +110,56 @@ public class SaxHandler extends DefaultHandler{
 	public void endDocument() throws SAXException {
 		scan.setListeMachine(listeMachine);
 		scan.setDateScan(dateScan);
-	}	
+	}
+	
+	// ***** GETTERS *****
+	
+	public String getDateScan() {
+		return nomAttributDateScan;
+	}
+	public void setDateScan(String nomAttributDateScan) {
+		this.nomAttributDateScan = nomAttributDateScan;
+	}
+	public Scan getScan() {
+		return scan;
+	}
+	public void setScan(Scan scan) {
+		this.scan = scan;
+	}
+	public List<Machine> getListeMachine() {
+		return listeMachine;
+	}
+	public void setListeMachine(List<Machine> listeMachine) {
+		this.listeMachine = listeMachine;
+	}
+	public List<BaliseXML> getListeBalise() {
+		return listeBalise;
+	}
+	public void setListeBalise(List<BaliseXML> listeBalise) {
+		this.listeBalise = listeBalise;
+	}
+	public String getNomAttributAdresse() {
+		return nomAttributAdresse;
+	}
+	public String getNomAttributHostname() {
+		return nomAttributHostname;
+	}
+	public String getNomAttributOs() {
+		return nomAttributOs;
+	}
+	public void setNomAttributAdresse(String nomAttributAdresse) {
+		this.nomAttributAdresse = nomAttributAdresse;
+	}
+	public void setNomAttributHostname(String nomAttributHostname) {
+		this.nomAttributHostname = nomAttributHostname;
+	}
+	public void setNomAttributOs(String nomAttributOs) {
+		this.nomAttributOs = nomAttributOs;
+	}
+	public String getNomAttributMachine() {
+		return nomAttributMachine;
+	}
+	public void setNomAttributMachine(String nomAttributMachine) {
+		this.nomAttributMachine = nomAttributMachine;
+	}
 }

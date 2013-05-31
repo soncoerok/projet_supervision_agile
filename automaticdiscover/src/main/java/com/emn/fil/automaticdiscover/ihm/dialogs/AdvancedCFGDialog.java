@@ -16,7 +16,7 @@ import com.emn.fil.automaticdiscover.ihm.Frame;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnAddsDialAdvCfg;
 
 public class AdvancedCFGDialog extends JDialog {
-
+/*
 	private static final long serialVersionUID = 1L;
 
 	// Dialog
@@ -187,4 +187,5 @@ public class AdvancedCFGDialog extends JDialog {
 		getContentPane().add(txtboxTimeout);
 		txtboxTimeout.setColumns(10);
 	}
+	*/
 }

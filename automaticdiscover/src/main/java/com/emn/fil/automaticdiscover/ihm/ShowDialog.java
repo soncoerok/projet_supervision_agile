@@ -1,41 +1,27 @@
 package com.emn.fil.automaticdiscover.ihm;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import javax.swing.JButton;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
+import org.springframework.stereotype.Component;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
+
+@Component
 public class ShowDialog extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JLabel lblMessage = new JLabel("Message to display");
-
-	@Autowired
-	private BtnQuitListener btnQuitListener;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				ShowDialog frame = new ShowDialog();
-				frame.setVisible(true);
-			}
-		});
-	}
+	private JTextPane message = new JTextPane();;
 
 	/**
 	 * Create the frame.
 	 */
 	public ShowDialog() {
-		initDialog(lblMessage.getText());
+		initDialog("");
 	}
 	
 	/**
@@ -51,27 +37,31 @@ public class ShowDialog extends JFrame {
 	 * @param msg to display
 	 */
 	private void initDialog(String msg) {
-		setTitle("Automatic Discover Beta - Message");
+		setTitle("Message");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
+		setBounds(100, 100, 300, 200);
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		lblMessage.setText(msg);
-		contentPane.add(lblMessage, BorderLayout.CENTER);
+		message.setEditable(false);
+		contentPane.add(message, BorderLayout.CENTER);
 		
-		JButton btnQuit = new JButton("Quit");
-		btnQuit.addActionListener(btnQuitListener);
+		JButton btnQuit = new JButton("Ok");
+		btnQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		contentPane.add(btnQuit, BorderLayout.SOUTH);
 	}
 	
-	public JLabel getLblMessage() {
-		return lblMessage;
+	public String getMessage() {
+		return message.getText();
 	}
-
-	public void setLblMessage(JLabel lblMessage) {
-		this.lblMessage = lblMessage;
+	
+	public void setMessage(String msg) {
+		message.setText(msg);
 	}
 }
