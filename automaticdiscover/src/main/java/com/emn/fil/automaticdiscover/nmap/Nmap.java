@@ -41,6 +41,7 @@ public class Nmap {
 	 * @throws IOException
 	 */
 	public void scanner(IPMask ipMask) throws IOException{
+		/*
 		StringBuilder commandeNmap = new StringBuilder();
 		commandeNmap.append(cheminNmap);
 		commandeNmap.append(" " + OptionsNmap.OS_DETECTION.getCommande());
@@ -56,6 +57,7 @@ public class Nmap {
 		}
 		scannerNmap.close();
 		processNmap.destroy();
+		*/
 		parsageResultat();
 	}
 
@@ -63,6 +65,7 @@ public class Nmap {
 		try {
 			// definition des attributs a recup
 			List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
+			listeBalise.add(new BaliseXML("nmaprun", Arrays.asList("startstr")));
 			listeBalise.add(new BaliseXML("address", Arrays.asList("addr", "addrtype")));
 			listeBalise.add(new BaliseXML("hostname", Arrays.asList("name")));
 			listeBalise.add(new BaliseXML("osclass", Arrays.asList("osfamily")));
@@ -71,14 +74,14 @@ public class Nmap {
 			SAXParser parseur = usine.newSAXParser();
 
 			File fichier = new File("./resultat.xml");
-			SaxHandler gestionnaire = new SaxHandler();
-			parametrageSaxHandler(gestionnaire, "ipv4", "hostname", "osclass", "host");
+			SaxHandler gestionnaire =new SaxHandler();
+			parametrageSaxHandler(gestionnaire, "startstr","ipv4", "hostname", "osclass", "host");
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
-			System.out.println("Liste : " + gestionnaire.getListeMachine().toString());
+			System.out.println("Liste : " + gestionnaire.getScan().toString());
 			return gestionnaire.getListeMachine();
-		} catch (Exception e) {
+		}catch (Exception e) {
 			Main.log.error(e.getStackTrace());
 			ShowDialog dialog = new ShowDialog("Problème lors de la récupération des machines ! \n" + e.getMessage());
 			dialog.setVisible(true);
@@ -86,8 +89,9 @@ public class Nmap {
 		return null;
 	}
 	
-	public static void parametrageSaxHandler(SaxHandler gestionnaire, String baliseAddress,
+	public static void parametrageSaxHandler(SaxHandler gestionnaire, String baliseDate, String baliseAddress,
 			String baliseHostname, String baliseOs, String baliseSeparationMachine){
+		gestionnaire.setDateScan(baliseDate);
 		gestionnaire.setNomAttributAdresse(baliseAddress);
 		gestionnaire.setNomAttributHostname(baliseHostname);
 		gestionnaire.setNomAttributOs(baliseOs);
