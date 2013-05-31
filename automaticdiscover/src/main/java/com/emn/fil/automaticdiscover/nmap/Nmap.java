@@ -13,7 +13,10 @@ import javax.xml.parsers.SAXParserFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.emn.fil.automaticdiscover.Main;
 import com.emn.fil.automaticdiscover.dto.IPMask;
+import com.emn.fil.automaticdiscover.dto.Machine;
+import com.emn.fil.automaticdiscover.ihm.ShowDialog;
 import com.emn.fil.automaticdiscover.parser.BaliseXML;
 import com.emn.fil.automaticdiscover.parser.SaxHandler;
 
@@ -56,9 +59,8 @@ public class Nmap {
 		parsageResultat();
 	}
 
-	public static void parsageResultat(){
-		try{
-			
+	public static List<Machine> parsageResultat(){
+		try {
 			// definition des attributs a recup
 			List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
 			listeBalise.add(new BaliseXML("address", Arrays.asList("addr", "addrtype")));
@@ -66,19 +68,22 @@ public class Nmap {
 			listeBalise.add(new BaliseXML("osclass", Arrays.asList("osfamily")));
 
 			SAXParserFactory usine = SAXParserFactory.newInstance();
-			SAXParser parseur =usine.newSAXParser();
+			SAXParser parseur = usine.newSAXParser();
 
 			File fichier = new File("./resultat.xml");
-			SaxHandler gestionnaire =new SaxHandler();
+			SaxHandler gestionnaire = new SaxHandler();
 			parametrageSaxHandler(gestionnaire, "ipv4", "hostname", "osclass", "host");
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
-			System.out.println("Liste : "+gestionnaire.getListeMachine().toString());
-
-		}catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Liste : " + gestionnaire.getListeMachine().toString());
+			return gestionnaire.getListeMachine();
+		} catch (Exception e) {
+			Main.log.error(e.getStackTrace());
+			ShowDialog dialog = new ShowDialog("Problème lors de la récupération des machines ! \n" + e.getMessage());
+			dialog.setVisible(true);
 		}
+		return null;
 	}
 	
 	public static void parametrageSaxHandler(SaxHandler gestionnaire, String baliseAddress,

@@ -63,14 +63,14 @@ public class SaxHandler extends DefaultHandler{
 	
 	public void verifMachine(){
 		if (machine.getHostname() == null){
-			machine.setHostname("unknonw");
+			machine.setHostname("unknown");
 		}
 		if (machine.getOsType() == null){
 			machine.setOsType(OsType.UNKNOWN);
 		}
 	}
 	
-	public void razMachine(){
+	public void resetMachine(){
 		machine = new Machine();
 	}
 	
@@ -84,26 +84,23 @@ public class SaxHandler extends DefaultHandler{
 	@Override
 	public void startElement(String uri, String localName, String nomBalise, Attributes valeur) throws SAXException{
 		//Ouverture d'une balise => Tester sur qName pour le nom et parcourez attributes comme une liste pour la liste des attributs
-		for (BaliseXML balise : listeBalise){
+		for (BaliseXML balise : listeBalise) {
 			if (balise.getNomBalise().equalsIgnoreCase(nomBalise)) {
 				String tmp = "";
 				for (int index = 0; index < valeur.getLength(); index++) 
 					if (balise.getNomAttribut().contains(valeur.getLocalName(index))) {
 						if (valeur.getValue(index).equalsIgnoreCase(this.nomAttributAdresse)){
 							machine.setIp(new IP(tmp));
-						}
-						if (balise.getNomBalise().equalsIgnoreCase(this.nomAttributHostname)){
+						} else if (balise.getNomBalise().equalsIgnoreCase(this.nomAttributHostname)){
 							machine.setHostname(valeur.getValue(index));
-						}
-						if (balise.getNomBalise().equalsIgnoreCase(this.nomAttributOs)){
+						} else if (balise.getNomBalise().equalsIgnoreCase(this.nomAttributOs)){
+							machine.setOsType(OsType.UNKNOWN);
 							if (valeur.getValue(index).toLowerCase().contains(OS_WINDOWS)){
 								machine.setOsType(OsType.WINDOWS);
-							}else if (valeur.getValue(index).toLowerCase().contains(OS_LINUX)){
+							} else if (valeur.getValue(index).toLowerCase().contains(OS_LINUX)){
 								machine.setOsType(OsType.UNIX);
-							}else if (valeur.getValue(index).toLowerCase().contains(OS_MAC)){
+							} else if (valeur.getValue(index).toLowerCase().contains(OS_MAC)){
 								machine.setOsType(OsType.OSX);
-							}else {
-								machine.setOsType(OsType.UNKNOWN);
 							}
 						}
 						tmp = valeur.getValue(index);
@@ -121,7 +118,7 @@ public class SaxHandler extends DefaultHandler{
 		if (qName.equalsIgnoreCase(this.nomAttributMachine)){
 			verifMachine();
 			listeMachine.add(machine);
-			razMachine();
+			resetMachine();
 		}
 	}
 
