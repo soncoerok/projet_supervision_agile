@@ -9,6 +9,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.emn.fil.automaticdiscover.dto.IP;
 import com.emn.fil.automaticdiscover.dto.Machine;
+import com.emn.fil.automaticdiscover.dto.Scan;
 import com.emn.fil.automaticdiscover.dto.enums.OsType;
 
 public class SaxHandler extends DefaultHandler{
@@ -18,12 +19,27 @@ public class SaxHandler extends DefaultHandler{
 	private final String OS_MAC = "mac";
 	private List<Machine> listeMachine = new ArrayList<Machine>();
 	private List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
+	private Scan scan = new Scan();
 	private Machine machine = new Machine();
+	private String dateScan = "";
 	private String nomAttributAdresse;
 	private String nomAttributHostname;
 	private String nomAttributOs;
 	private String nomAttributMachine;
+	private String nomAttributDateScan;
 	
+	public String getDateScan() {
+		return nomAttributDateScan;
+	}
+	public void setDateScan(String nomAttributDateScan) {
+		this.nomAttributDateScan = nomAttributDateScan;
+	}
+	public Scan getScan() {
+		return scan;
+	}
+	public void setScan(Scan scan) {
+		this.scan = scan;
+	}
 	public List<Machine> getListeMachine() {
 		return listeMachine;
 	}
@@ -89,6 +105,9 @@ public class SaxHandler extends DefaultHandler{
 				String tmp = "";
 				for (int index = 0; index < valeur.getLength(); index++) 
 					if (balise.getNomAttribut().contains(valeur.getLocalName(index))) {
+						if (valeur.getQName(index).equalsIgnoreCase(this.nomAttributDateScan)){
+							dateScan = valeur.getValue(index);
+						}
 						if (valeur.getValue(index).equalsIgnoreCase(this.nomAttributAdresse)){
 							machine.setIp(new IP(tmp));
 						}
@@ -145,5 +164,7 @@ public class SaxHandler extends DefaultHandler{
 	 */
 	@Override
 	public void endDocument() throws SAXException {
+		scan.setListeMachine(listeMachine);
+		scan.setDateScan(dateScan);
 	}	
 }

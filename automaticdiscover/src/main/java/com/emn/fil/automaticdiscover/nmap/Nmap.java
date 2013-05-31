@@ -63,6 +63,7 @@ public class Nmap {
 			
 			// definition des attributs a recup
 			List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
+			listeBalise.add(new BaliseXML("nmaprun", Arrays.asList("startstr")));
 			listeBalise.add(new BaliseXML("address", Arrays.asList("addr", "addrtype")));
 			listeBalise.add(new BaliseXML("hostname", Arrays.asList("name")));
 			listeBalise.add(new BaliseXML("osclass", Arrays.asList("osfamily")));
@@ -72,19 +73,20 @@ public class Nmap {
 
 			File fichier = new File("./resultat.xml");
 			SaxHandler gestionnaire =new SaxHandler();
-			parametrageSaxHandler(gestionnaire, "ipv4", "hostname", "osclass", "host");
+			parametrageSaxHandler(gestionnaire, "startstr","ipv4", "hostname", "osclass", "host");
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
-			System.out.println("Liste : "+gestionnaire.getListeMachine().toString());
+			System.out.println(gestionnaire.getScan().toString());
 
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void parametrageSaxHandler(SaxHandler gestionnaire, String baliseAddress,
+	public static void parametrageSaxHandler(SaxHandler gestionnaire, String baliseDate, String baliseAddress,
 			String baliseHostname, String baliseOs, String baliseSeparationMachine){
+		gestionnaire.setDateScan(baliseDate);
 		gestionnaire.setNomAttributAdresse(baliseAddress);
 		gestionnaire.setNomAttributHostname(baliseHostname);
 		gestionnaire.setNomAttributOs(baliseOs);
