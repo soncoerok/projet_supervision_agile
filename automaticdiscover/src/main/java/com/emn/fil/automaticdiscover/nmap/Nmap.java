@@ -38,6 +38,7 @@ public class Nmap {
 	 * @throws IOException
 	 */
 	public void scanner(IPMask ipMask) throws IOException{
+		/*
 		StringBuilder commandeNmap = new StringBuilder();
 		commandeNmap.append(cheminNmap);
 		commandeNmap.append(" " + OptionsNmap.OS_DETECTION.getCommande());
@@ -53,6 +54,7 @@ public class Nmap {
 		}
 		scannerNmap.close();
 		processNmap.destroy();
+		*/
 		parsageResultat();
 	}
 
