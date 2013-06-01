@@ -1,11 +1,14 @@
 package com.emn.fil.automaticdiscover.dto;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Scan {
 
-	private List<Machine> listeMachine;
-	private String dateScan;
+	private List<Machine> listeMachine = new ArrayList<Machine>();
+	private String dateScan = "";
 	
 	public Scan() {}
 	

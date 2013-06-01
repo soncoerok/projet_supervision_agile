@@ -21,16 +21,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.emn.fil.automaticdiscover.dto.EnhancedTableModel;
 import com.emn.fil.automaticdiscover.dto.ExportDataToCSV;
+import com.emn.fil.automaticdiscover.dto.IP;
+import com.emn.fil.automaticdiscover.dto.IPMask;
+import com.emn.fil.automaticdiscover.dto.Machine;
 import com.emn.fil.automaticdiscover.dto.Scan;
-import com.emn.fil.automaticdiscover.ihm.listeners.BtnLaunchListener;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
 import com.emn.fil.automaticdiscover.nmap.Nmap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.ArrayList;
 
 @Component
 public class Frame extends JFrame {
@@ -68,7 +75,8 @@ public class Frame extends JFrame {
 	private JLabel lblNbUnix = new JLabel("0");
 	private JLabel lblNbMac = new JLabel("0");
 	private JPanel panelResult;
-	private Scan scan = Nmap.parsageResultat();
+	@Autowired
+	private Scan scan;
 
 	/**
 	 * Create the frame.
@@ -152,7 +160,24 @@ public class Frame extends JFrame {
 		gbcBtnLunch.insets = new Insets(0, 0, 5, 5);
 		gbcBtnLunch.gridx = 2;
 		gbcBtnLunch.gridy = 0;
-		btnLunch.addActionListener(new BtnLaunchListener());
+		// LUNCH THE SCAN
+		btnLunch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IPMask ipMask = new IPMask(new IP("172.17.2.0"), 24);
+				try {
+					Nmap nmap = new Nmap(ipMask);
+					for(Machine m : nmap.getScan().getListeMachine()) {
+						setMachineTable(m.toObject());
+					}
+					System.out.println(nmap.getScan().toString());
+				} catch (IOException ioE) {
+					ShowDialog dialog = 
+						new ShowDialog("Problème lors du lancement de l'analyse du réseau !\n" + ioE);
+					dialog.setVisible(true);
+				}
+			}
+		});
+		
 		panelTop.add(btnLunch, gbcBtnLunch);
 
 		JPanel panelIpRange = new JPanel();
@@ -296,22 +321,50 @@ public class Frame extends JFrame {
 	 * Create the body
 	 */
 	private void _buildBody() {
+		tableMachine.setFillsViewportHeight(true);
 		tableMachine.setShowGrid(false);
 		tableMachine.setShowHorizontalLines(false);
 		tableMachine.setShowVerticalLines(false);
 		tableMachine.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tableMachine.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"172.17.1.24", "WINDOWS"},
-				{"172.17.1.31", "WINDOWS"},
-				{"172.17.1.94", "UNIX"},
-			},
-			new String[] {
-				"IP", "HostName"
-			}
-		));
 		
-		contentPane.add(new JScrollPane(tableMachine), BorderLayout.CENTER);
+		tableMachine.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2 && tableMachine.getSelectedRow() > 0) {
+					ShowDialog dialog = new ShowDialog("afficher la pop up du détail de la machine !");
+					dialog.setVisible(true);
+				}
+			}
+		});
+		JScrollPane sp = new JScrollPane();
+		sp.setViewportView(tableMachine);
+		
+		/*tableMachine.setModel(new DefaultTableModel(
+				new Object[][] {
+					{"172.17.1.24", "WINDOWS"},
+					{"172.17.1.31", "WINDOWS"},
+					{"172.17.1.94", "UNIX"},
+				},
+				new String[] {
+					"IP", "HostName"
+				}
+			));
+			*/
+		setMachineTable(new String[] {"IP", "HostName"}, new ArrayList<ArrayList<Object>>());
+		contentPane.add(sp, BorderLayout.CENTER);
+	}
+	
+	/**
+	 * Remplie la <i>JTable</i> avec les donnees passe en parametre.
+	 * @param columnNames Noms des colonnes
+	 * @param data Donnees dans l'ordre du nom des colonnes
+	 */
+	private void setMachineTable(String[] columnNames, ArrayList<ArrayList<Object>> data) {
+		tableMachine.setModel(new EnhancedTableModel(columnNames, data));
+	}
+
+	private void setMachineTable(ArrayList<Object> data) {
+		((EnhancedTableModel) tableMachine.getModel()).setEnhancedTableModel(data);
 	}
 
 }

@@ -45,6 +45,7 @@ public class ShowDialog extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
+		setMessage(msg);
 		message.setEditable(false);
 		contentPane.add(message, BorderLayout.CENTER);
 		

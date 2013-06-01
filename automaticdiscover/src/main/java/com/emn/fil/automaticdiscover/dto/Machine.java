@@ -1,5 +1,7 @@
 package com.emn.fil.automaticdiscover.dto;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import com.emn.fil.automaticdiscover.dto.enums.OsType;
 
 public class Machine {
@@ -8,8 +10,7 @@ public class Machine {
 	private OsType osType;
 	private String hostname;
 
-	public Machine(){
-	}
+	public Machine() {}
 	
 	public Machine(IP ip, OsType os) {
 		this.ip = ip;
@@ -20,6 +21,10 @@ public class Machine {
 		this.ip = ip;
 		this.osType = os;
 		this.hostname = hostname;
+	}
+	
+	public ArrayList<Object> toObject() {
+		return (ArrayList<Object>) Arrays.asList((Object) ip.toString(), osType.toString());
 	}
 
 	public IP getIp() {
@@ -41,7 +46,6 @@ public class Machine {
 		this.hostname = hostname;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

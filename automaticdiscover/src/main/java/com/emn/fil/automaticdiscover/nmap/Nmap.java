@@ -10,6 +10,7 @@ import java.util.Scanner;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -34,13 +35,22 @@ public class Nmap {
 
 	/** Chemin où on enregistre le fichier xml. */
 	private static final String cheminEnregistrementFichier = "./resultat.xml";
+	
+	@Autowired
+	private Scan scan;
+	
+	public Nmap() {}
+	
+	public Nmap(IPMask ipMask) throws IOException {
+		scan = scanner(ipMask);
+	}
 
 	/** Méthode permettant de scanner le réseau indiqué.
 	 * 
 	 * @param ipMask est l'ip voulue
 	 * @throws IOException
 	 */
-	public void scanner(IPMask ipMask) throws IOException{
+	private Scan scanner(IPMask ipMask) throws IOException{
 		StringBuilder commandeNmap = new StringBuilder();
 		commandeNmap.append(cheminNmap);
 		commandeNmap.append(" " + OptionsNmap.OS_DETECTION.getCommande());
@@ -56,7 +66,7 @@ public class Nmap {
 		}
 		scannerNmap.close();
 		processNmap.destroy();
-		parsageResultat();
+		return parsageResultat();
 	}
 
 	public static Scan parsageResultat() {
@@ -77,10 +87,10 @@ public class Nmap {
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
-			System.out.println("Liste : " + gestionnaire.getScan().toString());
+			//System.out.println("Liste : " + gestionnaire.getScan().toString());
 			return gestionnaire.getScan();
 		} catch (Exception e) {
-			Main.log.error(e.getStackTrace());
+			Main.log.trace(e.getStackTrace());
 			ShowDialog dialog = new ShowDialog("Problème lors de la récupération des machines !\n" + e.getMessage());
 			dialog.setVisible(true);
 		}
@@ -94,5 +104,9 @@ public class Nmap {
 		gestionnaire.setNomAttributHostname(baliseHostname);
 		gestionnaire.setNomAttributOs(baliseOs);
 		gestionnaire.setNomAttributMachine(baliseSeparationMachine);
+	}
+	
+	public Scan getScan() {
+		return scan;
 	}
 }
