@@ -1,7 +1,6 @@
 package com.emn.fil.automaticdiscover.ihm;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -45,6 +44,8 @@ public class Frame extends JFrame {
 	private int height;
 	@Value("${ihm.frame_title}")
 	private String title;
+	@Value("${chemin_export_csv}")
+	private String pathExport;
 	
 	// List Machine
 	private JTable tableMachine = new JTable();
@@ -96,7 +97,7 @@ public class Frame extends JFrame {
 		// Export data
 		export.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ExportDataToCSV.export("./export.csv", scan);
+				ExportDataToCSV.export(pathExport, scan);
 			}
 		});
 		
@@ -217,13 +218,13 @@ public class Frame extends JFrame {
 		panelTop.add(btnStop, gbcBtnStop);
 		
 		panelResult = new JPanel();
-		GridBagConstraints gbc_panelResult = new GridBagConstraints();
-		gbc_panelResult.gridheight = 2;
-		gbc_panelResult.insets = new Insets(0, 0, 5, 0);
-		gbc_panelResult.fill = GridBagConstraints.BOTH;
-		gbc_panelResult.gridx = 3;
-		gbc_panelResult.gridy = 0;
-		panelTop.add(panelResult, gbc_panelResult);
+		GridBagConstraints gbcPanelResult = new GridBagConstraints();
+		gbcPanelResult.gridheight = 2;
+		gbcPanelResult.insets = new Insets(0, 0, 5, 0);
+		gbcPanelResult.fill = GridBagConstraints.BOTH;
+		gbcPanelResult.gridx = 3;
+		gbcPanelResult.gridy = 0;
+		panelTop.add(panelResult, gbcPanelResult);
 		GridBagLayout gbl_panelResult = new GridBagLayout();
 		gbl_panelResult.columnWidths = new int[]{106, 52, 0};
 		gbl_panelResult.rowHeights = new int[]{14, 0, 0, 0, 0};
@@ -232,53 +233,53 @@ public class Frame extends JFrame {
 		panelResult.setLayout(gbl_panelResult);
 		
 		JLabel lblRsultats = new JLabel("Résultats :");
-		GridBagConstraints gbc_lblRsultats = new GridBagConstraints();
-		gbc_lblRsultats.insets = new Insets(0, 0, 5, 0);
-		gbc_lblRsultats.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblRsultats.gridx = 1;
-		gbc_lblRsultats.gridy = 0;
-		panelResult.add(lblRsultats, gbc_lblRsultats);
+		GridBagConstraints gbcLblRsultats = new GridBagConstraints();
+		gbcLblRsultats.insets = new Insets(0, 0, 5, 0);
+		gbcLblRsultats.anchor = GridBagConstraints.NORTHWEST;
+		gbcLblRsultats.gridx = 1;
+		gbcLblRsultats.gridy = 0;
+		panelResult.add(lblRsultats, gbcLblRsultats);
 		
 		JLabel lblWindows = new JLabel("Windows :");
-		GridBagConstraints gbc_lblWindows = new GridBagConstraints();
-		gbc_lblWindows.anchor = GridBagConstraints.EAST;
-		gbc_lblWindows.insets = new Insets(0, 0, 5, 5);
-		gbc_lblWindows.gridx = 0;
-		gbc_lblWindows.gridy = 1;
-		panelResult.add(lblWindows, gbc_lblWindows);
+		GridBagConstraints gbcLblWindows = new GridBagConstraints();
+		gbcLblWindows.anchor = GridBagConstraints.EAST;
+		gbcLblWindows.insets = new Insets(0, 0, 5, 5);
+		gbcLblWindows.gridx = 0;
+		gbcLblWindows.gridy = 1;
+		panelResult.add(lblWindows, gbcLblWindows);
 		
-		GridBagConstraints gbc_lblNbWindows = new GridBagConstraints();
-		gbc_lblNbWindows.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNbWindows.gridx = 1;
-		gbc_lblNbWindows.gridy = 1;
-		panelResult.add(lblNbWindows, gbc_lblNbWindows);
+		GridBagConstraints gbcLblNbWindows = new GridBagConstraints();
+		gbcLblNbWindows.insets = new Insets(0, 0, 5, 0);
+		gbcLblNbWindows.gridx = 1;
+		gbcLblNbWindows.gridy = 1;
+		panelResult.add(lblNbWindows, gbcLblNbWindows);
 		
 		JLabel lblUnix = new JLabel("Unix :");
-		GridBagConstraints gbc_lblUnix = new GridBagConstraints();
-		gbc_lblUnix.anchor = GridBagConstraints.EAST;
-		gbc_lblUnix.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUnix.gridx = 0;
-		gbc_lblUnix.gridy = 2;
-		panelResult.add(lblUnix, gbc_lblUnix);
+		GridBagConstraints gbcLblUnix = new GridBagConstraints();
+		gbcLblUnix.anchor = GridBagConstraints.EAST;
+		gbcLblUnix.insets = new Insets(0, 0, 5, 5);
+		gbcLblUnix.gridx = 0;
+		gbcLblUnix.gridy = 2;
+		panelResult.add(lblUnix, gbcLblUnix);
 		
-		GridBagConstraints gbc_lblNbUnix = new GridBagConstraints();
-		gbc_lblNbUnix.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNbUnix.gridx = 1;
-		gbc_lblNbUnix.gridy = 2;
-		panelResult.add(lblNbUnix, gbc_lblNbUnix);
+		GridBagConstraints gbcLblNbUnix = new GridBagConstraints();
+		gbcLblNbUnix.insets = new Insets(0, 0, 5, 0);
+		gbcLblNbUnix.gridx = 1;
+		gbcLblNbUnix.gridy = 2;
+		panelResult.add(lblNbUnix, gbcLblNbUnix);
 		
 		JLabel lblMacOs = new JLabel("Mac OS :");
-		GridBagConstraints gbc_lblMacOs = new GridBagConstraints();
-		gbc_lblMacOs.anchor = GridBagConstraints.EAST;
-		gbc_lblMacOs.insets = new Insets(0, 0, 0, 5);
-		gbc_lblMacOs.gridx = 0;
-		gbc_lblMacOs.gridy = 3;
-		panelResult.add(lblMacOs, gbc_lblMacOs);
+		GridBagConstraints gbcLblMacOs = new GridBagConstraints();
+		gbcLblMacOs.anchor = GridBagConstraints.EAST;
+		gbcLblMacOs.insets = new Insets(0, 0, 0, 5);
+		gbcLblMacOs.gridx = 0;
+		gbcLblMacOs.gridy = 3;
+		panelResult.add(lblMacOs, gbcLblMacOs);
 		
-		GridBagConstraints gbc_lblNbMac = new GridBagConstraints();
-		gbc_lblNbMac.gridx = 1;
-		gbc_lblNbMac.gridy = 3;
-		panelResult.add(lblNbMac, gbc_lblNbMac);
+		GridBagConstraints gbcLblNbMac = new GridBagConstraints();
+		gbcLblNbMac.gridx = 1;
+		gbcLblNbMac.gridy = 3;
+		panelResult.add(lblNbMac, gbcLblNbMac);
 
 		GridBagConstraints gbcProgressBar = new GridBagConstraints();
 		gbcProgressBar.insets = new Insets(0, 0, 0, 5);
@@ -295,12 +296,20 @@ public class Frame extends JFrame {
 	 * Create the body
 	 */
 	private void _buildBody() {
+		tableMachine.setShowGrid(false);
+		tableMachine.setShowHorizontalLines(false);
+		tableMachine.setShowVerticalLines(false);
 		tableMachine.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tableMachine.setModel(new DefaultTableModel(new Object[][] {
-				{ null, "hh" }, { null, null },
-				{ null, null, null }, { null, null },
-				{ null, null, "last" }, }, 
-				new String[] { "IP", "HostName" }));
+		tableMachine.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"172.17.1.24", "WINDOWS"},
+				{"172.17.1.31", "WINDOWS"},
+				{"172.17.1.94", "UNIX"},
+			},
+			new String[] {
+				"IP", "HostName"
+			}
+		));
 		
 		contentPane.add(new JScrollPane(tableMachine), BorderLayout.CENTER);
 	}
