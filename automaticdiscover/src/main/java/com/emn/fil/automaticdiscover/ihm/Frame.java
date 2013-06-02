@@ -163,13 +163,13 @@ public class Frame extends JFrame {
 		// LUNCH THE SCAN
 		btnLunch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IPMask ipMask = new IPMask(new IP("172.17.2.0"), 24);
+				IPMask ipMask = new IPMask(new IP("10.143.45.1"), 24);
 				try {
 					Nmap nmap = new Nmap(ipMask);
+					System.out.println(nmap.getScan().toString());
 					for(Machine m : nmap.getScan().getListeMachine()) {
 						setMachineTable(m.toObject());
 					}
-					System.out.println(nmap.getScan().toString());
 				} catch (IOException ioE) {
 					ShowDialog dialog = 
 						new ShowDialog("Problème lors du lancement de l'analyse du réseau !\n" + ioE);

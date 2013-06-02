@@ -82,6 +82,6 @@ public class Machine {
 	}
 	
 	public String toString() {
-		return "Machine [osType=" + osType + ", ip=" + ip + ", hosntame =" + hostname + "]\n";
+		return "Machine [osType=" + osType + ", ip=" + ip + ", hostname =" + hostname + "]\n";
 	}
 }

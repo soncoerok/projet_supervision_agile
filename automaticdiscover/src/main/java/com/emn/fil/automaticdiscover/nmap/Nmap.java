@@ -2,6 +2,7 @@ package com.emn.fil.automaticdiscover.nmap;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,8 +31,8 @@ import com.emn.fil.automaticdiscover.parser.SaxHandler;
 public class Nmap {
 
 	/** Chemin vers l'application nmap. */
-	@Value("${chemin_nmap}")
-	private String cheminNmap;
+	//@Value("${chemin_nmap}")
+	private String cheminNmap = "D:\\nmap-6.25\\nmap.exe";
 
 	/** Chemin où on enregistre le fichier xml. */
 	private static final String cheminEnregistrementFichier = "./resultat.xml";
@@ -83,7 +84,6 @@ public class Nmap {
 
 			File fichier = new File(cheminEnregistrementFichier);
 			SaxHandler gestionnaire = new SaxHandler();
-			parametrageSaxHandler(gestionnaire, "startstr","ipv4", "hostname", "osclass", "host");
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
@@ -95,15 +95,6 @@ public class Nmap {
 			dialog.setVisible(true);
 		}
 		return null;
-	}
-	
-	public static void parametrageSaxHandler(SaxHandler gestionnaire, String baliseDate, String baliseAddress,
-			String baliseHostname, String baliseOs, String baliseSeparationMachine){
-		gestionnaire.setDateScan(baliseDate);
-		gestionnaire.setNomAttributAdresse(baliseAddress);
-		gestionnaire.setNomAttributHostname(baliseHostname);
-		gestionnaire.setNomAttributOs(baliseOs);
-		gestionnaire.setNomAttributMachine(baliseSeparationMachine);
 	}
 	
 	public Scan getScan() {
