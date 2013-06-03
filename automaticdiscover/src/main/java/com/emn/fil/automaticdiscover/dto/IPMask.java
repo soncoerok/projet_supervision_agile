@@ -3,9 +3,16 @@ package com.emn.fil.automaticdiscover.dto;
 
 public class IPMask {
 	private IP ip;
-	private int masque;
+	private Integer masque;
 	private final char separateur = '/';
 
+	/** Premier constructeur sans masque, une et seule ip. */
+	public IPMask(IP ip){
+		super();
+		this.ip = ip;
+	}
+	
+	/** Deuxième constructeur avec masque, pour une plage d'adresse ip. */
 	public IPMask(IP ip, int masque) {
 		super();
 		this.ip = ip;
@@ -29,7 +36,11 @@ public class IPMask {
 	}
 	
 	public String toString(){
-		return ip.toString() + this.separateur + this.masque;
+		String resultat = this.ip.toString();
+		if(masque !=null && masque !=32){
+			resultat += String.valueOf(separateur) + this.masque;
+		}
+		return resultat;
 	}
 
 }
