@@ -33,7 +33,7 @@ public class Nmap {
 
 	/** Chemin vers l'application nmap. */
 	//@Value("${chemin_nmap}")
-	private String cheminNmap = "D:\\nmap-6.25\\nmap.exe";
+	private String cheminNmap = "E:\\Outils\\nmap-6.25\\nmap.exe";
 
 	/** Chemin où on enregistre le fichier xml. */
 	private static final String CHEMIN_ENREGISTREMENT_FICHIER = "./resultat.xml";
@@ -107,7 +107,7 @@ public class Nmap {
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
-			//System.out.println("Liste : " + gestionnaire.getScan().toString());
+			System.out.println("Liste : " + gestionnaire.getScan().toString());
 			return gestionnaire.getScan();
 		} catch (Exception e) {
 			Main.log.trace(e.getStackTrace());

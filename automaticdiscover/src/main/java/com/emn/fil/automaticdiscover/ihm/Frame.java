@@ -37,6 +37,8 @@ import com.emn.fil.automaticdiscover.nmap.Nmap;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 @Component
@@ -163,7 +165,15 @@ public class Frame extends JFrame {
 		// LUNCH THE SCAN
 		btnLunch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IPMask ipMask = new IPMask(new IP("10.143.45.1"), 24);
+				String ipReseau = null;
+				try {
+					ipReseau = InetAddress.getLocalHost().getHostAddress();
+				} catch (UnknownHostException e1) {
+					System.out.println("Un problème a été rencontré lors de la récupération de l'adresse");
+					e1.printStackTrace();
+				}
+				
+				IPMask ipMask = new IPMask(new IP(ipReseau), 24);
 				try {
 					Nmap nmap = new Nmap(ipMask);
 					System.out.println(nmap.getScan().toString());
