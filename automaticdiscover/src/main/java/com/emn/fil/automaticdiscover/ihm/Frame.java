@@ -169,14 +169,14 @@ public class Frame extends JFrame {
 				try {
 					ipReseau = InetAddress.getLocalHost().getHostAddress();
 				} catch (UnknownHostException e1) {
-					System.out.println("Un problème a été rencontré lors de la récupération de l'adresse");
-					e1.printStackTrace();
+					ShowDialog dialog = 
+							new ShowDialog("Problème rencontré lors de la récupération de l'adresse !\n" + e1);
+					dialog.setVisible(true);
 				}
 				
 				IPMask ipMask = new IPMask(new IP(ipReseau), 24);
 				try {
 					Nmap nmap = new Nmap(ipMask);
-					System.out.println(nmap.getScan().toString());
 					for(Machine m : nmap.getScan().getListeMachine()) {
 						setMachineTable(m.toObject());
 					}

@@ -28,12 +28,12 @@ import com.emn.fil.automaticdiscover.utils.Commande;
  * @author Clement
  *
  */
-@Component("nmap")
+@Component
 public class Nmap {
 
 	/** Chemin vers l'application nmap. */
-	//@Value("${chemin_nmap}")
-	private String cheminNmap = "E:\\Outils\\nmap-6.25\\nmap.exe";
+	@Value("${chemin_nmap}")
+	private String cheminNmap = "D:\\Romain\\Programmes\\Nmap\\nmap.exe";
 
 	/** Chemin où on enregistre le fichier xml. */
 	private static final String CHEMIN_ENREGISTREMENT_FICHIER = "./resultat.xml";
