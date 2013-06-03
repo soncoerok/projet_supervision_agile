@@ -14,17 +14,17 @@ public class Main {
 	public static void main(String[] args) {
 
 		// Set System L&F
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (Exception e) {
-					Main.log.trace("ERROR : Impossible de modifier le theme");
-				}
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			Main.log.trace("ERROR : Impossible de modifier le theme");
+		}
 
-				ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext-base.xml");
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext-base.xml");
 
-				/* Lancement de la fenetre. */
-				Frame frame = (Frame) ctx.getBean("frame");
-				frame.setVisible(true);
-				
+		/* Lancement de la fenetre. */
+		Frame frame = (Frame) ctx.getBean("frame");
+		frame.setVisible(true);
+
 	}
 }
