@@ -24,7 +24,10 @@ public class Machine {
 	}
 	
 	public ArrayList<Object> toObject() {
-		return (ArrayList<Object>) Arrays.asList((Object) ip.toString(), osType.toString());
+		ArrayList<Object> uneLigneMachine = new ArrayList<Object>();
+		uneLigneMachine.add(ip.toString());
+		uneLigneMachine.add(hostname.toString());
+		return uneLigneMachine;
 	}
 
 	public IP getIp() {

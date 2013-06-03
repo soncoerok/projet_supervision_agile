@@ -107,7 +107,7 @@ public class Nmap {
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
-			System.out.println("Liste : " + gestionnaire.getScan().toString());
+			// System.out.println("Liste : " + gestionnaire.getScan().toString());
 			return gestionnaire.getScan();
 		} catch (Exception e) {
 			Main.log.trace(e.getStackTrace());
