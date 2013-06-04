@@ -18,8 +18,8 @@ public enum OptionsNmap {
 	PORTS_UTILES("--top-ports 5"), 
 	EXCLUSION_IP("--exclude"),
 	FASTER("-T5"),
-	TEMPS_MAX_ABANDON_PAQUET("--max-rtt-timeout 130ms"), // home : 20ms
-	TEMPS_INITIAL_ABANDON_PAQUET("--initial-rtt-timeout 20ms"), // home 1ms
+	TEMPS_MAX_ABANDON_PAQUET("--max-rtt-timeout"), // home : 20ms
+	TEMPS_INITIAL_ABADON_PAQUET("--initial-rtt-timeout"), // home 1ms
 	NOMBRE_ESSAI_SANS_REPONSES("--max-retries 0"), // home 0
 	TEMPS_ABANDON_MACHINE("--host-timeout 40s"), // home 20s
 	

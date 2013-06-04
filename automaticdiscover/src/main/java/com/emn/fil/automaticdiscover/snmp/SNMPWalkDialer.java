@@ -1,8 +1,5 @@
 package com.emn.fil.automaticdiscover.snmp;
 
-
-
-
 /*Copyright (c) 2009-2013 Ecole des Mines de Nantes.
  *
  *      This file is part of BtrCloud.
@@ -44,14 +41,21 @@ import java.util.EnumMap;
  */
 public class SNMPWalkDialer {
 
+	private final static String chemin = "C:\\usr\\bin\\";
 	private final static String cpuLoadOid = "1.3.6.1.2.1.25.3.3.1.2";
 	private final static String ramCapOid = "1.3.6.1.2.1.25.2.2.0";
 	private final static String ramOid = "1.3.6.1.2.1.25.2.3.1.3";
 	private final static String ramOidHeader = "1.3.6.1.2.1.25.2.3.1.6";
 	private final String header;
-	private final int ramOffset;
+	private int ramOffset = -1;
 	private int cpuCor = -1;
 	private int ramCap = -1;
+
+
+	public static void main(String[] args) throws IOException, InterruptedException {
+		SNMPWalkDialer snmp = new SNMPWalkDialer("localhost", "public", "1", 161);
+		System.out.println(snmp.getData().toString());
+	}
 
 	/**
 	 * Dialer constructor: ensure given IP accessibility by retrieving physical memory offset.
@@ -65,26 +69,31 @@ public class SNMPWalkDialer {
 	 */
 	public SNMPWalkDialer(String ip, String community, String version, int port) throws IOException, InterruptedException {
 		// build snmpwalk calls header
-		this.header = new StringBuilder().append("snmpwalk -c").append(community).append(" -v").append(version).
+		this.header = new StringBuilder().append("snmpwalk.exe -c ").append(community).append(" -v ").append(version).
 				append(port == 161 ? " " : "-p" + port + " ").append(ip).toString();
-		// call snmpwalk to get RAM offset (machine dependent)
-		Process process = new ProcessBuilder(buildCommand(header + " " + ramOid)).start();
-		// wait for correct snmpwalk ending
-		if (process.waitFor() == 0) {
-			// get snmpwalk output
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			// parse each line to find â€œPhysical Memoryâ€ offset
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				if (line.endsWith("Physical Memory") || line.endsWith("Physical Memory\"")) {
-					String[] split = line.split(String.valueOf(' '))[0].split("\\.");
-					ramOffset = Integer.parseInt(split[split.length - 1]);
-					// return to avoid exception throw when offset is not found
-					return;
-				} // if
-			} // while
-		} // if
-		throw new IOException("Could not get physical memory offset");
+		try {
+			// call snmpwalk to get RAM offset (machine dependent)
+			Process process = new ProcessBuilder("cmd.exe", "/C", chemin + header + " " + ramOid).redirectErrorStream(true).start();
+			// wait for correct snmpwalk ending
+			if (process.waitFor() == 0) {
+				// get snmpwalk output
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				// parse each line to find â€œPhysical Memoryâ€ offset
+				String line;
+				while ((line = bufferedReader.readLine()) != null) {
+					if (line.endsWith("Physical Memory") || line.endsWith("Physical Memory\"")) {
+
+						String[] split = line.split(String.valueOf(' '))[0].split("\\.");
+						ramOffset = Integer.parseInt(split[split.length - 1]);
+						// return to avoid exception throw when offset is not found
+						return;
+					} // if
+				}// while
+			} 
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new IOException("Could not get physical memory offset");
+		}
 	}
 
 	/**
@@ -123,12 +132,12 @@ public class SNMPWalkDialer {
 		return enumMap;
 	}
 
-	private Data getData() throws IOException, InterruptedException {
+	public Data getData() throws IOException, InterruptedException {
 		// set default values
 		int newCpuCor = -1, cpu = -1, newRamCap = -1, ram = -1;
 
 		// get #CPUs and CPU consumption
-		Process cpuProcess = new ProcessBuilder(buildCommand(header + ' ' + cpuLoadOid)).start();
+		Process cpuProcess = new ProcessBuilder("cmd.exe", "/C", chemin + header + ' ' + cpuLoadOid).start();
 		if (cpuProcess.waitFor() == 0) {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(cpuProcess.getInputStream()));
 			String line;
@@ -146,7 +155,7 @@ public class SNMPWalkDialer {
 		} // if
 
 		// get RAM capacity
-		Process ramCapProcess = new ProcessBuilder(buildCommand(header + ' ' + ramCapOid)).start();
+		Process ramCapProcess = new ProcessBuilder("cmd.exe", "/C", chemin + header + ' ' + ramCapOid).start();
 		if (ramCapProcess.waitFor() == 0) {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ramCapProcess.getInputStream()));
 			String line = bufferedReader.readLine();
@@ -158,7 +167,7 @@ public class SNMPWalkDialer {
 		} // if
 
 		// get RAM consumption
-		Process ramProcess = new ProcessBuilder(buildCommand(header + " " + ramOidHeader + '.' + ramOffset)).start();
+		Process ramProcess = new ProcessBuilder("cmd.exe", "/C", chemin + header + " " + ramOidHeader + '.' + ramOffset).start();
 		if (ramProcess.waitFor() == 0) {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ramProcess.getInputStream()));
 			String line = bufferedReader.readLine();
@@ -175,10 +184,6 @@ public class SNMPWalkDialer {
 		return new Data(newCpuCor, cpu, newRamCap, ram);
 	}
 
-	private static String[] buildCommand(String command) {
-		return new String[]{"/bin/sh", "-c", command};
-	}
-
 	private static final class Data {
 
 		final int cpuCor;
@@ -192,10 +197,15 @@ public class SNMPWalkDialer {
 			this.ramCap = ramCap;
 			this.ram = ram;
 		}
+
+		@Override
+		public String toString() {
+			return "Data [cpuCor=" + cpuCor + ", cpu=" + cpu + ", ramCap="
+					+ ramCap + ", ram=" + ram + "]";
+		}
 	}
 
 	public static enum Keys {
-
 		ramCap, cpuCor, cpu, ram,
 	}
 }
