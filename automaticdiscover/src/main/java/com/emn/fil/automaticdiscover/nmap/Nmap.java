@@ -64,9 +64,9 @@ public class Nmap {
 		// commandeNmap.ajouterOption(OptionsNmap.MOINS_DE_PORTS.getOption());
 		// commandeNmap.ajouterOption(OptionsNmap.PROTOCOLE_ICMP.getOption());
 		// commandeNmap.ajouterOption(OptionsNmap.PORTS_UTILES.getOption());
-		commandeNmap.ajouterOption(OptionsNmap.FASTER.getOption());
+		// commandeNmap.ajouterOption(OptionsNmap.FASTER.getOption());
 		// commandeNmap.ajouterOption(OptionsNmap.TEMPS_MAX_ABANDON_PAQUET.getOption());
-		commandeNmap.ajouterOption(OptionsNmap.TEMPS_INITIAL_ABADON_PAQUET.getOption());
+		commandeNmap.ajouterOption(OptionsNmap.TEMPS_INITIAL_ABANDON_PAQUET.getOption());
 		commandeNmap.ajouterOption(OptionsNmap.NOMBRE_ESSAI_SANS_REPONSES.getOption());
 		commandeNmap.ajouterOption(OptionsNmap.TEMPS_ABANDON_MACHINE.getOption());
 		commandeNmap.ajouterOptionAvecArguments(OptionsNmap.EXCLUSION_IP.getOption(), new String[]{InetAddress.getLocalHost().getHostAddress()});

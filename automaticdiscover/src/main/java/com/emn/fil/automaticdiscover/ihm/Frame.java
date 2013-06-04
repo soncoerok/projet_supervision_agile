@@ -28,17 +28,11 @@ import org.springframework.stereotype.Component;
 
 import com.emn.fil.automaticdiscover.dto.EnhancedTableModel;
 import com.emn.fil.automaticdiscover.dto.ExportDataToCSV;
-import com.emn.fil.automaticdiscover.dto.IP;
-import com.emn.fil.automaticdiscover.dto.IPMask;
-import com.emn.fil.automaticdiscover.dto.Machine;
 import com.emn.fil.automaticdiscover.dto.Scan;
+import com.emn.fil.automaticdiscover.ihm.listeners.BtnLaunchListener;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
-import com.emn.fil.automaticdiscover.nmap.Nmap;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 @Component
@@ -76,7 +70,9 @@ public class Frame extends JFrame {
 	private JLabel lblNbWindows = new JLabel("0");
 	private JLabel lblNbUnix = new JLabel("0");
 	private JLabel lblNbMac = new JLabel("0");
-	private JPanel panelResult;
+	private JLabel lblNbResult = new JLabel("0");
+	private JPanel panelResult = new JPanel();
+
 	@Autowired
 	private Scan scan;
 
@@ -115,6 +111,12 @@ public class Frame extends JFrame {
 		menuBar.add(file);
 		file.add(export);
 		file.add(quit);
+		
+		JMenu edit = new JMenu("Edition");
+		menuBar.add(edit);
+		
+		JMenuItem preferences = new JMenuItem("Préférences");
+		edit.add(preferences);
 		menuBar.add(help);
 		help.add(about);
 		
@@ -162,32 +164,9 @@ public class Frame extends JFrame {
 		gbcBtnLunch.insets = new Insets(0, 0, 5, 5);
 		gbcBtnLunch.gridx = 2;
 		gbcBtnLunch.gridy = 0;
-		// LUNCH THE SCAN
-		btnLunch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String ipReseau = null;
-				try {
-					ipReseau = InetAddress.getLocalHost().getHostAddress();
-				} catch (UnknownHostException e1) {
-					ShowDialog dialog = 
-							new ShowDialog("Problème rencontré lors de la récupération de l'adresse !\n" + e1);
-					dialog.setVisible(true);
-				}
-				
-				IPMask ipMask = new IPMask(new IP(ipReseau), 24);
-				try {
-					Nmap nmap = new Nmap(ipMask);
-					for(Machine m : nmap.getScan().getListeMachine()) {
-						setMachineTable(m.toObject());
-					}
-				} catch (IOException ioE) {
-					ShowDialog dialog = 
-						new ShowDialog("Problème lors du lancement de l'analyse du réseau !\n" + ioE);
-					dialog.setVisible(true);
-				}
-			}
-		});
 		
+		// LUNCH THE SCAN
+		btnLunch.addActionListener(new BtnLaunchListener(this));
 		panelTop.add(btnLunch, gbcBtnLunch);
 
 		JPanel panelIpRange = new JPanel();
@@ -252,7 +231,7 @@ public class Frame extends JFrame {
 		gbcBtnStop.gridy = 1;
 		panelTop.add(btnStop, gbcBtnStop);
 		
-		panelResult = new JPanel();
+		panelResult.setVisible(false);
 		GridBagConstraints gbcPanelResult = new GridBagConstraints();
 		gbcPanelResult.gridheight = 2;
 		gbcPanelResult.insets = new Insets(0, 0, 5, 0);
@@ -260,20 +239,26 @@ public class Frame extends JFrame {
 		gbcPanelResult.gridx = 3;
 		gbcPanelResult.gridy = 0;
 		panelTop.add(panelResult, gbcPanelResult);
-		GridBagLayout gbl_panelResult = new GridBagLayout();
-		gbl_panelResult.columnWidths = new int[]{106, 52, 0};
-		gbl_panelResult.rowHeights = new int[]{14, 0, 0, 0, 0};
-		gbl_panelResult.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panelResult.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panelResult.setLayout(gbl_panelResult);
+		GridBagLayout gblPanelResult = new GridBagLayout();
+		gblPanelResult.columnWidths = new int[]{106, 52, 0, 0};
+		gblPanelResult.rowHeights = new int[]{14, 0, 0, 0, 0};
+		gblPanelResult.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gblPanelResult.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panelResult.setLayout(gblPanelResult);
 		
 		JLabel lblRsultats = new JLabel("Résultats :");
 		GridBagConstraints gbcLblRsultats = new GridBagConstraints();
-		gbcLblRsultats.insets = new Insets(0, 0, 5, 0);
+		gbcLblRsultats.insets = new Insets(0, 0, 5, 5);
 		gbcLblRsultats.anchor = GridBagConstraints.NORTHWEST;
 		gbcLblRsultats.gridx = 1;
 		gbcLblRsultats.gridy = 0;
 		panelResult.add(lblRsultats, gbcLblRsultats);
+		
+		GridBagConstraints gbc_lblNbResult = new GridBagConstraints();
+		gbc_lblNbResult.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNbResult.gridx = 2;
+		gbc_lblNbResult.gridy = 0;
+		panelResult.add(lblNbResult, gbc_lblNbResult);
 		
 		JLabel lblWindows = new JLabel("Windows :");
 		GridBagConstraints gbcLblWindows = new GridBagConstraints();
@@ -284,7 +269,7 @@ public class Frame extends JFrame {
 		panelResult.add(lblWindows, gbcLblWindows);
 		
 		GridBagConstraints gbcLblNbWindows = new GridBagConstraints();
-		gbcLblNbWindows.insets = new Insets(0, 0, 5, 0);
+		gbcLblNbWindows.insets = new Insets(0, 0, 5, 5);
 		gbcLblNbWindows.gridx = 1;
 		gbcLblNbWindows.gridy = 1;
 		panelResult.add(lblNbWindows, gbcLblNbWindows);
@@ -298,7 +283,7 @@ public class Frame extends JFrame {
 		panelResult.add(lblUnix, gbcLblUnix);
 		
 		GridBagConstraints gbcLblNbUnix = new GridBagConstraints();
-		gbcLblNbUnix.insets = new Insets(0, 0, 5, 0);
+		gbcLblNbUnix.insets = new Insets(0, 0, 5, 5);
 		gbcLblNbUnix.gridx = 1;
 		gbcLblNbUnix.gridy = 2;
 		panelResult.add(lblNbUnix, gbcLblNbUnix);
@@ -312,6 +297,7 @@ public class Frame extends JFrame {
 		panelResult.add(lblMacOs, gbcLblMacOs);
 		
 		GridBagConstraints gbcLblNbMac = new GridBagConstraints();
+		gbcLblNbMac.insets = new Insets(0, 0, 0, 5);
 		gbcLblNbMac.gridx = 1;
 		gbcLblNbMac.gridy = 3;
 		panelResult.add(lblNbMac, gbcLblNbMac);
@@ -340,27 +326,20 @@ public class Frame extends JFrame {
 		tableMachine.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2 && tableMachine.getSelectedRow() > 0) {
-					ShowDialog dialog = new ShowDialog("afficher la pop up du détail de la machine !");
-					dialog.setVisible(true);
+				if (e.getClickCount() == 2 
+						&& tableMachine.getSelectedRow() >= 0 
+						&& tableMachine.getSelectedRow() < tableMachine.getRowCount()) {
+					MachineDetail detail = new MachineDetail(
+							scan.getListeMachine().get(tableMachine.getSelectedRow()), 
+							scan.getDateScan()
+						);
+					detail.setVisible(true);
 				}
 			}
 		});
 		JScrollPane sp = new JScrollPane();
 		sp.setViewportView(tableMachine);
-		
-		/*tableMachine.setModel(new DefaultTableModel(
-				new Object[][] {
-					{"172.17.1.24", "WINDOWS"},
-					{"172.17.1.31", "WINDOWS"},
-					{"172.17.1.94", "UNIX"},
-				},
-				new String[] {
-					"IP", "HostName"
-				}
-			));
-			*/
-		setMachineTable(new String[] {"IP", "HostName"}, new ArrayList<ArrayList<Object>>());
+		setMachineTable(new String[] {"IP", "HostName", "OS"}, new ArrayList<ArrayList<Object>>());
 		contentPane.add(sp, BorderLayout.CENTER);
 	}
 	
@@ -373,8 +352,47 @@ public class Frame extends JFrame {
 		tableMachine.setModel(new EnhancedTableModel(columnNames, data));
 	}
 
-	private void setMachineTable(ArrayList<Object> data) {
+	public void setMachineTable(ArrayList<Object> data) {
 		((EnhancedTableModel) tableMachine.getModel()).setEnhancedTableModel(data);
 	}
+	
+	public void setNbWindows(String win) {
+		this.lblNbWindows.setText(win);
+	}
+	
+	public void setNbUnix(String unix) {
+		this.lblNbUnix.setText(unix);
+	}
+	
+	public void setNbMac(String mac) {
+		this.lblNbMac.setText(mac);
+	}
+	
+	public int getNbWindows() {
+		return Integer.valueOf(this.lblNbWindows.getText());
+	}
+	
+	public int getNbUnix() {
+		return Integer.valueOf(this.lblNbUnix.getText());
+	}
+	
+	public int getNbMac() {
+		return Integer.valueOf(this.lblNbMac.getText());
+	}
+	
+	public void setNbResult(String nb) {
+		this.lblNbResult.setText(nb);
+	}
+	
+	public JPanel getPanelResult() {
+		return panelResult;
+	}
+	
+	public Scan getScan() {
+		return scan;
+	}
 
+	public void setScan(Scan scan) {
+		this.scan = scan;
+	}
 }

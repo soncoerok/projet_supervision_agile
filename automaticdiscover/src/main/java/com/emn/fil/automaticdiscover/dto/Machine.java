@@ -1,14 +1,13 @@
 package com.emn.fil.automaticdiscover.dto;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import com.emn.fil.automaticdiscover.dto.enums.OsType;
 
 public class Machine {
 
-	private IP ip;
-	private OsType osType;
-	private String hostname;
+	private IP ip = new IP("192.168.0.1");
+	private OsType osType = OsType.UNKNOWN;
+	private String hostname = "";
 
 	public Machine() {}
 	
@@ -26,7 +25,8 @@ public class Machine {
 	public ArrayList<Object> toObject() {
 		ArrayList<Object> uneLigneMachine = new ArrayList<Object>();
 		uneLigneMachine.add(ip.toString());
-		uneLigneMachine.add(hostname.toString());
+		uneLigneMachine.add(hostname);
+		uneLigneMachine.add(osType.toString());
 		return uneLigneMachine;
 	}
 
