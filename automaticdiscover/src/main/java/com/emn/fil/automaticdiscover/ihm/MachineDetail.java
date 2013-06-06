@@ -1,20 +1,23 @@
 package com.emn.fil.automaticdiscover.ihm;
 
 import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JProgressBar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.EnumMap;
+
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.border.EmptyBorder;
 
 import com.emn.fil.automaticdiscover.dto.Machine;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.emn.fil.automaticdiscover.snmp.SNMPWalkDialer;
+import com.emn.fil.automaticdiscover.snmp.SNMPWalkDialer.Keys;
 
 public class MachineDetail extends JFrame {
 
@@ -29,9 +32,13 @@ public class MachineDetail extends JFrame {
 	private JLabel os = new JLabel(machine.getOsType().toString());
 	private JLabel ram = new JLabel("ram");
 	private JLabel updated = new JLabel("updated");
+	// Progress bar
+	private JProgressBar progressBarCPU = new JProgressBar();
+	private JProgressBar progressBarRAM = new JProgressBar();
 	// Buttons
 	private JButton btnRestart = new JButton("Redémarrer");
 	private JButton btnUpdate = new JButton("Mettre à jour");
+	private JLabel cpu = new JLabel("cpu");
 	
 	/**
 	 * Create the frame.
@@ -58,6 +65,7 @@ public class MachineDetail extends JFrame {
 		_initFrame();
 		_buildTop();
 		_buildButtons();
+		_updateRamCpu();
 	}
 	
 	private void _initFrame() {
@@ -144,7 +152,6 @@ public class MachineDetail extends JFrame {
 		gbcRam.gridy = 4;
 		panelDetail.add(ram, gbcRam);
 		
-		JProgressBar progressBarRAM = new JProgressBar();
 		GridBagConstraints gbcProgressBarRAM = new GridBagConstraints();
 		gbcProgressBarRAM.insets = new Insets(0, 0, 5, 0);
 		gbcProgressBarRAM.gridx = 2;
@@ -159,7 +166,13 @@ public class MachineDetail extends JFrame {
 		gbcLblCpu.gridy = 5;
 		panelDetail.add(lblCpu, gbcLblCpu);
 		
-		JProgressBar progressBarCPU = new JProgressBar();
+		GridBagConstraints gbcCpu = new GridBagConstraints();
+		gbcCpu.anchor = GridBagConstraints.WEST;
+		gbcCpu.insets = new Insets(0, 0, 5, 5);
+		gbcCpu.gridx = 1;
+		gbcCpu.gridy = 5;
+		panelDetail.add(cpu, gbcCpu);
+		
 		GridBagConstraints gbcProgressBarCPU = new GridBagConstraints();
 		gbcProgressBarCPU.insets = new Insets(0, 0, 5, 0);
 		gbcProgressBarCPU.gridx = 2;
@@ -179,6 +192,11 @@ public class MachineDetail extends JFrame {
 		gbcBtnUpdate.insets = new Insets(0, 0, 0, 5);
 		gbcBtnUpdate.gridx = 1;
 		gbcBtnUpdate.gridy = 8;
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				_updateRamCpu();
+			}
+		});
 		panelDetail.add(btnUpdate, gbcBtnUpdate);
 		
 		JButton btnExit = new JButton("Fermer");
@@ -191,6 +209,21 @@ public class MachineDetail extends JFrame {
 		gbcBtnExit.gridx = 2;
 		gbcBtnExit.gridy = 8;
 		panelDetail.add(btnExit, gbcBtnExit);
+	}
+	
+	private void _updateRamCpu() {
+		try {
+			SNMPWalkDialer snmp = new SNMPWalkDialer(machine.getIp().toString(), "public", "1", 161);
+			EnumMap<Keys, Integer> map = snmp.collect();
+			ram.setText(String.valueOf(map.get(Keys.ramCap)));
+			progressBarRAM.setValue(map.get(Keys.ram) / map.get(Keys.ramCap));
+			cpu.setText(String.valueOf(map.get(Keys.cpuCor)));
+			progressBarCPU.setValue(map.get(Keys.cpu));
+		} catch (Exception e) {
+			ShowDialog dialog 
+				= new ShowDialog("Problème lors de la récupération des données RAM et CPU de la mchine distante !\n" + e.getMessage());
+			dialog.setVisible(true);
+		}
 	}
 	
 	public void setMachine(Machine machine) {
