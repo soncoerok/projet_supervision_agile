@@ -51,14 +51,6 @@ public class SNMPWalkDialer {
 	private int cpuCor = -1;
 	private int ramCap = -1;
 
-
-	public static void main(String[] args) throws IOException, InterruptedException {
-		SNMPWalkDialer snmp = new SNMPWalkDialer("localhost", "public", "1", 161);
-		System.out.println(snmp.collect());
-	}
-	
-	
-
 	/**
 	 * Dialer constructor: ensure given IP accessibility by retrieving physical memory offset.
 	 *

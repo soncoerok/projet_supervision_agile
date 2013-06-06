@@ -17,6 +17,7 @@ public class SaxHandler extends DefaultHandler{
 	private final String OS_WINDOWS = "windows";
 	private final String OS_LINUX = "linux";
 	private final String OS_MAC = "mac";
+	private final String OS_IOS = "ios";
 	private final String SEP_MACHINE = "host";
 	private List<Machine> listeMachine = new ArrayList<Machine>();
 	private List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
@@ -175,6 +176,8 @@ public class SaxHandler extends DefaultHandler{
 						} else if (valeur.getValue(index).toLowerCase().contains(OS_LINUX)){
 							osType = OsType.UNIX;
 						} else if (valeur.getValue(index).toLowerCase().contains(OS_MAC)){
+							osType = OsType.OSX;
+						} else if (valeur.getValue(index).toLowerCase().contains(OS_IOS)){
 							osType = OsType.OSX;
 						}
 					}
