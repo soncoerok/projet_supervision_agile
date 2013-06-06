@@ -54,8 +54,10 @@ public class SNMPWalkDialer {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		SNMPWalkDialer snmp = new SNMPWalkDialer("localhost", "public", "1", 161);
-		System.out.println(snmp.getData().toString());
+		System.out.println(snmp.collect());
 	}
+	
+	
 
 	/**
 	 * Dialer constructor: ensure given IP accessibility by retrieving physical memory offset.
@@ -132,7 +134,7 @@ public class SNMPWalkDialer {
 		return enumMap;
 	}
 
-	public Data getData() throws IOException, InterruptedException {
+	private Data getData() throws IOException, InterruptedException {
 		// set default values
 		int newCpuCor = -1, cpu = -1, newRamCap = -1, ram = -1;
 
@@ -196,12 +198,6 @@ public class SNMPWalkDialer {
 			this.cpu = cpu;
 			this.ramCap = ramCap;
 			this.ram = ram;
-		}
-
-		@Override
-		public String toString() {
-			return "Data [cpuCor=" + cpuCor + ", cpu=" + cpu + ", ramCap="
-					+ ramCap + ", ram=" + ram + "]";
 		}
 	}
 
