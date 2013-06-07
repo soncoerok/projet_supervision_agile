@@ -15,8 +15,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.emn.fil.automaticdiscover.dto.Machine;
 import com.emn.fil.automaticdiscover.snmp.RunSNMP;
-import com.emn.fil.automaticdiscover.snmp.SNMPWalkDialer;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -93,7 +91,7 @@ public class MachineDetail extends JFrame {
 	private void _buildTop() {
 		contentPane.add(panelDetail, BorderLayout.CENTER);
 		GridBagLayout gblPanelDetail = new GridBagLayout();
-		gblPanelDetail.columnWidths = new int[]{145, 145, 50, 145, 0};
+		gblPanelDetail.columnWidths = new int[]{145, 150, 60, 145, 0};
 		gblPanelDetail.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gblPanelDetail.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		gblPanelDetail.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};

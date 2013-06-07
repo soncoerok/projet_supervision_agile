@@ -36,7 +36,7 @@ public class EnhancedTableModel extends AbstractTableModel {
 	    }
 	}
 	
-	public void setEnhancedTableModel(ArrayList<?> arrayList) {
+	public void setEnhancedTableModel(ArrayList<Object> arrayList) {
 		// test si la nouvelle valeur passé en param existe déjà dans la JTable		
 		int i = 0;
 		boolean bool = false;
@@ -111,15 +111,5 @@ public class EnhancedTableModel extends AbstractTableModel {
 		enhancedTableModel(table);
 		// Update of entire table (data only).
 		fireTableDataChanged();
-    }
-
-    /*
-     * JTable uses this method to determine the default renderer/
-     * editor for each cell.  If we didn't implement this method,
-     * then the last column would contain text ("true"/"false"),
-     * rather than a check box.
-     */
-    public Class<? extends Object> getColumnClass(int c) {
-        return getValueAt(0, c).getClass();
     }
 }

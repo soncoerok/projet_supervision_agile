@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
 import com.emn.fil.automaticdiscover.dto.IP;
 import com.emn.fil.automaticdiscover.dto.IPMask;
 import com.emn.fil.automaticdiscover.dto.Machine;
@@ -21,6 +23,8 @@ public class BtnLaunchListener implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		frame.resetResults();
+		frame.setMachineTable(new String[] {"IP", "HostName", "OS"}, new ArrayList<ArrayList<Object>>());
 		String ipReseau = null;
 		try {
 			ipReseau = InetAddress.getLocalHost().getHostAddress();

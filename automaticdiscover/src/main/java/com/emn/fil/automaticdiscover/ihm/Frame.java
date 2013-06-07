@@ -97,7 +97,7 @@ public class Frame extends JFrame {
 	 */
 	private void _buildMenu() {
 		JMenuBar menuBar = new JMenuBar();
-		JMenu file = new JMenu("Fichier"), help = new JMenu("Aide");
+		JMenu file = new JMenu("Fichier"), help = new JMenu("Aide"), edit = new JMenu("Edition");
 		JMenuItem export = new JMenuItem("Exporter"), quit = new JMenuItem("Quitter"), 
 				about = new JMenuItem("A propos");
 		// Export data
@@ -111,8 +111,6 @@ public class Frame extends JFrame {
 		menuBar.add(file);
 		file.add(export);
 		file.add(quit);
-		
-		JMenu edit = new JMenu("Edition");
 		menuBar.add(edit);
 		
 		JMenuItem preferences = new JMenuItem("Préférences");
@@ -322,7 +320,6 @@ public class Frame extends JFrame {
 		tableMachine.setShowHorizontalLines(false);
 		tableMachine.setShowVerticalLines(false);
 		tableMachine.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
 		tableMachine.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -348,10 +345,10 @@ public class Frame extends JFrame {
 	 * @param columnNames Noms des colonnes
 	 * @param data Donnees dans l'ordre du nom des colonnes
 	 */
-	private void setMachineTable(String[] columnNames, ArrayList<ArrayList<Object>> data) {
+	public void setMachineTable(String[] columnNames, ArrayList<ArrayList<Object>> data) {
 		tableMachine.setModel(new EnhancedTableModel(columnNames, data));
 	}
-
+	
 	public void setMachineTable(ArrayList<Object> data) {
 		((EnhancedTableModel) tableMachine.getModel()).setEnhancedTableModel(data);
 	}
@@ -394,5 +391,11 @@ public class Frame extends JFrame {
 
 	public void setScan(Scan scan) {
 		this.scan = scan;
+	}
+	
+	public void resetResults() {
+		setNbWindows("0");
+		setNbUnix("0");
+		setNbMac("0");
 	}
 }
