@@ -21,7 +21,7 @@ public class BtnLaunchListener implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		String ipReseau = null;
+		String ipReseau = "172.17.2.32";/*
 		try {
 			ipReseau = InetAddress.getLocalHost().getHostAddress();
 		} catch (UnknownHostException unknown) {
@@ -29,8 +29,8 @@ public class BtnLaunchListener implements ActionListener {
 					new ShowDialog("Problème rencontré lors de la récupération de l'adresse !\n" + unknown);
 			dialog.setVisible(true);
 		}
-		
-		IPMask ipMask = new IPMask(new IP(ipReseau), 24);
+		*/
+		IPMask ipMask = new IPMask(new IP(ipReseau), 32);
 		try {
 			Nmap nmap = new Nmap(ipMask);
 			frame.setScan(nmap.getScan());
