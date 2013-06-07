@@ -15,6 +15,10 @@ import javax.swing.border.EmptyBorder;
 
 import com.emn.fil.automaticdiscover.dto.Machine;
 import com.emn.fil.automaticdiscover.snmp.RunSNMP;
+import com.emn.fil.automaticdiscover.snmp.SNMPWalkDialer;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MachineDetail extends JFrame {
 
@@ -23,6 +27,7 @@ public class MachineDetail extends JFrame {
 	private JPanel panelDetail = new JPanel();
 	// Attributes
 	private Machine machine = new Machine();
+	private Thread runSNMP = new Thread();
 	// Labels
 	private JLabel ip = new JLabel(machine.getIp().toString());
 	private JLabel hostName = new JLabel(machine.getHostname());
@@ -61,6 +66,15 @@ public class MachineDetail extends JFrame {
 	}
 	
 	private void _build() {
+		// Lorsqu'on ferme la fenetre, on arrete le thread
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				if(runSNMP.isAlive()) {
+					runSNMP.stop();
+				}
+			}
+		});
 		_initFrame();
 		_buildTop();
 		_buildButtons();
@@ -233,7 +247,8 @@ public class MachineDetail extends JFrame {
 	}
 	
 	private void _updateRamCpu() {
-		new Thread(new RunSNMP(this, machine.getIp().toString(), "public", "1", 161)).start();
+		runSNMP = new Thread(new RunSNMP(this, machine.getIp().toString(), "public", "1", 161));
+		runSNMP.start();
 	}
 	
 	public void setMachine(Machine machine) {

@@ -3699,3 +3699,5 @@
 [2013-06-06 21:43:42,872] TRACE Une nouvelle adresse a été rajoutée : 192.168.2.2
 [2013-06-06 21:43:42,872] TRACE l'adresse de fin a été atteinte
 [2013-06-06 21:43:42,872] TRACE Il y a 257 ip dans la plage
+[2013-06-07 13:18:07,274] TRACE Could not get CPU value
+[2013-06-07 13:26:30,055] TRACE Could not get CPU value
