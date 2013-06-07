@@ -144,7 +144,7 @@ public class SNMPWalkDialer {
 				++newCpuCor;
 			} // while
 			if (newCpuCor != -1 && cpu != -1) {
-				cpu = cpu * 10 / newCpuCor;
+				cpu = cpu  / newCpuCor;
 			} // if
 		} // if
 
@@ -167,7 +167,7 @@ public class SNMPWalkDialer {
 			String line = bufferedReader.readLine();
 			if (line != null) {
 				if (newRamCap != 0) {
-					ram = (int) (Long.parseLong(line.split(String.valueOf(' '))[3]) * 1000D * 64D / 1024D / (long) (newRamCap == -1 ? ramCap
+					ram = (int) (Long.parseLong(line.split(String.valueOf(' '))[3]) * 100D * 64D / 1024D / (long) (newRamCap == -1 ? ramCap
 							: newRamCap));
 				} else {
 					ram = -1;
