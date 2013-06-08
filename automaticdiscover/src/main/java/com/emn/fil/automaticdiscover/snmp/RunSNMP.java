@@ -28,11 +28,11 @@ public class RunSNMP implements Runnable {
 			this.snmp = new SNMPWalkDialer(ip, community, version, port);
 			EnumMap<Keys, Integer> map = snmp.collect();
 			if(detail.isActive()) {
-				detail.getRam().setText(String.valueOf(map.get(Keys.ramCap)) + " mb");
-				detail.getProgressBarRAM().setValue(map.get(Keys.ram) / map.get(Keys.ramCap));
+				detail.getRam().setText(String.valueOf(map.get(Keys.ramCap)) + " MO");
+				detail.getProgressBarRAM().setValue(map.get(Keys.ram) *100/ map.get(Keys.ramCap));
 				detail.getCpu().setText(String.valueOf(map.get(Keys.cpuCor)) + " coeurs");
 				detail.getProgressBarCPU().setValue(map.get(Keys.cpu));
-				detail.getPourcentageRAM().setText(String.valueOf(map.get(Keys.ram) / map.get(Keys.ramCap)) + " %");
+				detail.getPourcentageRAM().setText(String.valueOf(map.get(Keys.ram)*100 / map.get(Keys.ramCap)) + " %");
 				detail.getPourcentageCPU().setText(String.valueOf(map.get(Keys.cpu)) + " %");
 			}
 		} catch (Exception e) {

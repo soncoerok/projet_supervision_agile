@@ -2,66 +2,87 @@ package com.emn.fil.automaticdiscover.ihm.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import com.emn.fil.automaticdiscover.dto.IP;
-import com.emn.fil.automaticdiscover.dto.IPMask;
+import javax.swing.JOptionPane;
+
 import com.emn.fil.automaticdiscover.dto.Machine;
 import com.emn.fil.automaticdiscover.ihm.Frame;
-import com.emn.fil.automaticdiscover.ihm.ShowDialog;
 import com.emn.fil.automaticdiscover.nmap.Nmap;
 
 public class BtnLaunchListener implements ActionListener {
-	
+
 	private Frame frame;
-	
+	private Nmap nmap;
+
 	public BtnLaunchListener(Frame frame) {
 		this.frame = frame;
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
+		// TODO est dépilé en dernier du coup n'est pas désactivé ! bizarre sachant qu'on a bien des threads a part pour les traitements
+		this.frame.getBtnLunch().setEnabled(false);
 		frame.resetResults();
-		frame.setMachineTable(new String[] {"IP", "HostName", "OS"}, new ArrayList<ArrayList<Object>>());
-		String ipReseau = null;
+		frame.setMachineTable(new String[] { "IP", "HostName", "OS" }, new ArrayList<ArrayList<Object>>());
+
 		try {
-			ipReseau = InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException unknown) {
-			ShowDialog dialog = 
-					new ShowDialog("Problème rencontré lors de la récupération de l'adresse !\n" + unknown);
-			dialog.setVisible(true);
-		}
-		
-		IPMask ipMask = new IPMask(new IP(ipReseau), 24);
-		try {
-			Nmap nmap = new Nmap(ipMask);
+			// Thread Nmap
+			this.nmap = new Nmap(frame);
+			final Thread threadNmap = new Thread(this.nmap);
+
+			// Thread Progress car
+			Thread threadProgressBar = new Thread(){
+				public void run(){
+					int progress = 0;
+					
+					while (progress <= 100 && !nmap.isScanTermine()) {
+						frame.getProgressBar().setValue(progress);
+						frame.getProgressBar().update(frame.getProgressBar().getGraphics());
+						progress++;
+						try {
+							Thread.sleep(200);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+					}
+					frame.getProgressBar().setValue(100);
+					frame.getProgressBar().update(frame.getProgressBar().getGraphics());
+				}
+			};
+			
+			// Lancement des threads
+			threadNmap.start();
+			threadProgressBar.start();
+			
+			// Attente de la fin de nmap
+			threadNmap.join();
+			this.frame.getBtnLunch().setEnabled(true);
+			
+			// Apres traitement
 			frame.setScan(nmap.getScan());
-			frame.setNbResult(String.valueOf(nmap.getScan().getListeMachine().size()));
-			for(Machine m : nmap.getScan().getListeMachine()) {
+			frame.setNbResult(String.valueOf(this.nmap.getScan().getListeMachine().size()));
+			for (Machine m : this.nmap.getScan().getListeMachine()) {
 				frame.setMachineTable(m.toObject());
-				switch(m.getOsType()) {
-					case WINDOWS:
-						frame.setNbWindows(String.valueOf(frame.getNbWindows() + 1));
-						break;
-					
-					case UNIX:
-						frame.setNbUnix(String.valueOf(frame.getNbUnix() + 1));
-						break;
-					
-					case OSX:
-						frame.setNbMac(String.valueOf(frame.getNbMac() + 1));
-						break;
-					default:
-						break;
+				switch (m.getOsType()) {
+				case WINDOWS:
+					frame.setNbWindows(String.valueOf(frame.getNbWindows() + 1));
+					break;
+
+				case UNIX:
+					frame.setNbUnix(String.valueOf(frame.getNbUnix() + 1));
+					break;
+
+				case OSX:
+					frame.setNbMac(String.valueOf(frame.getNbMac() + 1));
+					break;
+				default:
+					break;
 				}
 			}
 			frame.getPanelResult().setVisible(true);
-		} catch (IOException ioE) {
-			ShowDialog dialog = 
-				new ShowDialog("Problème lors du lancement de l'analyse du réseau !\n" + ioE);
-			dialog.setVisible(true);
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(frame, "Problème lors du lancement de l'analyse du réseau !\n" + e1.getMessage(), "Nmap erreur",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }
