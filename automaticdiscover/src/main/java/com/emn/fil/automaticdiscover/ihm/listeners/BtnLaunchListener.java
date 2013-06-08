@@ -2,9 +2,11 @@ package com.emn.fil.automaticdiscover.ihm.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import com.emn.fil.automaticdiscover.dto.Machine;
 import com.emn.fil.automaticdiscover.ihm.Frame;
@@ -21,7 +23,8 @@ public class BtnLaunchListener implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		// TODO est dépilé en dernier du coup n'est pas désactivé ! bizarre sachant qu'on a bien des threads a part pour les traitements
-		this.frame.getBtnLunch().setEnabled(false);
+		frame.getBtnLunch().setEnabled(false);
+		
 		frame.resetResults();
 		frame.setMachineTable(new String[] { "IP", "HostName", "OS" }, new ArrayList<ArrayList<Object>>());
 
@@ -55,7 +58,7 @@ public class BtnLaunchListener implements ActionListener {
 			threadProgressBar.start();
 			
 			// Attente de la fin de nmap
-			threadNmap.join();
+			threadNmap.join(); 
 			this.frame.getBtnLunch().setEnabled(true);
 			
 			// Apres traitement
