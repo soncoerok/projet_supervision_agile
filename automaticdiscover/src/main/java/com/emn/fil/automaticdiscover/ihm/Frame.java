@@ -35,7 +35,6 @@ import com.emn.fil.automaticdiscover.dto.ExportDataToCSV;
 import com.emn.fil.automaticdiscover.dto.Scan;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnLaunchListener;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
-import com.emn.fil.automaticdiscover.ihm.listeners.ProgressBarListener;
 
 @Component
 public class Frame extends JFrame {
@@ -310,7 +309,6 @@ public class Frame extends JFrame {
 		gbcProgressBar.gridy = 2;
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
-		progressBar.addPropertyChangeListener(new ProgressBarListener(this));
 		panelTop.add(progressBar, gbcProgressBar);
 	}
 
