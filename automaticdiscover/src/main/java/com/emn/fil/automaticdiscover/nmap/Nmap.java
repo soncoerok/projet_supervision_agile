@@ -37,7 +37,7 @@ import com.emn.fil.automaticdiscover.utils.ExecutionProgramme;
 public class Nmap implements Runnable {
 
 	/** Chemin vers l'application nmap. */
-	private @Value("${nmap}") String cheminNmap;
+	private @Value("${nmap}") String cheminNmap = "D:\\nmap-6.25\\nmap.exe";
 
 	/** Chemin où on enregistre le fichier xml. */
 	private static String CHEMIN_ENREGISTREMENT_FICHIER = "./resultat.xml";
@@ -100,7 +100,7 @@ public class Nmap implements Runnable {
 			// definition des attributs a recup
 			List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
 			listeBalise.add(new BaliseXML("nmaprun", Arrays.asList("startstr")));
-			listeBalise.add(new BaliseXML("address", Arrays.asList("addr", "addrtype")));
+			listeBalise.add(new BaliseXML("address", Arrays.asList("addr", "addrtype", "vendor")));
 			listeBalise.add(new BaliseXML("hostname", Arrays.asList("name")));
 			listeBalise.add(new BaliseXML("osclass", Arrays.asList("osfamily")));
 

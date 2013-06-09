@@ -25,8 +25,9 @@ public class SaxHandler extends DefaultHandler{
 	private String dateScan;
 	private String adresseIp;
 	private String hostname;
+	private String hostnameMac;
 	private OsType osType;
-	
+
 
 	/**
 	 * détection d'ouverture de balise
@@ -47,8 +48,8 @@ public class SaxHandler extends DefaultHandler{
 			}
 		}
 	}
-	
-	
+
+
 
 
 	/**
@@ -59,7 +60,7 @@ public class SaxHandler extends DefaultHandler{
 		if (qName.equalsIgnoreCase(this.SEP_MACHINE)){
 			verifMachine();
 			Machine machine = new Machine(new IP(adresseIp), osType, hostname);
-			listeMachine.add(machine);
+			this.listeMachine.add(machine);
 			reset();
 		}
 	}
@@ -75,7 +76,7 @@ public class SaxHandler extends DefaultHandler{
 	 */
 	@Override
 	public void startDocument() throws SAXException {
-		dateScan = "";
+		this.dateScan = "";
 		reset();
 	}
 
@@ -84,7 +85,7 @@ public class SaxHandler extends DefaultHandler{
 	 */
 	@Override
 	public void endDocument() throws SAXException {
-		scan = new Scan(listeMachine, dateScan);
+		this.scan = new Scan(listeMachine, dateScan);
 	}
 
 	// ***** GETTERS *****
@@ -104,19 +105,24 @@ public class SaxHandler extends DefaultHandler{
 	public void setListeBalise(List<BaliseXML> listeBalise) {
 		this.listeBalise = listeBalise;
 	}
-	
+
 	// ***** METHODES PRIVEES *****
-	
+
 	private void verifMachine() {
-		if (hostname.isEmpty()){
-			hostname = "unknown";
+		if (this.hostname.isEmpty()){
+			if (this.hostnameMac.isEmpty()){
+				this.hostname = "unknown";
+			}else{
+				this.hostname = "[" + this.hostnameMac + "]";
+			}
 		}
 	}
-	
+
 	private void reset(){
-		adresseIp = "";
-		hostname = "";
-		osType = OsType.UNKNOWN;
+		this.adresseIp = "";
+		this.hostname = "";
+		this.hostnameMac = "";
+		this.osType = OsType.UNKNOWN;
 	}
 
 	private void _parseDateScan(String nomBalise, Attributes valeur,
@@ -124,8 +130,8 @@ public class SaxHandler extends DefaultHandler{
 		if (nomBalise.equalsIgnoreCase("nmaprun")){
 			for (int index = 0; index < valeur.getLength(); index++){
 				if (balise.getNomAttribut().contains(valeur.getQName(index))){
-					if (dateScan.isEmpty()){
-						dateScan = valeur.getValue(index);
+					if (this.dateScan.isEmpty()){
+						this.dateScan = valeur.getValue(index);
 					}
 				}
 			}
@@ -142,9 +148,13 @@ public class SaxHandler extends DefaultHandler{
 						tmp = valeur.getValue(index);
 					}else if (valeur.getQName(index).equalsIgnoreCase("addrtype")){
 						if (valeur.getValue(index).equalsIgnoreCase("ipv4")){
-							if (adresseIp.isEmpty()){
-								adresseIp = tmp;
+							if (this.adresseIp.isEmpty()){
+								this.adresseIp = tmp;
 							}
+						}
+					}else if (valeur.getQName(index).equalsIgnoreCase("vendor")){
+						if (this.hostnameMac.isEmpty()){
+							this.hostnameMac = valeur.getValue(index);
 						}
 					}
 				}
@@ -156,8 +166,8 @@ public class SaxHandler extends DefaultHandler{
 		if (nomBalise.equalsIgnoreCase("hostname")){
 			for (int index = 0; index < valeur.getLength(); index++){
 				if (valeur.getQName(index).equalsIgnoreCase("name")){
-					if (hostname.isEmpty()){
-						hostname = valeur.getValue(index);
+					if (this.hostname.isEmpty()){
+						this.hostname = valeur.getValue(index);
 					}
 				}
 			}
@@ -169,16 +179,16 @@ public class SaxHandler extends DefaultHandler{
 		if (nomBalise.equalsIgnoreCase("osclass")){
 			for (int index = 0; index < valeur.getLength(); index++){
 				if (balise.getNomAttribut().contains(valeur.getQName(index))){
-					if (osType.equals(OsType.UNKNOWN)){
-						osType = OsType.UNKNOWN;
-						if (valeur.getValue(index).toLowerCase().contains(OS_WINDOWS)){
-							osType = OsType.WINDOWS;
-						} else if (valeur.getValue(index).toLowerCase().contains(OS_LINUX)){
-							osType = OsType.UNIX;
-						} else if (valeur.getValue(index).toLowerCase().contains(OS_MAC)){
-							osType = OsType.OSX;
-						} else if (valeur.getValue(index).toLowerCase().contains(OS_IOS)){
-							osType = OsType.OSX;
+					if (this.osType.equals(OsType.UNKNOWN)){
+						this.osType = OsType.UNKNOWN;
+						if (valeur.getValue(index).toLowerCase().contains(this.OS_WINDOWS)){
+							this.osType = OsType.WINDOWS;
+						} else if (valeur.getValue(index).toLowerCase().contains(this.OS_LINUX)){
+							this.osType = OsType.UNIX;
+						} else if (valeur.getValue(index).toLowerCase().contains(this.OS_MAC)){
+							this.osType = OsType.OSX;
+						} else if (valeur.getValue(index).toLowerCase().contains(this.OS_IOS)){
+							this.osType = OsType.OSX;
 						}
 					}
 				}
