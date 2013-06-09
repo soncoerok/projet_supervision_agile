@@ -37,10 +37,10 @@ import com.emn.fil.automaticdiscover.utils.ExecutionProgramme;
 public class Nmap implements Runnable {
 
 	/** Chemin vers l'application nmap. */
-	private @Value("${chemin_nmap}") String cheminNmap;
+	private @Value("${nmap}") String cheminNmap;
 
 	/** Chemin où on enregistre le fichier xml. */
-	private static final String CHEMIN_ENREGISTREMENT_FICHIER = "./resultat.xml";
+	private static String CHEMIN_ENREGISTREMENT_FICHIER = "./resultat.xml";
 
 	@Autowired
 	private Scan scan;
@@ -51,9 +51,7 @@ public class Nmap implements Runnable {
 
 	private boolean scanTermine = false;
 
-	public Nmap() {
-
-	}
+	public Nmap() {}
 
 	public Nmap(Frame frame) throws UnknownHostException {
 		String ipReseau = InetAddress.getLocalHost().getHostAddress();

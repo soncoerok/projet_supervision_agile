@@ -33,11 +33,10 @@ public class BtnLaunchListener implements ActionListener {
 			this.nmap = new Nmap(frame);
 			final Thread threadNmap = new Thread(this.nmap);
 
-			// Thread Progress car
-			Thread threadProgressBar = new Thread(){
+			// Thread Progress bar
+			Thread threadProgressBar = new Thread() {
 				public void run(){
 					int progress = 0;
-					
 					while (progress <= 100 && !nmap.isScanTermine()) {
 						frame.getProgressBar().setValue(progress);
 						frame.getProgressBar().update(frame.getProgressBar().getGraphics());

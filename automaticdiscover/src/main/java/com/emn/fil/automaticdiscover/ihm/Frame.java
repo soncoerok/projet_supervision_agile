@@ -307,8 +307,8 @@ public class Frame extends JFrame {
 		gbcProgressBar.gridwidth = 4;
 		gbcProgressBar.gridx = 0;
 		gbcProgressBar.gridy = 2;
-		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
+		progressBar.setValue(0);
 		panelTop.add(progressBar, gbcProgressBar);
 	}
 
