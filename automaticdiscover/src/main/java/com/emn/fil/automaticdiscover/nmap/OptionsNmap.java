@@ -19,7 +19,7 @@ public enum OptionsNmap {
 	EXCLUSION_IP("--exclude"),
 	FASTER("-T5"),
 	TEMPS_MAX_ABANDON_PAQUET("--max-rtt-timeout"), // home : 20ms
-	TEMPS_INITIAL_ABADON_PAQUET("--initial-rtt-timeout"), // home 1ms
+	TEMPS_INITIAL_ABANDON_PAQUET("--initial-rtt-timeout"), // home 1ms
 	NOMBRE_ESSAI_SANS_REPONSES("--max-retries 0"), // home 0
 	TEMPS_ABANDON_MACHINE("--host-timeout 40s"), // home 20s
 	
