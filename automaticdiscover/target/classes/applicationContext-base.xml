@@ -8,6 +8,5 @@
      <context:component-scan base-package="com.emn.fil.automaticdiscover" />
      
      <context:property-placeholder location="classpath:configuration.properties"/>
-	<!--  test -->
 
 </beans>

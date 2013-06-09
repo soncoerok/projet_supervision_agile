@@ -33,8 +33,7 @@ import com.emn.fil.automaticdiscover.utils.ExecutionProgramme;
 public class Nmap {
 
 	/** Chemin vers l'application nmap. */
-	@Value("${chemin_nmap}")
-	private String cheminNmap = "D:\\Romain\\Programmes\\Nmap\\nmap.exe";
+	private @Value("${chemin_nmap}") String cheminNmap;
 
 	/** Chemin où on enregistre le fichier xml. */
 	private static final String CHEMIN_ENREGISTREMENT_FICHIER = "./resultat.xml";
@@ -102,7 +101,6 @@ public class Nmap {
 			gestionnaire.setListeBalise(listeBalise);
 			parseur.parse(fichier, gestionnaire);
 			
-			// System.out.println("Liste : " + gestionnaire.getScan().toString());
 			return gestionnaire.getScan();
 		} catch (Exception e) {
 			Main.log.trace(e.getStackTrace());
