@@ -2,11 +2,9 @@ package com.emn.fil.automaticdiscover.ihm.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import com.emn.fil.automaticdiscover.dto.Machine;
 import com.emn.fil.automaticdiscover.ihm.Frame;
