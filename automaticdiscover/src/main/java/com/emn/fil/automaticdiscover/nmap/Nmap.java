@@ -36,9 +36,6 @@ import com.emn.fil.automaticdiscover.utils.ExecutionProgramme;
 @Component
 public class Nmap implements Runnable {
 
-	/** Chemin vers l'application nmap. */
-	private @Value("${nmap}") String cheminNmap = "D:\\nmap-6.25\\nmap.exe";
-
 	/** Chemin où on enregistre le fichier xml. */
 	private static String CHEMIN_ENREGISTREMENT_FICHIER = "./resultat.xml";
 
@@ -68,7 +65,7 @@ public class Nmap implements Runnable {
 	 */
 	private Scan scanner(IPMask ipMask) throws IOException {
 		/* Build of the commande. */
-		Commande commandeNmap = new Commande(cheminNmap);
+		Commande commandeNmap = new Commande(frame.getCheminNmap());
 
 		// Process to do
 		commandeNmap.ajouterOption(OptionsNmap.HOST_NAME_DETECTION.getOption());
@@ -76,8 +73,8 @@ public class Nmap implements Runnable {
 
 		// Timing and performing
 		commandeNmap.ajouterOption(OptionsNmap.FASTER.getOption());
-		commandeNmap.ajouterOptionAvecArguments(OptionsNmap.TEMPS_MAX_ABANDON_PAQUET.getOption(), new String[] { "50ms" });
-		commandeNmap.ajouterOptionAvecArguments(OptionsNmap.TEMPS_INITIAL_ABANDON_PAQUET.getOption(), new String[] { "1ms" });
+		commandeNmap.ajouterOptionAvecArguments(OptionsNmap.TEMPS_MAX_ABANDON_PAQUET.getOption(), new String[] { "200ms" });
+		commandeNmap.ajouterOptionAvecArguments(OptionsNmap.TEMPS_INITIAL_ABANDON_PAQUET.getOption(), new String[] { "15ms" });
 		commandeNmap.ajouterOption(OptionsNmap.NOMBRE_ESSAI_SANS_REPONSES.getOption());
 		commandeNmap.ajouterOption(OptionsNmap.TEMPS_ABANDON_MACHINE.getOption());
 		commandeNmap.ajouterOptionAvecArguments(OptionsNmap.EXCLUSION_IP.getOption(), new String[] { InetAddress.getLocalHost().getHostAddress() });

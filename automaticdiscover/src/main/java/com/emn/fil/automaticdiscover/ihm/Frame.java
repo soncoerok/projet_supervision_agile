@@ -34,6 +34,7 @@ import com.emn.fil.automaticdiscover.dto.EnhancedTableModel;
 import com.emn.fil.automaticdiscover.dto.ExportDataToCSV;
 import com.emn.fil.automaticdiscover.dto.Scan;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnLaunchListener;
+import com.emn.fil.automaticdiscover.ihm.listeners.BtnPreferences;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
 
 @Component
@@ -50,6 +51,8 @@ public class Frame extends JFrame {
 	private String title;
 	@Value("${chemin_export_csv}")
 	private String pathExport;
+	@Value("${nmap}")
+	private String cheminNmap;
 
 	// List Machine
 	private JTable tableMachine = new JTable();
@@ -113,7 +116,10 @@ public class Frame extends JFrame {
 		file.add(quit);
 		menuBar.add(edit);
 
+		BtnPreferences listenerPreference = new BtnPreferences(this);
 		JMenuItem preferences = new JMenuItem("Préférences");
+		preferences.addActionListener(listenerPreference);
+		
 		edit.add(preferences);
 		menuBar.add(help);
 		help.add(about);
@@ -404,5 +410,13 @@ public class Frame extends JFrame {
 
 	public JButton getBtnLunch() {
 		return btnLunch;
+	}
+	
+	public String getCheminNmap(){
+		return this.cheminNmap;
+	}
+	
+	public void setCheminNmap(String chemin){
+		this.cheminNmap = chemin;
 	}
 }
