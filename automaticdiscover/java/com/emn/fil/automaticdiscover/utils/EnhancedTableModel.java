@@ -1,4 +1,4 @@
-package com.emn.fil.automaticdiscover.dto;
+package com.emn.fil.automaticdiscover.utils;
 
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;

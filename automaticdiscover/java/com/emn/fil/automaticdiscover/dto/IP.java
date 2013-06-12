@@ -46,20 +46,10 @@ public class IP implements Comparable<IP> {
 		return ip;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
 	public int compareTo(IP iPToCompare) {
 		return this.ip.compareTo(iPToCompare.ip);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object objectIP) {
 		if (objectIP instanceof IP) {
@@ -69,11 +59,6 @@ public class IP implements Comparable<IP> {
 		}	
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		return this.ip.hashCode();
@@ -83,6 +68,4 @@ public class IP implements Comparable<IP> {
 		Matcher matcher = patternIP.matcher(ip);
 		return matcher.matches();
 	}
-	
-	
 }

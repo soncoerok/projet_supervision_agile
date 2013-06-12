@@ -22,7 +22,4 @@ public class IPMaskTest extends TestCase {
 		IPMask ipMask = new IPMask(new IP(EXEMPLE_IP),24);
 		assertEquals(ipMask.toString(),"172.12.2.13/24");
 	}
-	
-	
-
 }

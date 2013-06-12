@@ -30,12 +30,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.emn.fil.automaticdiscover.dto.EnhancedTableModel;
 import com.emn.fil.automaticdiscover.dto.ExportDataToCSV;
 import com.emn.fil.automaticdiscover.dto.Scan;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnLaunchListener;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnPreferences;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
+import com.emn.fil.automaticdiscover.utils.EnhancedTableModel;
 
 @Component
 public class Frame extends JFrame {

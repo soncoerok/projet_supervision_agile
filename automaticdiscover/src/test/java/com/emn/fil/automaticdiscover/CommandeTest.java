@@ -20,6 +20,7 @@ public class CommandeTest extends TestCase {
     public void setUp() throws Exception {
 		 this.commande = new Commande(EXEMPLE_COMMANDE); 
     }
+	
 	@Test
 	public void testSansArguments(){
 		assertEquals(commande.getCommandeFinale(),EXEMPLE_COMMANDE);
@@ -49,8 +50,4 @@ public class CommandeTest extends TestCase {
 		this.commande.ajouterOptionAvecArguments(EXEMPLE_OPTION_1,EXEMPLE_ARG_1,EXEMPLE_ARG_2);
 		assertEquals(commande.getCommandeFinale(),EXEMPLE_COMMANDE + " " + EXEMPLE_OPTION_1 + " " + EXEMPLE_ARG_1 + " " +EXEMPLE_ARG_2);
 	}
-	
-	
-	
-
 }
