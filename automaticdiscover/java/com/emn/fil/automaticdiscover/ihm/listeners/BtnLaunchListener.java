@@ -4,33 +4,39 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.emn.fil.automaticdiscover.ihm.Frame;
 import com.emn.fil.automaticdiscover.ihm.threads.TaskNmap;
 import com.emn.fil.automaticdiscover.ihm.threads.TaskProgressBar;
+import com.emn.fil.automaticdiscover.nmap.Nmap;
 
 public class BtnLaunchListener implements ActionListener {
 
-	@Autowired
 	public Frame frame;
+	public Nmap nmap;
 
-	public BtnLaunchListener() {
+	public BtnLaunchListener(Frame frame) {
+		this.frame = frame;
+		try {
+			this.nmap = new Nmap(frame);
+		} catch (UnknownHostException e) {
+			JOptionPane.showMessageDialog(frame, "La récupération de l'adresse a écouché !\n" + e.getMessage(), "Erreur réseau",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(frame == null);
 		frame.getBtnLunch().setEnabled(false);
 		frame.resetResults();
 		frame.setMachineTable(new String[] { "IP", "HostName", "OS" }, new ArrayList<ArrayList<Object>>());
 
 		try {
 			// Initialisation
-			TaskProgressBar taskProgressBar = new TaskProgressBar(frame.getProgressBar());
+			TaskProgressBar taskProgressBar = new TaskProgressBar(frame.getProgressBar(), nmap);
 			taskProgressBar.addPropertyChangeListener(new PropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent evt) {
 					if ("progress".equals(evt.getPropertyName())) {
@@ -38,7 +44,7 @@ public class BtnLaunchListener implements ActionListener {
 					}
 				}
 			});
-			TaskNmap taskNmap = new TaskNmap();
+			TaskNmap taskNmap = new TaskNmap(frame, nmap);
 
 			// Lancement tâches
 			taskNmap.execute();

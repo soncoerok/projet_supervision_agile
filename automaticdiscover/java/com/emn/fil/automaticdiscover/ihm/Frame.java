@@ -42,17 +42,25 @@ public class Frame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
 	// configuration
 	@Value("${ihm.frame_width}")
 	private int width;
+	
 	@Value("${ihm.frame_height}")
 	private int height;
+	
 	@Value("${ihm.frame_title}")
 	private String title;
+	
 	@Value("${chemin_export_csv}")
 	private String pathExport;
+	
 	@Value("${nmap}")
 	private String cheminNmap;
+	
+	@Value("${vitesse_scan}")
+	private String vitesseScan;
 
 	// List Machine
 	private JTable tableMachine = new JTable();
@@ -94,6 +102,7 @@ public class Frame extends JFrame {
 		this._buildMenu();
 		this._buildTop();
 		this._buildBody();
+
 	}
 
 	/**
@@ -119,7 +128,7 @@ public class Frame extends JFrame {
 		BtnPreferences listenerPreference = new BtnPreferences(this);
 		JMenuItem preferences = new JMenuItem("Préférences");
 		preferences.addActionListener(listenerPreference);
-		
+
 		edit.add(preferences);
 		menuBar.add(help);
 		help.add(about);
@@ -411,12 +420,22 @@ public class Frame extends JFrame {
 	public JButton getBtnLunch() {
 		return btnLunch;
 	}
-	
-	public String getCheminNmap(){
+
+	public String getCheminNmap() {
 		return this.cheminNmap;
 	}
-	
-	public void setCheminNmap(String chemin){
+
+	public void setCheminNmap(String chemin) {
 		this.cheminNmap = chemin;
 	}
+
+	public String getVistesseScan() {
+		return this.vitesseScan;
+
+	}
+
+	public void setVistesseScan(String scan) {
+		this.vitesseScan = scan;
+	}
+
 }
