@@ -13,7 +13,7 @@ public class EnhancedTableModel extends AbstractTableModel {
 		this.columnNames = columnNames;
 		this.data = new Object[arrayList.size()][columnNames.length];
 		int row = 0;
-		for(ArrayList<?> arr : arrayList) {
+		for(ArrayList<Object> arr : arrayList) {
 			int col = 0;
 			for(Object value : arr) {
 				this.data[row][col] = value;
@@ -26,7 +26,7 @@ public class EnhancedTableModel extends AbstractTableModel {
 	private void enhancedTableModel(ArrayList<ArrayList<Object>> arrayList) {
 		this.data = new Object[arrayList.size()][columnNames.length];
 		int row = 0;
-		for(ArrayList<?> arr : arrayList) {
+		for(ArrayList<Object> arr : arrayList) {
 			int col = 0;
 			for(Object value : arr) {
 				this.data[row][col] = value;
