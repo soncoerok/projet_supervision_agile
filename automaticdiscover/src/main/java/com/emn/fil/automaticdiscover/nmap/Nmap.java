@@ -77,7 +77,7 @@ public class Nmap /*implements Runnable*/ {
 		
 		// Vitess and performing chosse by user
 		if (frame.getVistesseScan().equals(Nmap.LENT)){
-			this.modifierVitesseScan(1000, 500, 1);
+			this.modifierVitesseScan(700, 100, 0);
 		}
 		
 		else if (frame.getVistesseScan().equals(Nmap.MOYEN)){
@@ -89,7 +89,7 @@ public class Nmap /*implements Runnable*/ {
 			this.modifierVitesseScan(100, 10, 0);
 		}
 		
-		commandeNmap.ajouterOption(OptionsNmap.TEMPS_ABANDON_MACHINE.getOption());
+		//commandeNmap.ajouterOption(OptionsNmap.TEMPS_ABANDON_MACHINE.getOption());
 		commandeNmap.ajouterOptionAvecArguments(OptionsNmap.EXCLUSION_IP.getOption(), new String[] { InetAddress.getLocalHost().getHostAddress() });
 
 		// Output
