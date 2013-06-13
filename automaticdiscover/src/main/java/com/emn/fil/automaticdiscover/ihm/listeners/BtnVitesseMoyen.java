@@ -8,9 +8,10 @@ import javax.swing.JRadioButton;
 import com.emn.fil.automaticdiscover.ihm.EditPreferences;
 import com.emn.fil.automaticdiscover.utils.GestionProperties;
 
-public class BtnVitesseMoyen implements ActionListener{
-	EditPreferences preferences;
-	JRadioButton btnMoyen;
+public class BtnVitesseMoyen implements ActionListener {
+	
+	private EditPreferences preferences;
+	private JRadioButton btnMoyen;
 	
 	public BtnVitesseMoyen(EditPreferences preferences, JRadioButton button){
 		this.preferences = preferences;

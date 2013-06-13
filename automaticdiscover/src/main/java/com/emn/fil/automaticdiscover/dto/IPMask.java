@@ -4,7 +4,7 @@ package com.emn.fil.automaticdiscover.dto;
 public class IPMask {
 	private IP ip;
 	private Integer masque;
-	private final char separateur = '/';
+	private static final char separateur = '/';
 
 	/** Premier constructeur sans masque, une et seule ip. */
 	public IPMask(IP ip){

@@ -14,11 +14,11 @@ import com.emn.fil.automaticdiscover.dto.enums.OsType;
 
 public class SaxHandler extends DefaultHandler{
 
-	private final String OS_WINDOWS = "windows";
-	private final String OS_LINUX = "linux";
-	private final String OS_MAC = "mac";
-	private final String OS_IOS = "ios";
-	private final String SEP_MACHINE = "host";
+	private static final String OS_WINDOWS = "windows";
+	private static final String OS_LINUX = "linux";
+	private static final String OS_MAC = "mac";
+	private static final String OS_IOS = "ios";
+	private static final String SEP_MACHINE = "host";
 	private List<Machine> listeMachine = new ArrayList<Machine>();
 	private List<BaliseXML> listeBalise = new ArrayList<BaliseXML>();
 	private Scan scan;
@@ -49,15 +49,12 @@ public class SaxHandler extends DefaultHandler{
 		}
 	}
 
-
-
-
 	/**
 	 * détection fin de balise
 	 */
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException{
-		if (qName.equalsIgnoreCase(this.SEP_MACHINE)){
+		if (qName.equalsIgnoreCase(SEP_MACHINE)){
 			verifMachine();
 			Machine machine = new Machine(new IP(adresseIp), osType, hostname);
 			this.listeMachine.add(machine);
@@ -109,16 +106,16 @@ public class SaxHandler extends DefaultHandler{
 	// ***** METHODES PRIVEES *****
 
 	private void verifMachine() {
-		if (this.hostname.isEmpty()){
-			if (this.hostnameMac.isEmpty()){
+		if (this.hostname.isEmpty()) {
+			if (this.hostnameMac.isEmpty()) {
 				this.hostname = "unknown";
-			}else{
+			} else {
 				this.hostname = "[" + this.hostnameMac + "]";
 			}
 		}
 	}
 
-	private void reset(){
+	private void reset() {
 		this.adresseIp = "";
 		this.hostname = "";
 		this.hostnameMac = "";
@@ -129,10 +126,8 @@ public class SaxHandler extends DefaultHandler{
 			BaliseXML balise) {
 		if (nomBalise.equalsIgnoreCase("nmaprun")){
 			for (int index = 0; index < valeur.getLength(); index++){
-				if (balise.getNomAttribut().contains(valeur.getQName(index))){
-					if (this.dateScan.isEmpty()){
-						this.dateScan = valeur.getValue(index);
-					}
+				if (balise.getNomAttribut().contains(valeur.getQName(index)) && this.dateScan.isEmpty()){
+					this.dateScan = valeur.getValue(index);
 				}
 			}
 		}
@@ -140,22 +135,19 @@ public class SaxHandler extends DefaultHandler{
 
 	private void _parseAdresseIP(String nomBalise, Attributes valeur,
 			BaliseXML balise) {
-		if (nomBalise.equalsIgnoreCase("address")){
+		if (nomBalise.equalsIgnoreCase("address")) {
 			String tmp = "";
-			for (int index = 0; index < valeur.getLength(); index++){
-				if (balise.getNomAttribut().contains(valeur.getQName(index))){
-					if (valeur.getQName(index).equalsIgnoreCase("addr")){
+			for (int index = 0; index < valeur.getLength(); index++) {
+				if (balise.getNomAttribut().contains(valeur.getQName(index))) {
+					if (valeur.getQName(index).equalsIgnoreCase("addr")) {
 						tmp = valeur.getValue(index);
-					}else if (valeur.getQName(index).equalsIgnoreCase("addrtype")){
-						if (valeur.getValue(index).equalsIgnoreCase("ipv4")){
-							if (this.adresseIp.isEmpty()){
-								this.adresseIp = tmp;
-							}
+					} else if (valeur.getQName(index).equalsIgnoreCase("addrtype")) {
+						if (valeur.getValue(index).equalsIgnoreCase("ipv4") && this.adresseIp.isEmpty()) {
+							this.adresseIp = tmp;
 						}
-					}else if (valeur.getQName(index).equalsIgnoreCase("vendor")){
-						if (this.hostnameMac.isEmpty()){
-							this.hostnameMac = valeur.getValue(index);
-						}
+					} else if (valeur.getQName(index).equalsIgnoreCase("vendor") 
+							&& this.hostnameMac.isEmpty()) {
+						this.hostnameMac = valeur.getValue(index);
 					}
 				}
 			}
@@ -163,12 +155,10 @@ public class SaxHandler extends DefaultHandler{
 	}
 
 	private void _parseHostname(String nomBalise, Attributes valeur) {
-		if (nomBalise.equalsIgnoreCase("hostname")){
-			for (int index = 0; index < valeur.getLength(); index++){
-				if (valeur.getQName(index).equalsIgnoreCase("name")){
-					if (this.hostname.isEmpty()){
-						this.hostname = valeur.getValue(index);
-					}
+		if (nomBalise.equalsIgnoreCase("hostname")) {
+			for (int index = 0; index < valeur.getLength(); index++) {
+				if (valeur.getQName(index).equalsIgnoreCase("name") && this.hostname.isEmpty()) {
+					this.hostname = valeur.getValue(index);
 				}
 			}
 		}
@@ -179,15 +169,15 @@ public class SaxHandler extends DefaultHandler{
 		if (nomBalise.equalsIgnoreCase("osclass")){
 			for (int index = 0; index < valeur.getLength(); index++){
 				if (balise.getNomAttribut().contains(valeur.getQName(index))){
-					if (this.osType.equals(OsType.UNKNOWN)){
+					if (this.osType.equals(OsType.UNKNOWN)) {
 						this.osType = OsType.UNKNOWN;
-						if (valeur.getValue(index).toLowerCase().contains(this.OS_WINDOWS)){
+						if (valeur.getValue(index).toLowerCase().contains(OS_WINDOWS)){
 							this.osType = OsType.WINDOWS;
-						} else if (valeur.getValue(index).toLowerCase().contains(this.OS_LINUX)){
+						} else if (valeur.getValue(index).toLowerCase().contains(OS_LINUX)){
 							this.osType = OsType.UNIX;
-						} else if (valeur.getValue(index).toLowerCase().contains(this.OS_MAC)){
+						} else if (valeur.getValue(index).toLowerCase().contains(OS_MAC)){
 							this.osType = OsType.OSX;
-						} else if (valeur.getValue(index).toLowerCase().contains(this.OS_IOS)){
+						} else if (valeur.getValue(index).toLowerCase().contains(OS_IOS)){
 							this.osType = OsType.OSX;
 						}
 					}

@@ -8,10 +8,10 @@ import javax.swing.JRadioButton;
 import com.emn.fil.automaticdiscover.ihm.EditPreferences;
 import com.emn.fil.automaticdiscover.utils.GestionProperties;
 
-public class BtnVitesseRapide implements ActionListener{
+public class BtnVitesseRapide implements ActionListener {
 	
-	EditPreferences preferences;
-	JRadioButton btnRapide;
+	private EditPreferences preferences;
+	private JRadioButton btnRapide;
 	
 	public BtnVitesseRapide(EditPreferences preferences, JRadioButton button){
 		this.preferences = preferences;
@@ -23,5 +23,4 @@ public class BtnVitesseRapide implements ActionListener{
 		preferences.getFrame().setVistesseScan("Rapide");
 		GestionProperties.enregistrerProperties("vitesse_scan", "Rapide");
 	}
-
 }

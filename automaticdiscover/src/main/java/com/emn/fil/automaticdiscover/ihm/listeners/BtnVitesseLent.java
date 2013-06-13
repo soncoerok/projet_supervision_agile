@@ -10,8 +10,8 @@ import com.emn.fil.automaticdiscover.utils.GestionProperties;
 
 public class BtnVitesseLent implements ActionListener{
 	
-	EditPreferences preferences;
-	JRadioButton btnLent;
+	private EditPreferences preferences;
+	private JRadioButton btnLent;
 	
 	public BtnVitesseLent(EditPreferences preferences, JRadioButton button){
 		this.preferences = preferences;

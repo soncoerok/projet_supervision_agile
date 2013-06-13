@@ -268,7 +268,7 @@ public class Frame extends JFrame {
 		
 		btnStop.addActionListener(new BtnStopListener(this));
 		panelTop.add(btnStop, gbcBtnStop);
-
+		
 		GridBagConstraints gbcPanelResult = new GridBagConstraints();
 		gbcPanelResult.gridheight = 2;
 		gbcPanelResult.insets = new Insets(0, 0, 5, 0);

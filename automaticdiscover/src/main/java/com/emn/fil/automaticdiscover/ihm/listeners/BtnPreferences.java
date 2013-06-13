@@ -8,7 +8,7 @@ import com.emn.fil.automaticdiscover.ihm.Frame;
 
 public class BtnPreferences implements ActionListener{
 
-	Frame frame;
+	private Frame frame;
 	
 	public BtnPreferences (Frame frame){
 		this.frame = frame;		
