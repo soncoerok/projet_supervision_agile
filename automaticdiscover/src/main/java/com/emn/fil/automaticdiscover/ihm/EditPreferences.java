@@ -20,6 +20,8 @@ import com.emn.fil.automaticdiscover.ihm.listeners.BtnModifierChemin;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnVitesseLent;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnVitesseMoyen;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnVitesseRapide;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class EditPreferences extends JFrame {
 
@@ -41,14 +43,13 @@ public class EditPreferences extends JFrame {
 		gblPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		panel.setLayout(gblPanel);
 		
-		// Chemin Nmap
-		Label labelNmap = new Label("Chemin d'accès nmap :");
-		GridBagConstraints gbcLabelNmap = new GridBagConstraints();
-		gbcLabelNmap.insets = new Insets(0, 0, 5, 5);
-		gbcLabelNmap.fill = GridBagConstraints.BOTH;
-		gbcLabelNmap.gridx = 0;
-		gbcLabelNmap.gridy = 0;
-		panel.add(labelNmap, gbcLabelNmap);
+		JLabel lblCheminDaccsNmap = new JLabel("Chemin d'accès nmap :");
+		GridBagConstraints gbc_lblCheminDaccsNmap = new GridBagConstraints();
+		gbc_lblCheminDaccsNmap.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblCheminDaccsNmap.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCheminDaccsNmap.gridx = 0;
+		gbc_lblCheminDaccsNmap.gridy = 0;
+		panel.add(lblCheminDaccsNmap, gbc_lblCheminDaccsNmap);
 		
 		textChemin = new JTextField();
 		GridBagConstraints gbcTextField = new GridBagConstraints();
@@ -72,8 +73,10 @@ public class EditPreferences extends JFrame {
 		panel.add(btnModifier, gbcBtnModifier);
 		
 		// Vistesse du scan
-		JLabel lblTypeScan = new JLabel("Caractéristique du scan");
+		JLabel lblTypeScan = new JLabel("Caractéristique du scan :");
+		lblTypeScan.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbcLblTypeScan = new GridBagConstraints();
+		gbcLblTypeScan.fill = GridBagConstraints.BOTH;
 		gbcLblTypeScan.insets = new Insets(0, 0, 5, 5);
 		gbcLblTypeScan.gridx = 0;
 		gbcLblTypeScan.gridy = 1;
