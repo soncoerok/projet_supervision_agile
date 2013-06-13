@@ -11,8 +11,9 @@ import com.emn.fil.automaticdiscover.ihm.EditPreferences;
 import com.emn.fil.automaticdiscover.utils.GestionProperties;
 
 public class BtnModifierChemin implements ActionListener {
-	EditPreferences preferences;
-	JTextField textChemin;
+	
+	private EditPreferences preferences;
+	private JTextField textChemin;
 
 	public BtnModifierChemin(EditPreferences preferences, JTextField textfield){
 		this.preferences = preferences;

@@ -35,6 +35,7 @@ import com.emn.fil.automaticdiscover.dto.Scan;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnLaunchListener;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnPreferences;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
+import com.emn.fil.automaticdiscover.ihm.listeners.BtnStopListener;
 import com.emn.fil.automaticdiscover.utils.EnhancedTableModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -153,7 +154,7 @@ public class Frame extends JFrame {
 		JPanel panelTop = new JPanel();
 		contentPane.add(panelTop, BorderLayout.NORTH);
 		GridBagLayout gblPanelHaut = new GridBagLayout();
-		gblPanelHaut.columnWidths = new int[] { 20, 229, 107, 41, 0 };
+		gblPanelHaut.columnWidths = new int[] { 20, 229, 151, 41, 0 };
 		gblPanelHaut.rowHeights = new int[] { 20, 20, 0, 0 };
 		gblPanelHaut.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gblPanelHaut.rowWeights = new double[] { 1.0, 1.0, 0.0, Double.MIN_VALUE };
@@ -202,7 +203,7 @@ public class Frame extends JFrame {
 		buttonGroup .add(rdbtnToutReseau);
 
 		GridBagConstraints gbcBtnLunch = new GridBagConstraints();
-		gbcBtnLunch.anchor = GridBagConstraints.WEST;
+		gbcBtnLunch.anchor = GridBagConstraints.EAST;
 		gbcBtnLunch.insets = new Insets(0, 0, 5, 5);
 		gbcBtnLunch.gridx = 2;
 		gbcBtnLunch.gridy = 0;
@@ -260,10 +261,12 @@ public class Frame extends JFrame {
 		panelIpRange.add(comboMasqueIp, gbc_comboMasqueIP);
 
 		GridBagConstraints gbcBtnStop = new GridBagConstraints();
-		gbcBtnStop.anchor = GridBagConstraints.WEST;
+		gbcBtnStop.anchor = GridBagConstraints.EAST;
 		gbcBtnStop.insets = new Insets(0, 0, 5, 5);
 		gbcBtnStop.gridx = 2;
 		gbcBtnStop.gridy = 1;
+		
+		btnStop.addActionListener(new BtnStopListener(this));
 		panelTop.add(btnStop, gbcBtnStop);
 
 		GridBagConstraints gbcPanelResult = new GridBagConstraints();

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,7 +19,6 @@ import com.emn.fil.automaticdiscover.ihm.listeners.BtnModifierChemin;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnVitesseLent;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnVitesseMoyen;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnVitesseRapide;
-import java.awt.Font;
 import javax.swing.SwingConstants;
 
 public class EditPreferences extends JFrame {
@@ -44,12 +42,12 @@ public class EditPreferences extends JFrame {
 		panel.setLayout(gblPanel);
 		
 		JLabel lblCheminDaccsNmap = new JLabel("Chemin d'accès nmap :");
-		GridBagConstraints gbc_lblCheminDaccsNmap = new GridBagConstraints();
-		gbc_lblCheminDaccsNmap.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblCheminDaccsNmap.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCheminDaccsNmap.gridx = 0;
-		gbc_lblCheminDaccsNmap.gridy = 0;
-		panel.add(lblCheminDaccsNmap, gbc_lblCheminDaccsNmap);
+		GridBagConstraints gbcLblCheminDaccsNmap = new GridBagConstraints();
+		gbcLblCheminDaccsNmap.fill = GridBagConstraints.HORIZONTAL;
+		gbcLblCheminDaccsNmap.insets = new Insets(0, 0, 5, 5);
+		gbcLblCheminDaccsNmap.gridx = 0;
+		gbcLblCheminDaccsNmap.gridy = 0;
+		panel.add(lblCheminDaccsNmap, gbcLblCheminDaccsNmap);
 		
 		textChemin = new JTextField();
 		GridBagConstraints gbcTextField = new GridBagConstraints();

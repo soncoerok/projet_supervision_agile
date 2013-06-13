@@ -31,7 +31,6 @@ public class BtnLaunchListener implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(frame.isIpChecked());
 		if(!frame.isIpChecked() || (frame.isIpChecked() && IP.isValidIP(frame.getTextFieldIp()))) {
 			frame.getProgressBar().setValue(0);
 			frame.getProgressBar().update(frame.getProgressBar().getGraphics());

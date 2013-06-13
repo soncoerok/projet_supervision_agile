@@ -120,8 +120,6 @@ public class SNMPWalkDialer {
 		// Therefore the throw in else scope is commentedâ€¦
 		if (data.ram != -1) {
 			enumMap.put(Keys.ram, data.ram);
-		} else {
-			// throw new IOException("Could not get RAM value");
 		} // if
 		return enumMap;
 	}
