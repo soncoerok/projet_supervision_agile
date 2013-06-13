@@ -476,4 +476,8 @@ public class Frame extends JFrame {
 	public String getTextFieldIp() {
 		return textFieldIp.getText();
 	}
+	
+	public void setTextFieldIp(String ip){
+		this.textFieldIp.setText(ip);
+	}
 }
