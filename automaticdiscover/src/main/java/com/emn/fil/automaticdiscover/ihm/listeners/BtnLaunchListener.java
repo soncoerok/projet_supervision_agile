@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
@@ -60,8 +61,14 @@ public class BtnLaunchListener implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
-			JOptionPane.showMessageDialog(frame, "Mauvaise IP, saisir une ip valide : " + frame.getTextFieldIp(), "IP erreur",
+			JOptionPane.showMessageDialog(frame, "Adresse IP erronée : " + frame.getTextFieldIp() +", saisissez une IP valide."  , "IP erreur",
 					JOptionPane.ERROR_MESSAGE);
+			try {
+				this.frame.setTextFieldIp(InetAddress.getLocalHost().getHostAddress());
+			} catch (UnknownHostException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
