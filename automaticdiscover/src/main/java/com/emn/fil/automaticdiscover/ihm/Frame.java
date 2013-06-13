@@ -36,6 +36,8 @@ import com.emn.fil.automaticdiscover.ihm.listeners.BtnLaunchListener;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnPreferences;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
 import com.emn.fil.automaticdiscover.utils.EnhancedTableModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 @Component
 public class Frame extends JFrame {
@@ -66,8 +68,7 @@ public class Frame extends JFrame {
 	private JTable tableMachine = new JTable();
 
 	// TextFields
-	private JFormattedTextField textFieldFrom = new JFormattedTextField();
-	private JFormattedTextField textFieldTo = new JFormattedTextField();
+	private JFormattedTextField textFieldIp = new JFormattedTextField();
 
 	// ProgressBar
 	private JProgressBar progressBar = new JProgressBar();
@@ -75,8 +76,8 @@ public class Frame extends JFrame {
 	// Buttons
 	private JButton btnStop = new JButton("Stopper");
 	private JButton btnLunch = new JButton("Scanner");
-	private JRadioButton rdbtnToutReseau = new JRadioButton("Tout le réseau");
-	private JRadioButton rdbtnRangeReseau = new JRadioButton("De");
+	private JRadioButton rdbtnToutReseau = new JRadioButton("Son propre réseau");
+	private JRadioButton rdbtnRangeReseau = new JRadioButton();
 
 	// Results labels
 	private JLabel lblNbWindows = new JLabel("0");
@@ -84,6 +85,10 @@ public class Frame extends JFrame {
 	private JLabel lblNbMac = new JLabel("0");
 	private JLabel lblNbResult = new JLabel("0");
 	private JPanel panelResult = new JPanel();
+	
+	private JComboBox comboMasqueReseau = new JComboBox();
+	private JComboBox comboMasqueIp = new JComboBox();
+	private String[] masqueReseau = new String[] {"8", "16", "24", "32"};
 
 	@Autowired
 	private Scan scan;
@@ -148,29 +153,53 @@ public class Frame extends JFrame {
 		JPanel panelTop = new JPanel();
 		contentPane.add(panelTop, BorderLayout.NORTH);
 		GridBagLayout gblPanelHaut = new GridBagLayout();
-		gblPanelHaut.columnWidths = new int[] { 20, 263, 107, 41, 0 };
-		gblPanelHaut.rowHeights = new int[] { 20, 51, 0, 0 };
+		gblPanelHaut.columnWidths = new int[] { 20, 229, 107, 41, 0 };
+		gblPanelHaut.rowHeights = new int[] { 20, 20, 0, 0 };
 		gblPanelHaut.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gblPanelHaut.rowWeights = new double[] { 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		panelTop.setLayout(gblPanelHaut);
 
 		// disable textField
-		textFieldFrom.setEditable(false);
-		textFieldTo.setEditable(false);
+		textFieldIp.setEditable(false);
+		
+		JPanel panelNetwork = new JPanel();
+		GridBagConstraints gbcPanelNetwork = new GridBagConstraints();
+		gbcPanelNetwork.fill = GridBagConstraints.HORIZONTAL;
+		gbcPanelNetwork.insets = new Insets(0, 0, 5, 5);
+		gbcPanelNetwork.gridx = 1;
+		gbcPanelNetwork.gridy = 0;
+		panelTop.add(panelNetwork, gbcPanelNetwork);
+		GridBagLayout gblPanelNetwork = new GridBagLayout();
+		gblPanelNetwork.columnWidths = new int[]{141, 86, 0};
+		gblPanelNetwork.rowHeights = new int[]{23, 0};
+		gblPanelNetwork.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gblPanelNetwork.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panelNetwork.setLayout(gblPanelNetwork);
+		GridBagConstraints gbcRdbtnToutReseau = new GridBagConstraints();
+		gbcRdbtnToutReseau.insets = new Insets(0, 0, 0, 5);
+		gbcRdbtnToutReseau.anchor = GridBagConstraints.WEST;
+		gbcRdbtnToutReseau.gridx = 0;
+		gbcRdbtnToutReseau.gridy = 0;
+		panelNetwork.add(rdbtnToutReseau, gbcRdbtnToutReseau);
 		rdbtnToutReseau.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textFieldFrom.setEditable(false);
-				textFieldTo.setEditable(false);
+				textFieldIp.setEditable(false);
+				comboMasqueIp.setEnabled(false);
+				comboMasqueReseau.setEnabled(true);
 			}
 		});
-
+		
 		rdbtnToutReseau.setSelected(true);
-		GridBagConstraints gbcRdbtnToutReseau = new GridBagConstraints();
-		gbcRdbtnToutReseau.anchor = GridBagConstraints.WEST;
-		gbcRdbtnToutReseau.insets = new Insets(0, 0, 5, 5);
-		gbcRdbtnToutReseau.gridx = 1;
-		gbcRdbtnToutReseau.gridy = 0;
-		panelTop.add(rdbtnToutReseau, gbcRdbtnToutReseau);
+		
+		comboMasqueReseau.setModel(new DefaultComboBoxModel(masqueReseau));
+		comboMasqueReseau.setSelectedIndex(2);
+		GridBagConstraints gbcComboMasqueReseau = new GridBagConstraints();
+		gbcComboMasqueReseau.fill = GridBagConstraints.HORIZONTAL;
+		gbcComboMasqueReseau.gridx = 1;
+		gbcComboMasqueReseau.gridy = 0;
+		panelNetwork.add(comboMasqueReseau, gbcComboMasqueReseau);
+		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup .add(rdbtnToutReseau);
 
 		GridBagConstraints gbcBtnLunch = new GridBagConstraints();
 		gbcBtnLunch.anchor = GridBagConstraints.WEST;
@@ -190,61 +219,53 @@ public class Frame extends JFrame {
 		gbcPanelIpRange.gridy = 1;
 		panelTop.add(panelIpRange, gbcPanelIpRange);
 		GridBagLayout gblPanelIpRange = new GridBagLayout();
-		gblPanelIpRange.columnWidths = new int[] { 0, 184, 0 };
-		gblPanelIpRange.rowHeights = new int[] { 0, 33, 0 };
-		gblPanelIpRange.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gblPanelIpRange.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gblPanelIpRange.columnWidths = new int[] { 0, 114, 88, 0 };
+		gblPanelIpRange.rowHeights = new int[] { 0, 0 };
+		gblPanelIpRange.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gblPanelIpRange.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		panelIpRange.setLayout(gblPanelIpRange);
 
 		rdbtnRangeReseau.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textFieldFrom.setEditable(true);
-				textFieldTo.setEditable(true);
+				textFieldIp.setEditable(true);
+				comboMasqueIp.setEnabled(true);
+				comboMasqueReseau.setEnabled(false);
 			}
 		});
 
 		GridBagConstraints gbcRdbtnRangeReseau = new GridBagConstraints();
 		gbcRdbtnRangeReseau.anchor = GridBagConstraints.WEST;
-		gbcRdbtnRangeReseau.insets = new Insets(0, 0, 5, 5);
+		gbcRdbtnRangeReseau.insets = new Insets(0, 0, 0, 5);
 		gbcRdbtnRangeReseau.gridx = 0;
 		gbcRdbtnRangeReseau.gridy = 0;
 		panelIpRange.add(rdbtnRangeReseau, gbcRdbtnRangeReseau);
 
 		// Associate the radio button
-		ButtonGroup buttonGroup = new ButtonGroup();
-		buttonGroup.add(rdbtnToutReseau);
 		buttonGroup.add(rdbtnRangeReseau);
 
-		GridBagConstraints gbcTextFieldFrom = new GridBagConstraints();
-		gbcTextFieldFrom.fill = GridBagConstraints.HORIZONTAL;
-		gbcTextFieldFrom.insets = new Insets(0, 0, 5, 0);
-		gbcTextFieldFrom.gridx = 1;
-		gbcTextFieldFrom.gridy = 0;
-		panelIpRange.add(textFieldFrom, gbcTextFieldFrom);
-
-		JLabel label = new JLabel("à");
-		GridBagConstraints gbcLabel = new GridBagConstraints();
-		gbcLabel.anchor = GridBagConstraints.NORTHEAST;
-		gbcLabel.insets = new Insets(0, 0, 0, 5);
-		gbcLabel.gridx = 0;
-		gbcLabel.gridy = 1;
-		panelIpRange.add(label, gbcLabel);
-
-		GridBagConstraints gbcTextFieldTo = new GridBagConstraints();
-		gbcTextFieldTo.anchor = GridBagConstraints.NORTH;
-		gbcTextFieldTo.fill = GridBagConstraints.HORIZONTAL;
-		gbcTextFieldTo.gridx = 1;
-		gbcTextFieldTo.gridy = 1;
-		panelIpRange.add(textFieldTo, gbcTextFieldTo);
+		GridBagConstraints gbcTextFieldIp = new GridBagConstraints();
+		gbcTextFieldIp.insets = new Insets(0, 0, 0, 5);
+		gbcTextFieldIp.fill = GridBagConstraints.HORIZONTAL;
+		gbcTextFieldIp.gridx = 1;
+		gbcTextFieldIp.gridy = 0;
+		panelIpRange.add(textFieldIp, gbcTextFieldIp);
+		
+		comboMasqueIp.setModel(new DefaultComboBoxModel(masqueReseau));
+		comboMasqueIp.setEnabled(false);
+		comboMasqueIp.setSelectedIndex(2);
+		GridBagConstraints gbc_comboMasqueIP = new GridBagConstraints();
+		gbc_comboMasqueIP.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboMasqueIP.gridx = 2;
+		gbc_comboMasqueIP.gridy = 0;
+		panelIpRange.add(comboMasqueIp, gbc_comboMasqueIP);
 
 		GridBagConstraints gbcBtnStop = new GridBagConstraints();
-		gbcBtnStop.anchor = GridBagConstraints.NORTHWEST;
+		gbcBtnStop.anchor = GridBagConstraints.WEST;
 		gbcBtnStop.insets = new Insets(0, 0, 5, 5);
 		gbcBtnStop.gridx = 2;
 		gbcBtnStop.gridy = 1;
 		panelTop.add(btnStop, gbcBtnStop);
 
-		panelResult.setVisible(false);
 		GridBagConstraints gbcPanelResult = new GridBagConstraints();
 		gbcPanelResult.gridheight = 2;
 		gbcPanelResult.insets = new Insets(0, 0, 5, 0);
@@ -267,11 +288,11 @@ public class Frame extends JFrame {
 		gbcLblRsultats.gridy = 0;
 		panelResult.add(lblRsultats, gbcLblRsultats);
 
-		GridBagConstraints gbc_lblNbResult = new GridBagConstraints();
-		gbc_lblNbResult.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNbResult.gridx = 2;
-		gbc_lblNbResult.gridy = 0;
-		panelResult.add(lblNbResult, gbc_lblNbResult);
+		GridBagConstraints gbcLblNbResult = new GridBagConstraints();
+		gbcLblNbResult.insets = new Insets(0, 0, 5, 0);
+		gbcLblNbResult.gridx = 2;
+		gbcLblNbResult.gridy = 0;
+		panelResult.add(lblNbResult, gbcLblNbResult);
 
 		JLabel lblWindows = new JLabel("Windows :");
 		GridBagConstraints gbcLblWindows = new GridBagConstraints();
@@ -316,7 +337,6 @@ public class Frame extends JFrame {
 		panelResult.add(lblNbMac, gbcLblNbMac);
 
 		GridBagConstraints gbcProgressBar = new GridBagConstraints();
-		gbcProgressBar.insets = new Insets(0, 0, 0, 5);
 		gbcProgressBar.anchor = GridBagConstraints.NORTH;
 		gbcProgressBar.fill = GridBagConstraints.HORIZONTAL;
 		gbcProgressBar.gridwidth = 4;
@@ -408,6 +428,7 @@ public class Frame extends JFrame {
 	}
 
 	public void resetResults() {
+		setNbResult("0");
 		setNbWindows("0");
 		setNbUnix("0");
 		setNbMac("0");
@@ -431,11 +452,25 @@ public class Frame extends JFrame {
 
 	public String getVistesseScan() {
 		return this.vitesseScan;
-
 	}
 
 	public void setVistesseScan(String scan) {
 		this.vitesseScan = scan;
 	}
-
+	
+	public boolean isIpChecked() {
+		return rdbtnRangeReseau.isSelected();
+	}
+	
+	public int getMasqueReseau() {
+		return Integer.valueOf(comboMasqueReseau.getSelectedItem().toString());
+	}
+	
+	public int getMasqueIp() {
+		return Integer.valueOf(comboMasqueIp.getSelectedItem().toString());
+	}
+	
+	public String getTextFieldIp() {
+		return textFieldIp.getText();
+	}
 }

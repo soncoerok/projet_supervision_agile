@@ -8,12 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.emn.fil.automaticdiscover.Main;
 import com.emn.fil.automaticdiscover.dto.IP;
 import com.emn.fil.automaticdiscover.dto.IPMask;
@@ -53,12 +51,9 @@ public class Nmap /*implements Runnable*/ {
 
 	private Commande commandeNmap;
 
-	public Nmap() {
-	}
+	public Nmap() {}
 
 	public Nmap(Frame frame) throws UnknownHostException {
-		String ipReseau = InetAddress.getLocalHost().getHostAddress();
-		this.ipMask = new IPMask(new IP(ipReseau), 24);
 		this.frame = frame;
 		this.scanTermine = false;
 	}
@@ -159,6 +154,15 @@ public class Nmap /*implements Runnable*/ {
 	 */
 	public void lancer() throws IOException {
 		this.scanTermine = false;
+		
+		String ipReseau = InetAddress.getLocalHost().getHostAddress();
+		int masque = frame.getMasqueReseau();
+		if(this.frame.isIpChecked()) {
+			ipReseau = frame.getTextFieldIp();
+			masque = frame.getMasqueIp();
+		}
+		
+		this.ipMask = new IPMask(new IP(ipReseau), masque);
 		this.scan = scanner(ipMask);
 		this.scanTermine = true;
 	}

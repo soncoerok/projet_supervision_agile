@@ -51,9 +51,7 @@ public class TaskNmap extends SwingWorker<Void, Void> {
 					break;
 				}
 			}
-			frame.getPanelResult().setVisible(true);
 			frame.getBtnLunch().setEnabled(true);
-			frame.getProgressBar().setValue(0);
 			frame.getProgressBar().update(frame.getProgressBar().getGraphics());
 		}
 	}

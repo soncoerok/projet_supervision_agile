@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.emn.fil.automaticdiscover.exception.IPFormatException;
+import com.emn.fil.automaticdiscover.ihm.ShowDialog;
 
 public class IP implements Comparable<IP> {
 
@@ -25,12 +26,8 @@ public class IP implements Comparable<IP> {
 		if (this.isValidIP(ip)){
 			this.ip = ip;
 		} else {
-			try {
-				throw new IPFormatException("BAD IP : " + ip);
-			} catch (IPFormatException e) {
-				e.printStackTrace();
-				System.exit(-1);
-			}
+			ShowDialog dialog = new ShowDialog("Mauvaise IP, saisir une ip valide : " + ip);
+			dialog.setVisible(true);
 		}
 	}
 
