@@ -35,7 +35,7 @@ import com.emn.fil.automaticdiscover.dto.Scan;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnLaunchListener;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnPreferences;
 import com.emn.fil.automaticdiscover.ihm.listeners.BtnQuitListener;
-import com.emn.fil.automaticdiscover.ihm.listeners.BtnStopListener;
+//import com.emn.fil.automaticdiscover.ihm.listeners.BtnStopListener;
 import com.emn.fil.automaticdiscover.utils.EnhancedTableModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -266,7 +266,7 @@ public class Frame extends JFrame {
 		gbcBtnStop.gridx = 2;
 		gbcBtnStop.gridy = 1;
 		
-		btnStop.addActionListener(new BtnStopListener(this));
+		//btnStop.addActionListener(new BtnStopListener(this));
 		panelTop.add(btnStop, gbcBtnStop);
 		
 		GridBagConstraints gbcPanelResult = new GridBagConstraints();
