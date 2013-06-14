@@ -66,6 +66,7 @@ public class MachineDetail extends JFrame {
 	private void _build() {
 		// Lorsqu'on ferme la fenetre, on arrete le thread
 		addWindowListener(new WindowAdapter() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void windowClosed(WindowEvent e) {
 				if(runSNMP.isAlive()) {

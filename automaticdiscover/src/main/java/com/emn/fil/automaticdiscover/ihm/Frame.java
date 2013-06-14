@@ -87,7 +87,9 @@ public class Frame extends JFrame {
 	private JLabel lblNbResult = new JLabel("0");
 	private JPanel panelResult = new JPanel();
 	
+	@SuppressWarnings("rawtypes")
 	private JComboBox comboMasqueReseau = new JComboBox();
+	@SuppressWarnings("rawtypes")
 	private JComboBox comboMasqueIp = new JComboBox();
 	private String[] masqueReseau = new String[] {"8", "16", "24", "32"};
 
@@ -150,6 +152,7 @@ public class Frame extends JFrame {
 	/**
 	 * Create the top
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void _buildTop() {
 		JPanel panelTop = new JPanel();
 		contentPane.add(panelTop, BorderLayout.NORTH);

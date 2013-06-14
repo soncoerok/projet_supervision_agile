@@ -95,14 +95,14 @@ public class EnhancedTableModel extends AbstractTableModel {
     
     public void removeValueAt(int i) {
     	ArrayList<ArrayList<Object>> table = new ArrayList<ArrayList<Object>>();
-    	int col, row = 0;
+    	int row = 0;
 		for(Object[] arr : this.data) {
 			if(row != i) {
-				col = 0;
+				int col = 0;
 				ArrayList<Object> array = new ArrayList<Object>();
 				for(Object value : arr) {
 					array.add(value);
-					col++;
+					col = col + 1;
 				}
 				table.add(array);
 			}
